@@ -1,7 +1,10 @@
+import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
+import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'commons_libs.dart';
@@ -25,7 +28,8 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
             (s) => Container(
                   color: $styles.colors.greyStrong,
                 )),
-        AppRoute(ScreenPaths.login, (s) => const LoginScreens())
+        AppRoute(ScreenPaths.login, (s) => const LoginScreens()),
+        AppRoute(ScreenPaths.home, (s) => const HomeScreens())
       ])
 ]);
 
@@ -51,7 +55,11 @@ class AppRoute extends GoRoute {
                 },
               );
             }
-            return CupertinoPage(child: pageContent);
+            return MaterialPage(
+                child: BlocProvider(
+              create: (context) => AuthenticationBloc(repo),
+              child: pageContent,
+            ));
           },
         );
   final bool useFade;

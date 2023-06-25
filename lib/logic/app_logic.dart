@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:expence_project/main.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../commons_libs.dart';
 import '../router.dart';
@@ -63,10 +65,39 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
+    String? getAuths;
+    await SharedPreferences.getInstance().then(
+      (value) {
+        final getAuth = value.getString(
+          'auth',
+        );
+        print(getAuth);
+        if (getAuth != null) {
+          getAuths = getAuth;
+        }
+      },
+    );
+
+    print("S$getAuths");
+    if (getAuths != null) {
+      if (repo.firebaseAuth.currentUser?.uid != null) {
+        print(repo.firebaseAuth.currentUser?.uid);
+        if (getAuths == repo.firebaseAuth.currentUser?.uid) {
+          appRoute.go(ScreenPaths.home);
+        } else {
+          appRoute.go(ScreenPaths.login);
+        }
+      } else {
+        appRoute.go(ScreenPaths.login);
+      }
+    } else {
+      appRoute.go(ScreenPaths.login);
+    }
+
     // if (showIntro) {
     //   appRouter.go(ScreenPaths.intro);
     // } else {
-    appRoute.go(ScreenPaths.login);
+    // appRoute.go(ScreenPaths.login);
     // }
   }
 

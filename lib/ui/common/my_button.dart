@@ -52,7 +52,7 @@ class MyButton extends StatelessWidget {
                   : const SizedBox(),
               Text(title,
                   style: $styles.text.bodyBold.copyWith(
-                      fontSize: 15.sp,
+                      fontSize: 15,
                       color: isTransparant
                           ? $styles.colors.black
                           : $styles.colors.offWhite)),
