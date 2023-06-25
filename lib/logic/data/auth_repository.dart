@@ -1,8 +1,9 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tuple/tuple.dart';
 
 abstract class AuthenticationRepository {
-  Future<UserCredential?> signIn();
+  Future<Tuple2<UserCredential?, bool>> signIn();
   Future<void> signOut();
 }
 
@@ -12,7 +13,7 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   UserCredential? userCredential;
 
   @override
-  Future<UserCredential?> signIn() async {
+  Future<Tuple2<UserCredential?, bool>> signIn() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
@@ -30,19 +31,19 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         if (userCredential.user != null) {
           print(userCredential.user?.email);
           this.userCredential = userCredential;
-          return userCredential;
+          return Tuple2(userCredential, true);
         } else {
           print("Failed to sign in with credential");
-          return null;
+          return Tuple2(null, false);
         }
       } else {
         print("Failed to sign in with Google");
-        return null;
+        return Tuple2(null, false);
       }
     } on Exception catch (e) {
       print('Error ${e}');
     }
-    return null;
+    return Tuple2(null, false);
   }
 
   @override

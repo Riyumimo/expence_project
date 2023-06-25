@@ -30,14 +30,15 @@ class AuthenticationBloc
 
     //Sign In
     on<_SignInEvent>((event, emit) async {
-      final result = await repo.signIn();
       emit(const _Loaded(isLoading: true));
-      await Future.delayed(
-        const Duration(seconds: 2),
+      final result = await repo.signIn();
+      emit(_Loaded(isLoading: result.item2));
+      Future.delayed(
+        Duration(milliseconds: 500),
       );
       await SharedPreferences.getInstance().then(
         (value) {
-          value.setString('auth', result!.user!.uid);
+          value.setString('auth', result.item1!.user!.uid);
         },
       );
       emit(const _Loaded(isLoading: false));

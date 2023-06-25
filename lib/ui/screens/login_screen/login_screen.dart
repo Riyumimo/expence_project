@@ -141,8 +141,9 @@ class _MyHomePageState extends State<LoginScreens> {
                                 MyButton(
                                   title: "Login With Google",
                                   isTransparant: true,
-                                  onPressed: () {
+                                  onPressed: () async {
                                     // GET google sign in here
+
                                     context.read<AuthenticationBloc>().add(
                                         const AuthenticationEvent.signIn());
                                   },
