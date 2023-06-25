@@ -17,12 +17,20 @@ class LoginScreens extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<LoginScreens> {
+  bool isLoading = false;
+
   @override
   void initState() {
     BlocProvider.of<AuthenticationBloc>(context)
         .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
 
     super.initState();
+  }
+
+  void load() {
+    setState(() {
+      isLoading = true;
+    });
   }
 
   @override
@@ -34,107 +42,132 @@ class _MyHomePageState extends State<LoginScreens> {
             authenticated: (value) {
               appRoute.go(ScreenPaths.home);
             },
-            loaded: (loaded) {},
+            loaded: (loaded) {
+              setState(() {
+                isLoading = loaded.isLoading;
+              });
+            },
             unauthenticated: (unauthenticated) {});
       },
       builder: (context, state) {
+        print(isLoading);
         return Scaffold(
           // backgroundColor: Color(0xFFE5E5E5),
           appBar: AppBar(
             backgroundColor: $styles.colors.offWhite,
             elevation: 0,
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Gap(height * .05),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Let's Login",
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w700, fontSize: 32),
-                        ),
-                        const Gap(16),
-                        Text(
-                          "Management Your Money",
-                          style: GoogleFonts.inter(
-                              // fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              color: const Color(0xFF827D89)),
-                        ),
-                        const Gap(32),
-                        const MyInputField(
-                            title: "Email Address",
-                            hint: "Example: johndoe@gmail.com",
-                            color: Color(0xFFC8C5CB)),
-                        const Gap(16),
-                        const MyInputField(
-                            title: "Password",
-                            hint: "******",
-                            color: Color(0xFFC8C5CB)),
-                        const Gap(12),
-                        MyTextButton(
-                          title: "Forgot password",
-                          onPressed: () {},
-                        ),
-                        const Gap(32),
-                        MyButton(
-                          title: "Login",
-                          onPressed: () {
-                            // go to home screen
-                          },
-                          color: $styles.colors.accent1,
-                        ),
-                        const Gap(16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                height: .2,
-                                width: 100,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "Or",
-                              style: $styles.text.bodySmall,
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: .2,
-                                width: 100,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Gap(16),
-                        MyButton(
-                          title: "Login With Google",
-                          isTransparant: true,
-                          onPressed: () {
-                            // GET google sign in here
-                            context
-                                .read<AuthenticationBloc>()
-                                .add(const AuthenticationEvent.signIn());
-                          },
-                        ),
-                        const Gap(24),
-                        Center(
-                            child: MyTextButton(
-                          title: "Don't have account? Register here",
-                          onPressed: () {},
-                        ))
-                      ]),
-                ],
+          body: Stack(
+            children: [
+              IgnorePointer(
+                ignoring: isLoading,
+                child: Opacity(
+                  opacity: isLoading ? 0.8 : 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Gap(height * .05),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Let's Login",
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 32),
+                                ),
+                                const Gap(16),
+                                Text(
+                                  "Management Your Money",
+                                  style: GoogleFonts.inter(
+                                      // fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: const Color(0xFF827D89)),
+                                ),
+                                const Gap(32),
+                                const MyInputField(
+                                    title: "Email Address",
+                                    hint: "Example: johndoe@gmail.com",
+                                    color: Color(0xFFC8C5CB)),
+                                const Gap(16),
+                                const MyInputField(
+                                    title: "Password",
+                                    hint: "******",
+                                    color: Color(0xFFC8C5CB)),
+                                const Gap(12),
+                                MyTextButton(
+                                  title: "Forgot password",
+                                  onPressed: () {},
+                                ),
+                                const Gap(32),
+                                MyButton(
+                                  title: "Login",
+                                  onPressed: () {
+                                    // go to home screen
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                  },
+                                  color: $styles.colors.accent1,
+                                ),
+                                const Gap(16),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        height: .2,
+                                        width: 100,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Or",
+                                      style: $styles.text.bodySmall,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        height: .2,
+                                        width: 100,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Gap(16),
+                                MyButton(
+                                  title: "Login With Google",
+                                  isTransparant: true,
+                                  onPressed: () {
+                                    // GET google sign in here
+                                    context.read<AuthenticationBloc>().add(
+                                        const AuthenticationEvent.signIn());
+                                  },
+                                ),
+                                const Gap(24),
+                                Center(
+                                    child: MyTextButton(
+                                  title: "Don't have account? Register here",
+                                  onPressed: () {},
+                                ))
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              if (isLoading)
+                Container(
+                  color: $styles.colors.offWhite.withOpacity(.04),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
           ),
         );
       },

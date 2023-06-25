@@ -28,7 +28,10 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
             (s) => Container(
                   color: $styles.colors.greyStrong,
                 )),
-        AppRoute(ScreenPaths.login, (s) => const LoginScreens()),
+        AppRoute(
+          ScreenPaths.login,
+          (s) => const LoginScreens(),
+        ),
         AppRoute(ScreenPaths.home, (s) => const HomeScreens())
       ])
 ]);
@@ -42,7 +45,10 @@ class AppRoute extends GoRoute {
           routes: routes,
           pageBuilder: (context, state) {
             final pageContent = Scaffold(
-              body: builder(state),
+              body: BlocProvider(
+                create: (context) => AuthenticationBloc(repo),
+                child: builder(state),
+              ),
               resizeToAvoidBottomInset: false,
             );
             if (useFade) {
@@ -55,13 +61,10 @@ class AppRoute extends GoRoute {
                 },
               );
             }
-            return MaterialPage(
-                child: BlocProvider(
-              create: (context) => AuthenticationBloc(repo),
-              child: pageContent,
-            ));
+            return MaterialPage(child: pageContent);
           },
         );
+
   final bool useFade;
 }
 

@@ -1,5 +1,4 @@
 import 'package:expence_project/main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,8 +31,7 @@ class _HomeScreensState extends State<HomeScreens> {
                 return;
               },
               authenticated: (value) {},
-              unauthenticated: (value) =>
-                  appRoute.pushReplacement(ScreenPaths.login),
+              unauthenticated: (value) => appRoute.go(ScreenPaths.login),
               loaded: (value) {});
         },
         builder: (context, state) {

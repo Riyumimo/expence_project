@@ -443,7 +443,7 @@ mixin _$AuthenticationState {
   TResult when<TResult extends Object?>({
     required TResult Function() intial,
     required TResult Function() authenticated,
-    required TResult Function() loaded,
+    required TResult Function(bool isLoading) loaded,
     required TResult Function() unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -451,7 +451,7 @@ mixin _$AuthenticationState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? intial,
     TResult? Function()? authenticated,
-    TResult? Function()? loaded,
+    TResult? Function(bool isLoading)? loaded,
     TResult? Function()? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -459,7 +459,7 @@ mixin _$AuthenticationState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? intial,
     TResult Function()? authenticated,
-    TResult Function()? loaded,
+    TResult Function(bool isLoading)? loaded,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) =>
@@ -548,7 +548,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() intial,
     required TResult Function() authenticated,
-    required TResult Function() loaded,
+    required TResult Function(bool isLoading) loaded,
     required TResult Function() unauthenticated,
   }) {
     return intial();
@@ -559,7 +559,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? intial,
     TResult? Function()? authenticated,
-    TResult? Function()? loaded,
+    TResult? Function(bool isLoading)? loaded,
     TResult? Function()? unauthenticated,
   }) {
     return intial?.call();
@@ -570,7 +570,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? intial,
     TResult Function()? authenticated,
-    TResult Function()? loaded,
+    TResult Function(bool isLoading)? loaded,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -662,7 +662,7 @@ class _$_Authenticated implements _Authenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() intial,
     required TResult Function() authenticated,
-    required TResult Function() loaded,
+    required TResult Function(bool isLoading) loaded,
     required TResult Function() unauthenticated,
   }) {
     return authenticated();
@@ -673,7 +673,7 @@ class _$_Authenticated implements _Authenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? intial,
     TResult? Function()? authenticated,
-    TResult? Function()? loaded,
+    TResult? Function(bool isLoading)? loaded,
     TResult? Function()? unauthenticated,
   }) {
     return authenticated?.call();
@@ -684,7 +684,7 @@ class _$_Authenticated implements _Authenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? intial,
     TResult Function()? authenticated,
-    TResult Function()? loaded,
+    TResult Function(bool isLoading)? loaded,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -740,6 +740,8 @@ abstract class _Authenticated implements AuthenticationState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isLoading});
 }
 
 /// @nodoc
@@ -748,36 +750,62 @@ class __$$_LoadedCopyWithImpl<$Res>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isLoading = null,
+  }) {
+    return _then(_$_Loaded(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded({this.isLoading = false});
+
+  @override
+  @JsonKey()
+  final bool isLoading;
 
   @override
   String toString() {
-    return 'AuthenticationState.loaded()';
+    return 'AuthenticationState.loaded(isLoading: $isLoading)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$_Loaded &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isLoading);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() intial,
     required TResult Function() authenticated,
-    required TResult Function() loaded,
+    required TResult Function(bool isLoading) loaded,
     required TResult Function() unauthenticated,
   }) {
-    return loaded();
+    return loaded(isLoading);
   }
 
   @override
@@ -785,10 +813,10 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? intial,
     TResult? Function()? authenticated,
-    TResult? Function()? loaded,
+    TResult? Function(bool isLoading)? loaded,
     TResult? Function()? unauthenticated,
   }) {
-    return loaded?.call();
+    return loaded?.call(isLoading);
   }
 
   @override
@@ -796,12 +824,12 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? intial,
     TResult Function()? authenticated,
-    TResult Function()? loaded,
+    TResult Function(bool isLoading)? loaded,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(isLoading);
     }
     return orElse();
   }
@@ -845,7 +873,12 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements AuthenticationState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded({final bool isLoading}) = _$_Loaded;
+
+  bool get isLoading;
+  @JsonKey(ignore: true)
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -888,7 +921,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() intial,
     required TResult Function() authenticated,
-    required TResult Function() loaded,
+    required TResult Function(bool isLoading) loaded,
     required TResult Function() unauthenticated,
   }) {
     return unauthenticated();
@@ -899,7 +932,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? intial,
     TResult? Function()? authenticated,
-    TResult? Function()? loaded,
+    TResult? Function(bool isLoading)? loaded,
     TResult? Function()? unauthenticated,
   }) {
     return unauthenticated?.call();
@@ -910,7 +943,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? intial,
     TResult Function()? authenticated,
-    TResult Function()? loaded,
+    TResult Function(bool isLoading)? loaded,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {

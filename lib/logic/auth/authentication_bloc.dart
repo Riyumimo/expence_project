@@ -15,6 +15,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepository repo;
   AuthenticationBloc(this.repo) : super(const _Initial()) {
+    // Initial
     on<_GetSignInEvent>((event, emit) async {
       // Obtain shared preferences.
       print('get started');
@@ -26,19 +27,27 @@ class AuthenticationBloc
         emit(_Initial());
       }
     });
+
+    //Sign In
     on<_SignInEvent>((event, emit) async {
       final result = await repo.signIn();
-      emit(const _Loaded());
-      print('login succsess');
+      emit(const _Loaded(isLoading: true));
+      await Future.delayed(
+        const Duration(seconds: 2),
+      );
       await SharedPreferences.getInstance().then(
         (value) {
           value.setString('auth', result!.user!.uid);
         },
       );
+      emit(const _Loaded(isLoading: false));
       if (result != null) {
+        print('login succsess');
         emit(const _Authenticated());
       }
     });
+
+    //Sign Out
     on<_SignOutEvent>((event, emit) async {
       if (state is _Authenticated) {
         try {
