@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "652142256876",
+    "project_id": "gogglesignin-1bbda",
+    "storage_bucket": "gogglesignin-1bbda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652142256876:android:04979d7821ea0990d5fbc9",
+        "android_client_info": {
+          "package_name": "com.example.expence_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5vua_zznakFWyVf8c0gNPl5WTWIyE2Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652142256876:android:59bab0e10a9d92fcd5fbc9",
+        "android_client_info": {
+          "package_name": "com.example.signin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5vua_zznakFWyVf8c0gNPl5WTWIyE2Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652142256876:android:be7e4eb7882fcc71d5fbc9",
+        "android_client_info": {
+          "package_name": "com.example.signintest2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5vua_zznakFWyVf8c0gNPl5WTWIyE2Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652142256876:android:df8ca39c037e502bd5fbc9",
+        "android_client_info": {
+          "package_name": "com.plcoding.composegooglesignincleanarchitecture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5vua_zznakFWyVf8c0gNPl5WTWIyE2Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
