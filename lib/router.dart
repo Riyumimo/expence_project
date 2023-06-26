@@ -3,6 +3,7 @@ import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
+import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +33,8 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
           ScreenPaths.login,
           (s) => const LoginScreens(),
         ),
-        AppRoute(ScreenPaths.home, (s) => const HomeScreens())
+        AppRoute(ScreenPaths.home, (s) => const HomeScreens()),
+        AppRoute(ScreenPaths.register, (s) => const RegisterScreen())
       ])
 ]);
 
