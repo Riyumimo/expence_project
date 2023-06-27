@@ -107,9 +107,7 @@ class _MyHomePageState extends State<LoginScreens> {
                                   title: "Login",
                                   onPressed: () {
                                     // go to home screen
-                                    setState(() {
-                                      isLoading = true;
-                                    });
+                                    appRoute.push(ScreenPaths.register);
                                   },
                                   color: $styles.colors.accent1,
                                 ),
@@ -143,9 +141,9 @@ class _MyHomePageState extends State<LoginScreens> {
                                   isTransparant: true,
                                   onPressed: () async {
                                     // GET google sign in here
-
                                     context.read<AuthenticationBloc>().add(
-                                        const AuthenticationEvent.signIn());
+                                        const AuthenticationEvent
+                                            .signInWithGoogle());
                                   },
                                 ),
                                 const Gap(24),
@@ -164,7 +162,7 @@ class _MyHomePageState extends State<LoginScreens> {
               if (isLoading)
                 Container(
                   color: $styles.colors.offWhite.withOpacity(.04),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),

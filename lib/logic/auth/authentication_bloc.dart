@@ -1,11 +1,12 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:crypto/crypto.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../main.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -29,9 +30,9 @@ class AuthenticationBloc
     });
 
     //Sign In
-    on<_SignInEvent>((event, emit) async {
+    on<_SignInWithGoogleEvent>((event, emit) async {
       emit(const _Loaded(isLoading: true));
-      final result = await repo.signIn();
+      final result = await repo.signInWithGoogle();
       emit(_Loaded(isLoading: result.item2));
       Future.delayed(
         Duration(milliseconds: 500),
@@ -42,10 +43,8 @@ class AuthenticationBloc
         },
       );
       emit(const _Loaded(isLoading: false));
-      if (result != null) {
-        print('login succsess');
-        emit(const _Authenticated());
-      }
+      print('login succsess');
+      emit(const _Authenticated());
     });
 
     //Sign Out
@@ -67,5 +66,14 @@ class AuthenticationBloc
         }
       }
     });
+  }
+
+  String encryptPassword(String password) {
+    var bytes =
+        utf8.encode(password); // Konversi password ke dalam bentuk bytes
+    var hashedPassword = sha256
+        .convert(bytes)
+        .toString(); // Gunakan algoritma SHA-256 untuk hashing
+    return hashedPassword;
   }
 }

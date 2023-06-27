@@ -1,8 +1,8 @@
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
 import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../common/my_back_button.dart';
 
@@ -19,7 +19,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(children: [
-          const MyBackButton(),
+          MyBackButton(
+            onTap: () {
+              appRoute.pop();
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
             child: Column(

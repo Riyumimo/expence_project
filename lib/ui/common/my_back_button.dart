@@ -2,8 +2,10 @@ import '../../commons_libs.dart';
 import '../../main.dart';
 
 class MyBackButton extends StatelessWidget {
+  final Function()? onTap;
   const MyBackButton({
     super.key,
+    this.onTap,
   });
 
   @override

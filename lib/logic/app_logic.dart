@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:expence_project/logic/authencation_route_screen.dart';
-import 'package:expence_project/main.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../commons_libs.dart';
-import '../router.dart';
 import 'common/platform_info.dart';
 
 class AppLogic {
@@ -66,7 +63,7 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    AuthenticationScreenRouter().redirectToScreen();
+    AuthenticationScreenRouter().handleAuthentication();
     // if (showIntro) {
     //   appRouter.go(ScreenPaths.intro);
     // } else {

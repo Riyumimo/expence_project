@@ -18,45 +18,57 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthenticationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() signIn,
+    required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? signIn,
+    TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? signIn,
+    TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SignInEvent value) signIn,
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SignInEvent value)? signIn,
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SignInEvent value)? signIn,
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -81,35 +93,35 @@ class _$AuthenticationEventCopyWithImpl<$Res, $Val extends AuthenticationEvent>
 }
 
 /// @nodoc
-abstract class _$$_SignInEventCopyWith<$Res> {
-  factory _$$_SignInEventCopyWith(
-          _$_SignInEvent value, $Res Function(_$_SignInEvent) then) =
-      __$$_SignInEventCopyWithImpl<$Res>;
+abstract class _$$_SignInWithGoogleEventCopyWith<$Res> {
+  factory _$$_SignInWithGoogleEventCopyWith(_$_SignInWithGoogleEvent value,
+          $Res Function(_$_SignInWithGoogleEvent) then) =
+      __$$_SignInWithGoogleEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SignInEventCopyWithImpl<$Res>
-    extends _$AuthenticationEventCopyWithImpl<$Res, _$_SignInEvent>
-    implements _$$_SignInEventCopyWith<$Res> {
-  __$$_SignInEventCopyWithImpl(
-      _$_SignInEvent _value, $Res Function(_$_SignInEvent) _then)
+class __$$_SignInWithGoogleEventCopyWithImpl<$Res>
+    extends _$AuthenticationEventCopyWithImpl<$Res, _$_SignInWithGoogleEvent>
+    implements _$$_SignInWithGoogleEventCopyWith<$Res> {
+  __$$_SignInWithGoogleEventCopyWithImpl(_$_SignInWithGoogleEvent _value,
+      $Res Function(_$_SignInWithGoogleEvent) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_SignInEvent implements _SignInEvent {
-  const _$_SignInEvent();
+class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
+  const _$_SignInWithGoogleEvent();
 
   @override
   String toString() {
-    return 'AuthenticationEvent.signIn()';
+    return 'AuthenticationEvent.signInWithGoogle()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SignInEvent);
+        (other.runtimeType == runtimeType && other is _$_SignInWithGoogleEvent);
   }
 
   @override
@@ -118,33 +130,39 @@ class _$_SignInEvent implements _SignInEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() signIn,
+    required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
   }) {
-    return signIn();
+    return signInWithGoogle();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? signIn,
+    TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
   }) {
-    return signIn?.call();
+    return signInWithGoogle?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? signIn,
+    TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
     required TResult orElse(),
   }) {
-    if (signIn != null) {
-      return signIn();
+    if (signInWithGoogle != null) {
+      return signInWithGoogle();
     }
     return orElse();
   }
@@ -152,40 +170,46 @@ class _$_SignInEvent implements _SignInEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SignInEvent value) signIn,
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
   }) {
-    return signIn(this);
+    return signInWithGoogle(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SignInEvent value)? signIn,
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
   }) {
-    return signIn?.call(this);
+    return signInWithGoogle?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SignInEvent value)? signIn,
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
-    if (signIn != null) {
-      return signIn(this);
+    if (signInWithGoogle != null) {
+      return signInWithGoogle(this);
     }
     return orElse();
   }
 }
 
-abstract class _SignInEvent implements AuthenticationEvent {
-  const factory _SignInEvent() = _$_SignInEvent;
+abstract class _SignInWithGoogleEvent implements AuthenticationEvent {
+  const factory _SignInWithGoogleEvent() = _$_SignInWithGoogleEvent;
 }
 
 /// @nodoc
@@ -253,9 +277,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() signIn,
+    required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
   }) {
     return getSignIn(firebaseAuth);
   }
@@ -263,9 +289,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? signIn,
+    TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
   }) {
     return getSignIn?.call(firebaseAuth);
   }
@@ -273,9 +301,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? signIn,
+    TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
     required TResult orElse(),
   }) {
     if (getSignIn != null) {
@@ -287,9 +317,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SignInEvent value) signIn,
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
   }) {
     return getSignIn(this);
   }
@@ -297,9 +329,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SignInEvent value)? signIn,
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
   }) {
     return getSignIn?.call(this);
   }
@@ -307,9 +341,11 @@ class _$_GetSignInEvent implements _GetSignInEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SignInEvent value)? signIn,
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (getSignIn != null) {
@@ -367,9 +403,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() signIn,
+    required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
   }) {
     return signOut();
   }
@@ -377,9 +415,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? signIn,
+    TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
   }) {
     return signOut?.call();
   }
@@ -387,9 +427,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? signIn,
+    TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -401,9 +443,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SignInEvent value) signIn,
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
   }) {
     return signOut(this);
   }
@@ -411,9 +455,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SignInEvent value)? signIn,
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
   }) {
     return signOut?.call(this);
   }
@@ -421,9 +467,11 @@ class _$_SignOutEvent implements _SignOutEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SignInEvent value)? signIn,
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -435,6 +483,246 @@ class _$_SignOutEvent implements _SignOutEvent {
 
 abstract class _SignOutEvent implements AuthenticationEvent {
   const factory _SignOutEvent() = _$_SignOutEvent;
+}
+
+/// @nodoc
+abstract class _$$_SignInWithEmailEventCopyWith<$Res> {
+  factory _$$_SignInWithEmailEventCopyWith(_$_SignInWithEmailEvent value,
+          $Res Function(_$_SignInWithEmailEvent) then) =
+      __$$_SignInWithEmailEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_SignInWithEmailEventCopyWithImpl<$Res>
+    extends _$AuthenticationEventCopyWithImpl<$Res, _$_SignInWithEmailEvent>
+    implements _$$_SignInWithEmailEventCopyWith<$Res> {
+  __$$_SignInWithEmailEventCopyWithImpl(_$_SignInWithEmailEvent _value,
+      $Res Function(_$_SignInWithEmailEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
+  const _$_SignInWithEmailEvent();
+
+  @override
+  String toString() {
+    return 'AuthenticationEvent.signInWithEmail()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_SignInWithEmailEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogle,
+    required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
+    required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
+  }) {
+    return signInWithEmail();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogle,
+    TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
+    TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
+  }) {
+    return signInWithEmail?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogle,
+    TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
+    TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
+    required TResult orElse(),
+  }) {
+    if (signInWithEmail != null) {
+      return signInWithEmail();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
+    required TResult Function(_GetSignInEvent value) getSignIn,
+    required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+  }) {
+    return signInWithEmail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
+    TResult? Function(_GetSignInEvent value)? getSignIn,
+    TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+  }) {
+    return signInWithEmail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
+    TResult Function(_GetSignInEvent value)? getSignIn,
+    TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    required TResult orElse(),
+  }) {
+    if (signInWithEmail != null) {
+      return signInWithEmail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SignInWithEmailEvent implements AuthenticationEvent {
+  const factory _SignInWithEmailEvent() = _$_SignInWithEmailEvent;
+}
+
+/// @nodoc
+abstract class _$$registerWithEmailEventCopyWith<$Res> {
+  factory _$$registerWithEmailEventCopyWith(_$registerWithEmailEvent value,
+          $Res Function(_$registerWithEmailEvent) then) =
+      __$$registerWithEmailEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$registerWithEmailEventCopyWithImpl<$Res>
+    extends _$AuthenticationEventCopyWithImpl<$Res, _$registerWithEmailEvent>
+    implements _$$registerWithEmailEventCopyWith<$Res> {
+  __$$registerWithEmailEventCopyWithImpl(_$registerWithEmailEvent _value,
+      $Res Function(_$registerWithEmailEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$registerWithEmailEvent implements registerWithEmailEvent {
+  const _$registerWithEmailEvent();
+
+  @override
+  String toString() {
+    return 'AuthenticationEvent.registerWithEmail()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$registerWithEmailEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() signInWithGoogle,
+    required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
+    required TResult Function() signOut,
+    required TResult Function() signInWithEmail,
+    required TResult Function() registerWithEmail,
+  }) {
+    return registerWithEmail();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? signInWithGoogle,
+    TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
+    TResult? Function()? signOut,
+    TResult? Function()? signInWithEmail,
+    TResult? Function()? registerWithEmail,
+  }) {
+    return registerWithEmail?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? signInWithGoogle,
+    TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
+    TResult Function()? signOut,
+    TResult Function()? signInWithEmail,
+    TResult Function()? registerWithEmail,
+    required TResult orElse(),
+  }) {
+    if (registerWithEmail != null) {
+      return registerWithEmail();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SignInWithGoogleEvent value) signInWithGoogle,
+    required TResult Function(_GetSignInEvent value) getSignIn,
+    required TResult Function(_SignOutEvent value) signOut,
+    required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
+    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+  }) {
+    return registerWithEmail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SignInWithGoogleEvent value)? signInWithGoogle,
+    TResult? Function(_GetSignInEvent value)? getSignIn,
+    TResult? Function(_SignOutEvent value)? signOut,
+    TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+  }) {
+    return registerWithEmail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SignInWithGoogleEvent value)? signInWithGoogle,
+    TResult Function(_GetSignInEvent value)? getSignIn,
+    TResult Function(_SignOutEvent value)? signOut,
+    TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
+    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    required TResult orElse(),
+  }) {
+    if (registerWithEmail != null) {
+      return registerWithEmail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class registerWithEmailEvent implements AuthenticationEvent {
+  const factory registerWithEmailEvent() = _$registerWithEmailEvent;
 }
 
 /// @nodoc
