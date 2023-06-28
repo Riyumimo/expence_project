@@ -55,6 +55,7 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      print(userCredential.user?.email);
 
       return Tuple2(userCredential, true);
     } on FirebaseAuthException catch (e) {
