@@ -18,12 +18,14 @@ class LoginScreens extends StatefulWidget {
 
 class _MyHomePageState extends State<LoginScreens> {
   bool isLoading = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _obscureTextPassword = true;
 
   @override
   void initState() {
     BlocProvider.of<AuthenticationBloc>(context)
         .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
-
     super.initState();
   }
 
@@ -107,14 +109,31 @@ class _MyHomePageState extends State<LoginScreens> {
                                       color: const Color(0xFF827D89)),
                                 ),
                                 const Gap(32),
-                                const MyInputField(
+                                MyInputField(
                                     title: "Email Address",
+                                    textEditingController: emailController,
                                     hint: "Example: johndoe@gmail.com",
                                     color: Color(0xFFC8C5CB)),
                                 const Gap(16),
-                                const MyInputField(
+                                MyInputField(
                                     title: "Password",
                                     hint: "******",
+                                    textEditingController: passwordController,
+                                    isPassword: true,
+                                    obscureText: _obscureTextPassword,
+                                    icon: _obscureTextPassword
+                                        ? const Icon(
+                                            Icons.visibility,
+                                          )
+                                        : const Icon(
+                                            Icons.visibility_off,
+                                          ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureTextPassword =
+                                            !_obscureTextPassword;
+                                      });
+                                    },
                                     color: Color(0xFFC8C5CB)),
                                 const Gap(12),
                                 MyTextButton(
@@ -125,8 +144,10 @@ class _MyHomePageState extends State<LoginScreens> {
                                 MyButton(
                                   title: "Login",
                                   onPressed: () {
-                                    // go to home screen
-                                    appRoute.push(ScreenPaths.register);
+                                    context.read<AuthenticationBloc>().add(
+                                        AuthenticationEvent.signInWithEmail(
+                                            emailController.text,
+                                            passwordController.text));
                                   },
                                   color: $styles.colors.accent1,
                                 ),
@@ -168,7 +189,9 @@ class _MyHomePageState extends State<LoginScreens> {
                                 Center(
                                     child: MyTextButton(
                                   title: "Don't have account? Register here",
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    appRoute.push(ScreenPaths.register);
+                                  },
                                 ))
                               ]),
                         ],
