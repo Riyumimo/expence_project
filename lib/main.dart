@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/app_logic.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
 import 'package:expence_project/router.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget with GetItMixin {
 void registerSingletons() {
   // Top level app controller
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
+  GetIt.I.registerLazySingleton<Connectivity>(() => Connectivity());
   GetIt.I.registerLazySingleton<FirebaseAuthenticationRepository>(
       () => FirebaseAuthenticationRepository());
 }
@@ -55,6 +57,7 @@ void registerSingletons() {
 /// Add syntax sugar for quickly accessing the main "logic" controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the view/widget layer.
 AppLogic get appLogic => GetIt.I.get<AppLogic>();
+Connectivity get connectivity => GetIt.I.get<Connectivity>();
 FirebaseAuthenticationRepository get repo =>
     GetIt.I.get<FirebaseAuthenticationRepository>();
 

@@ -48,7 +48,7 @@ class AppRoute extends GoRoute {
           pageBuilder: (context, state) {
             final pageContent = Scaffold(
               body: BlocProvider(
-                create: (context) => AuthenticationBloc(repo),
+                create: (context) => AuthenticationBloc(repo, connectivity),
                 child: builder(state),
               ),
               resizeToAvoidBottomInset: false,

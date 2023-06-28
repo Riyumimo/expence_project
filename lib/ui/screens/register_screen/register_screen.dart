@@ -1,8 +1,10 @@
 import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
 import 'package:expence_project/ui/common/my_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/my_back_button.dart';
 
@@ -14,70 +16,176 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  bool _obscureTextPassword = true;
+  bool _obscureTextRetypePassword = true;
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController retypePasswordController =
+      TextEditingController();
+  @override
+  void initState() {
+    BlocProvider.of<AuthenticationBloc>(context)
+        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
     return Scaffold(
-      body: SafeArea(
-        child: ListView(children: [
-          MyBackButton(
-            onTap: () {
-              appRoute.pop();
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          state.map(
+              intial: (intial) {},
+              authenticated: (value) {
+                appRoute.go(ScreenPaths.home);
+              },
+              loaded: (loaded) {
+                setState(() {
+                  isLoading = loaded.isLoading;
+                });
+              },
+              unauthenticated: (unauthenticated) {},
+              error: (value) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext build) {
+                      return AlertDialog(
+                        title: const Text("Error Message"),
+                        content: Text(value.message),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                context.read<AuthenticationBloc>().add(
+                                    AuthenticationEvent.getSignIn(
+                                        repo.firebaseAuth));
+                              },
+                              child: const Text("Ok"))
+                        ],
+                      );
+                    });
+              });
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: Stack(
               children: [
-                Text(
-                  "Register",
-                  style: $styles.text.quote1,
-                ),
-                const Gap(16),
-                Text(
-                  'And start tracking your money',
-                  style: $styles.text.quote2Sub
-                      .copyWith(color: $styles.colors.caption, height: 0),
-                ),
-                const Gap(32),
-                // FULL NAME
-                MyInputField(
-                    title: "Full Name",
-                    hint: "Example: John Doe",
-                    color: $styles.colors.textWhite),
-                const Gap(16),
+                ListView(children: [
+                  MyBackButton(
+                    onTap: () {
+                      appRoute.pop();
+                    },
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 16, right: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Register",
+                          style: $styles.text.quote1,
+                        ),
+                        const Gap(16),
+                        Text(
+                          'And start tracking your money',
+                          style: $styles.text.quote2Sub.copyWith(
+                              color: $styles.colors.caption, height: 0),
+                        ),
+                        const Gap(32),
+                        // FULL NAME
+                        MyInputField(
+                            title: "Full Name",
+                            hint: "Example: John Doe",
+                            textEditingController: fullNameController,
+                            color: $styles.colors.textWhite),
+                        const Gap(16),
 
-                // EMAIL
-                MyInputField(
-                    title: "Email",
-                    hint: "Example: JohnDoe@gmail.com",
-                    color: $styles.colors.textWhite),
-                const Gap(16),
+                        // EMAIL
+                        MyInputField(
+                            title: "Email",
+                            textEditingController: emailController,
+                            hint: "Example: JohnDoe@gmail.com",
+                            color: $styles.colors.textWhite),
+                        const Gap(16),
 
-                // PASSWORD
-                MyInputField(
-                    title: "Password",
-                    hint: "******",
-                    color: $styles.colors.textWhite),
-                const Gap(16),
+                        // PASSWORD
+                        MyInputField(
+                            title: "Password",
+                            hint: "******",
+                            isPassword: true,
+                            obscureText: _obscureTextPassword,
+                            icon: _obscureTextPassword
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _obscureTextPassword = !_obscureTextPassword;
+                              });
+                            },
+                            textEditingController: passwordController,
+                            color: $styles.colors.textWhite),
+                        const Gap(16),
 
-                // RETYPE PASSWORD
-                MyInputField(
-                    title: "Retype Password",
-                    hint: "******",
-                    color: $styles.colors.textWhite),
-                const Gap(16),
+                        // RETYPE PASSWORD
+                        MyInputField(
+                            title: "Retype Password",
+                            hint: "******",
+                            isPassword: true,
+                            obscureText: _obscureTextRetypePassword,
+                            icon: _obscureTextRetypePassword
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _obscureTextRetypePassword =
+                                    !_obscureTextRetypePassword;
+                              });
+                            },
+                            textEditingController: retypePasswordController,
+                            color: $styles.colors.textWhite),
+                        const Gap(16),
 
-                // REGISTER BUTTON
-                MyButton(
-                  title: "Register",
-                  onPressed: () {},
-                  color: $styles.colors.accent1,
-                )
+                        // REGISTER BUTTON
+                        MyButton(
+                          title: "Register",
+                          onPressed: () async {
+                            if (passwordController.text ==
+                                retypePasswordController.text) {
+                              context.read<AuthenticationBloc>().add(
+                                  AuthenticationEvent.registerWithEmail(
+                                      emailController.text,
+                                      passwordController.text,
+                                      fullNameController.text));
+                              print('cliked');
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (context) => SnackBar(
+                                    content: Text(
+                                        "Retype password tidak sama dengan password")),
+                              );
+                            }
+                          },
+                          color: $styles.colors.accent1,
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
+                if (isLoading)
+                  Container(
+                    color: $styles.colors.offWhite.withOpacity(.04),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
               ],
             ),
-          ),
-        ]),
+          );
+        },
       ),
     );
   }

@@ -5,6 +5,10 @@ class MyInputField extends StatelessWidget {
   final String hint;
   final TextEditingController? textEditingController;
   final Widget? widget;
+  final bool isPassword;
+  final bool? obscureText;
+  final Function()? onPressed;
+  final Icon? icon;
 
   final Color color;
 
@@ -12,9 +16,13 @@ class MyInputField extends StatelessWidget {
     Key? key,
     required this.title,
     required this.hint,
+    this.isPassword = false,
     this.textEditingController,
     required this.color,
     this.widget,
+    this.onPressed,
+    this.icon,
+    this.obscureText,
   }) : super(key: key);
 
   @override
@@ -43,6 +51,10 @@ class MyInputField extends StatelessWidget {
               children: [
                 Expanded(
                     child: TextFormField(
+                  keyboardType: isPassword
+                      ? TextInputType.visiblePassword
+                      : TextInputType.emailAddress,
+                  obscureText: obscureText ?? false,
                   readOnly: widget == null ? false : true,
                   autofocus: false,
                   controller: textEditingController,
@@ -52,6 +64,14 @@ class MyInputField extends StatelessWidget {
                     // color: const Color(0xFF827D89),
                   ),
                   decoration: InputDecoration(
+                      suffixIcon: isPassword
+                          ? IconButton(
+                              icon: icon!,
+                              onPressed: onPressed,
+                            )
+                          : Container(
+                              width: 1,
+                            ),
                       hintText: hint,
                       hintStyle: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,

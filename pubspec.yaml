@@ -54,7 +54,6 @@ dependencies:
   platform_info: ^4.0.0
   shared_preferences: ^2.1.2
   sized_context: ^1.0.0+4
-  spacer: ^1.0.0
   tuple: ^2.0.2
 
 dev_dependencies:
