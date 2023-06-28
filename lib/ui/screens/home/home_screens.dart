@@ -32,7 +32,15 @@ class _HomeScreensState extends State<HomeScreens> {
               },
               authenticated: (value) {},
               unauthenticated: (value) => appRoute.go(ScreenPaths.login),
-              loaded: (value) {});
+              loaded: (value) {},
+              error: (value) {
+                ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthenticationBloc>().add(
+                          AuthenticationEvent.getSignIn(repo.firebaseAuth));
+                    },
+                    child: const Text("Ok"));
+              });
         },
         builder: (context, state) {
           return Center(

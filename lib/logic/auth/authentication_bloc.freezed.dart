@@ -21,8 +21,9 @@ mixin _$AuthenticationEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,8 +31,9 @@ mixin _$AuthenticationEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,8 +41,9 @@ mixin _$AuthenticationEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -50,7 +53,7 @@ mixin _$AuthenticationEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,7 +62,7 @@ mixin _$AuthenticationEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +71,7 @@ mixin _$AuthenticationEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -133,8 +136,9 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) {
     return signInWithGoogle();
   }
@@ -145,8 +149,9 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) {
     return signInWithGoogle?.call();
   }
@@ -157,8 +162,9 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) {
     if (signInWithGoogle != null) {
@@ -174,7 +180,7 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) {
     return signInWithGoogle(this);
   }
@@ -186,7 +192,7 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) {
     return signInWithGoogle?.call(this);
   }
@@ -198,7 +204,7 @@ class _$_SignInWithGoogleEvent implements _SignInWithGoogleEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (signInWithGoogle != null) {
@@ -280,8 +286,9 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) {
     return getSignIn(firebaseAuth);
   }
@@ -292,8 +299,9 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) {
     return getSignIn?.call(firebaseAuth);
   }
@@ -304,8 +312,9 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) {
     if (getSignIn != null) {
@@ -321,7 +330,7 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) {
     return getSignIn(this);
   }
@@ -333,7 +342,7 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) {
     return getSignIn?.call(this);
   }
@@ -345,7 +354,7 @@ class _$_GetSignInEvent implements _GetSignInEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (getSignIn != null) {
@@ -406,8 +415,9 @@ class _$_SignOutEvent implements _SignOutEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) {
     return signOut();
   }
@@ -418,8 +428,9 @@ class _$_SignOutEvent implements _SignOutEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) {
     return signOut?.call();
   }
@@ -430,8 +441,9 @@ class _$_SignOutEvent implements _SignOutEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -447,7 +459,7 @@ class _$_SignOutEvent implements _SignOutEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) {
     return signOut(this);
   }
@@ -459,7 +471,7 @@ class _$_SignOutEvent implements _SignOutEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) {
     return signOut?.call(this);
   }
@@ -471,7 +483,7 @@ class _$_SignOutEvent implements _SignOutEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -490,6 +502,8 @@ abstract class _$$_SignInWithEmailEventCopyWith<$Res> {
   factory _$$_SignInWithEmailEventCopyWith(_$_SignInWithEmailEvent value,
           $Res Function(_$_SignInWithEmailEvent) then) =
       __$$_SignInWithEmailEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -499,26 +513,60 @@ class __$$_SignInWithEmailEventCopyWithImpl<$Res>
   __$$_SignInWithEmailEventCopyWithImpl(_$_SignInWithEmailEvent _value,
       $Res Function(_$_SignInWithEmailEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+  }) {
+    return _then(_$_SignInWithEmailEvent(
+      null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
-  const _$_SignInWithEmailEvent();
+  const _$_SignInWithEmailEvent(this.email, this.password);
+
+  @override
+  final String email;
+  @override
+  final String password;
 
   @override
   String toString() {
-    return 'AuthenticationEvent.signInWithEmail()';
+    return 'AuthenticationEvent.signInWithEmail(email: $email, password: $password)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SignInWithEmailEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$_SignInWithEmailEvent &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, email, password);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SignInWithEmailEventCopyWith<_$_SignInWithEmailEvent> get copyWith =>
+      __$$_SignInWithEmailEventCopyWithImpl<_$_SignInWithEmailEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -526,10 +574,11 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) {
-    return signInWithEmail();
+    return signInWithEmail(email, password);
   }
 
   @override
@@ -538,10 +587,11 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) {
-    return signInWithEmail?.call();
+    return signInWithEmail?.call(email, password);
   }
 
   @override
@@ -550,12 +600,13 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) {
     if (signInWithEmail != null) {
-      return signInWithEmail();
+      return signInWithEmail(email, password);
     }
     return orElse();
   }
@@ -567,7 +618,7 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) {
     return signInWithEmail(this);
   }
@@ -579,7 +630,7 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) {
     return signInWithEmail?.call(this);
   }
@@ -591,7 +642,7 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (signInWithEmail != null) {
@@ -602,43 +653,95 @@ class _$_SignInWithEmailEvent implements _SignInWithEmailEvent {
 }
 
 abstract class _SignInWithEmailEvent implements AuthenticationEvent {
-  const factory _SignInWithEmailEvent() = _$_SignInWithEmailEvent;
+  const factory _SignInWithEmailEvent(
+      final String email, final String password) = _$_SignInWithEmailEvent;
+
+  String get email;
+  String get password;
+  @JsonKey(ignore: true)
+  _$$_SignInWithEmailEventCopyWith<_$_SignInWithEmailEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$registerWithEmailEventCopyWith<$Res> {
-  factory _$$registerWithEmailEventCopyWith(_$registerWithEmailEvent value,
-          $Res Function(_$registerWithEmailEvent) then) =
-      __$$registerWithEmailEventCopyWithImpl<$Res>;
+abstract class _$$_RegisterWithEmailEventCopyWith<$Res> {
+  factory _$$_RegisterWithEmailEventCopyWith(_$_RegisterWithEmailEvent value,
+          $Res Function(_$_RegisterWithEmailEvent) then) =
+      __$$_RegisterWithEmailEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String email, String password, String fullName});
 }
 
 /// @nodoc
-class __$$registerWithEmailEventCopyWithImpl<$Res>
-    extends _$AuthenticationEventCopyWithImpl<$Res, _$registerWithEmailEvent>
-    implements _$$registerWithEmailEventCopyWith<$Res> {
-  __$$registerWithEmailEventCopyWithImpl(_$registerWithEmailEvent _value,
-      $Res Function(_$registerWithEmailEvent) _then)
+class __$$_RegisterWithEmailEventCopyWithImpl<$Res>
+    extends _$AuthenticationEventCopyWithImpl<$Res, _$_RegisterWithEmailEvent>
+    implements _$$_RegisterWithEmailEventCopyWith<$Res> {
+  __$$_RegisterWithEmailEventCopyWithImpl(_$_RegisterWithEmailEvent _value,
+      $Res Function(_$_RegisterWithEmailEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+    Object? fullName = null,
+  }) {
+    return _then(_$_RegisterWithEmailEvent(
+      null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$registerWithEmailEvent implements registerWithEmailEvent {
-  const _$registerWithEmailEvent();
+class _$_RegisterWithEmailEvent implements _RegisterWithEmailEvent {
+  const _$_RegisterWithEmailEvent(this.email, this.password, this.fullName);
+
+  @override
+  final String email;
+  @override
+  final String password;
+  @override
+  final String fullName;
 
   @override
   String toString() {
-    return 'AuthenticationEvent.registerWithEmail()';
+    return 'AuthenticationEvent.registerWithEmail(email: $email, password: $password, fullName: $fullName)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$registerWithEmailEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$_RegisterWithEmailEvent &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, email, password, fullName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RegisterWithEmailEventCopyWith<_$_RegisterWithEmailEvent> get copyWith =>
+      __$$_RegisterWithEmailEventCopyWithImpl<_$_RegisterWithEmailEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -646,10 +749,11 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     required TResult Function() signInWithGoogle,
     required TResult Function(FirebaseAuth firebaseAuth) getSignIn,
     required TResult Function() signOut,
-    required TResult Function() signInWithEmail,
-    required TResult Function() registerWithEmail,
+    required TResult Function(String email, String password) signInWithEmail,
+    required TResult Function(String email, String password, String fullName)
+        registerWithEmail,
   }) {
-    return registerWithEmail();
+    return registerWithEmail(email, password, fullName);
   }
 
   @override
@@ -658,10 +762,11 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     TResult? Function()? signInWithGoogle,
     TResult? Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult? Function()? signOut,
-    TResult? Function()? signInWithEmail,
-    TResult? Function()? registerWithEmail,
+    TResult? Function(String email, String password)? signInWithEmail,
+    TResult? Function(String email, String password, String fullName)?
+        registerWithEmail,
   }) {
-    return registerWithEmail?.call();
+    return registerWithEmail?.call(email, password, fullName);
   }
 
   @override
@@ -670,12 +775,13 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     TResult Function()? signInWithGoogle,
     TResult Function(FirebaseAuth firebaseAuth)? getSignIn,
     TResult Function()? signOut,
-    TResult Function()? signInWithEmail,
-    TResult Function()? registerWithEmail,
+    TResult Function(String email, String password)? signInWithEmail,
+    TResult Function(String email, String password, String fullName)?
+        registerWithEmail,
     required TResult orElse(),
   }) {
     if (registerWithEmail != null) {
-      return registerWithEmail();
+      return registerWithEmail(email, password, fullName);
     }
     return orElse();
   }
@@ -687,7 +793,7 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     required TResult Function(_GetSignInEvent value) getSignIn,
     required TResult Function(_SignOutEvent value) signOut,
     required TResult Function(_SignInWithEmailEvent value) signInWithEmail,
-    required TResult Function(registerWithEmailEvent value) registerWithEmail,
+    required TResult Function(_RegisterWithEmailEvent value) registerWithEmail,
   }) {
     return registerWithEmail(this);
   }
@@ -699,7 +805,7 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     TResult? Function(_GetSignInEvent value)? getSignIn,
     TResult? Function(_SignOutEvent value)? signOut,
     TResult? Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult? Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult? Function(_RegisterWithEmailEvent value)? registerWithEmail,
   }) {
     return registerWithEmail?.call(this);
   }
@@ -711,7 +817,7 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
     TResult Function(_GetSignInEvent value)? getSignIn,
     TResult Function(_SignOutEvent value)? signOut,
     TResult Function(_SignInWithEmailEvent value)? signInWithEmail,
-    TResult Function(registerWithEmailEvent value)? registerWithEmail,
+    TResult Function(_RegisterWithEmailEvent value)? registerWithEmail,
     required TResult orElse(),
   }) {
     if (registerWithEmail != null) {
@@ -721,8 +827,17 @@ class _$registerWithEmailEvent implements registerWithEmailEvent {
   }
 }
 
-abstract class registerWithEmailEvent implements AuthenticationEvent {
-  const factory registerWithEmailEvent() = _$registerWithEmailEvent;
+abstract class _RegisterWithEmailEvent implements AuthenticationEvent {
+  const factory _RegisterWithEmailEvent(
+          final String email, final String password, final String fullName) =
+      _$_RegisterWithEmailEvent;
+
+  String get email;
+  String get password;
+  String get fullName;
+  @JsonKey(ignore: true)
+  _$$_RegisterWithEmailEventCopyWith<_$_RegisterWithEmailEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -732,6 +847,7 @@ mixin _$AuthenticationState {
     required TResult Function() intial,
     required TResult Function() authenticated,
     required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -740,6 +856,7 @@ mixin _$AuthenticationState {
     TResult? Function()? intial,
     TResult? Function()? authenticated,
     TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
     TResult? Function()? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -748,6 +865,7 @@ mixin _$AuthenticationState {
     TResult Function()? intial,
     TResult Function()? authenticated,
     TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) =>
@@ -757,6 +875,7 @@ mixin _$AuthenticationState {
     required TResult Function(_Initial value) intial,
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
     required TResult Function(_Unauthenticated value) unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -765,6 +884,7 @@ mixin _$AuthenticationState {
     TResult? Function(_Initial value)? intial,
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
     TResult? Function(_Unauthenticated value)? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
@@ -773,6 +893,7 @@ mixin _$AuthenticationState {
     TResult Function(_Initial value)? intial,
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
     TResult Function(_Unauthenticated value)? unauthenticated,
     required TResult orElse(),
   }) =>
@@ -837,6 +958,7 @@ class _$_Initial implements _Initial {
     required TResult Function() intial,
     required TResult Function() authenticated,
     required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
     return intial();
@@ -848,6 +970,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? intial,
     TResult? Function()? authenticated,
     TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
     TResult? Function()? unauthenticated,
   }) {
     return intial?.call();
@@ -859,6 +982,7 @@ class _$_Initial implements _Initial {
     TResult Function()? intial,
     TResult Function()? authenticated,
     TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -874,6 +998,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) intial,
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
     required TResult Function(_Unauthenticated value) unauthenticated,
   }) {
     return intial(this);
@@ -885,6 +1010,7 @@ class _$_Initial implements _Initial {
     TResult? Function(_Initial value)? intial,
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
     TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return intial?.call(this);
@@ -896,6 +1022,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? intial,
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
     TResult Function(_Unauthenticated value)? unauthenticated,
     required TResult orElse(),
   }) {
@@ -951,6 +1078,7 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function() intial,
     required TResult Function() authenticated,
     required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
     return authenticated();
@@ -962,6 +1090,7 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function()? intial,
     TResult? Function()? authenticated,
     TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
     TResult? Function()? unauthenticated,
   }) {
     return authenticated?.call();
@@ -973,6 +1102,7 @@ class _$_Authenticated implements _Authenticated {
     TResult Function()? intial,
     TResult Function()? authenticated,
     TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -988,6 +1118,7 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function(_Initial value) intial,
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
     required TResult Function(_Unauthenticated value) unauthenticated,
   }) {
     return authenticated(this);
@@ -999,6 +1130,7 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function(_Initial value)? intial,
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
     TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return authenticated?.call(this);
@@ -1010,6 +1142,7 @@ class _$_Authenticated implements _Authenticated {
     TResult Function(_Initial value)? intial,
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
     TResult Function(_Unauthenticated value)? unauthenticated,
     required TResult orElse(),
   }) {
@@ -1091,6 +1224,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function() intial,
     required TResult Function() authenticated,
     required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
     return loaded(isLoading);
@@ -1102,6 +1236,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function()? intial,
     TResult? Function()? authenticated,
     TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
     TResult? Function()? unauthenticated,
   }) {
     return loaded?.call(isLoading);
@@ -1113,6 +1248,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? intial,
     TResult Function()? authenticated,
     TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -1128,6 +1264,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Initial value) intial,
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
     required TResult Function(_Unauthenticated value) unauthenticated,
   }) {
     return loaded(this);
@@ -1139,6 +1276,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Initial value)? intial,
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
     TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return loaded?.call(this);
@@ -1150,6 +1288,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Initial value)? intial,
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
     TResult Function(_Unauthenticated value)? unauthenticated,
     required TResult orElse(),
   }) {
@@ -1166,6 +1305,157 @@ abstract class _Loaded implements AuthenticationState {
   bool get isLoading;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ErrorStateCopyWith<$Res> {
+  factory _$$_ErrorStateCopyWith(
+          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
+      __$$_ErrorStateCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_ErrorStateCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$_ErrorState>
+    implements _$$_ErrorStateCopyWith<$Res> {
+  __$$_ErrorStateCopyWithImpl(
+      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_ErrorState(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ErrorState implements _ErrorState {
+  const _$_ErrorState(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'AuthenticationState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ErrorState &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() intial,
+    required TResult Function() authenticated,
+    required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
+    required TResult Function() unauthenticated,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? intial,
+    TResult? Function()? authenticated,
+    TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function()? unauthenticated,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? intial,
+    TResult Function()? authenticated,
+    TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
+    TResult Function()? unauthenticated,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) intial,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
+    required TResult Function(_Unauthenticated value) unauthenticated,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? intial,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? intial,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
+    TResult Function(_Unauthenticated value)? unauthenticated,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ErrorState implements AuthenticationState {
+  const factory _ErrorState(final String message) = _$_ErrorState;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1210,6 +1500,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     required TResult Function() intial,
     required TResult Function() authenticated,
     required TResult Function(bool isLoading) loaded,
+    required TResult Function(String message) error,
     required TResult Function() unauthenticated,
   }) {
     return unauthenticated();
@@ -1221,6 +1512,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult? Function()? intial,
     TResult? Function()? authenticated,
     TResult? Function(bool isLoading)? loaded,
+    TResult? Function(String message)? error,
     TResult? Function()? unauthenticated,
   }) {
     return unauthenticated?.call();
@@ -1232,6 +1524,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult Function()? intial,
     TResult Function()? authenticated,
     TResult Function(bool isLoading)? loaded,
+    TResult Function(String message)? error,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -1247,6 +1540,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     required TResult Function(_Initial value) intial,
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_ErrorState value) error,
     required TResult Function(_Unauthenticated value) unauthenticated,
   }) {
     return unauthenticated(this);
@@ -1258,6 +1552,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult? Function(_Initial value)? intial,
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_ErrorState value)? error,
     TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return unauthenticated?.call(this);
@@ -1269,6 +1564,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult Function(_Initial value)? intial,
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_ErrorState value)? error,
     TResult Function(_Unauthenticated value)? unauthenticated,
     required TResult orElse(),
   }) {

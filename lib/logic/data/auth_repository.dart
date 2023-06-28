@@ -72,8 +72,11 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   @override
   Future<String> registerWithEmail(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       User? user = userCredential.user;
       return 'Registrasi berhasil! User ID: ${user?.uid}';
     } on FirebaseAuthException catch (e) {

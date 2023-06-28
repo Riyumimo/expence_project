@@ -47,7 +47,26 @@ class _MyHomePageState extends State<LoginScreens> {
                 isLoading = loaded.isLoading;
               });
             },
-            unauthenticated: (unauthenticated) {});
+            unauthenticated: (unauthenticated) {},
+            error: (value) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext build) {
+                    return AlertDialog(
+                      title: const Text("Error Message"),
+                      content: Text(value.message),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              context.read<AuthenticationBloc>().add(
+                                  AuthenticationEvent.getSignIn(
+                                      repo.firebaseAuth));
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    );
+                  });
+            });
       },
       builder: (context, state) {
         print(isLoading);
@@ -142,8 +161,7 @@ class _MyHomePageState extends State<LoginScreens> {
                                   onPressed: () async {
                                     // GET google sign in here
                                     context.read<AuthenticationBloc>().add(
-                                        const AuthenticationEvent
-                                            .signInWithGoogle());
+                                        AuthenticationEvent.signInWithGoogle());
                                   },
                                 ),
                                 const Gap(24),
