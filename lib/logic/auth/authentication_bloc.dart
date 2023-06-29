@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:either_dart/either.dart';
 import 'package:expence_project/logic/common/validate_data.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';

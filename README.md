@@ -6,8 +6,9 @@ Uang Track is an application that is used to record daily financial expenses and
 <img src="screenshot/Frame.png" width="100%">
 
 ## Future Features
-* Register, login, with email
-* SignIn With Google Account
+
+* Register, login, with email ✅
+* SignIn With Google Account ✅
 * Add, edit, and delete transaction data
 * Add, edit, and delete category data
 * Add, edit, and delete account data
