@@ -1,16 +1,16 @@
-# expence_project
+# Uang Track
 
-A new Flutter project.
+Uang Track is an application that is used to record daily financial expenses and income. This application is a personal project of Ryumimo A.K.A Ilham Suherman.
 
-## Getting Started
+## Screenshot
+<img src="screenshot/Frame.png" width="100%">
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Future Features
+* Register, login, with email
+* SignIn With Google Account
+* Add, edit, and delete transaction data
+* Add, edit, and delete category data
+* Add, edit, and delete account data
+* Add, edit, and delete budget data
+* Add, edit, and delete reminder data
+* Add, edit, and delete debt data
