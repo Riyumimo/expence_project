@@ -27,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     BlocProvider.of<AuthenticationBloc>(context)
         .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
-
     super.initState();
   }
 
@@ -37,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
+          print(state);
           state.map(
               intial: (intial) {},
               authenticated: (value) {
@@ -53,14 +53,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     context: context,
                     builder: (BuildContext build) {
                       return AlertDialog(
-                        title: const Text("Error Message"),
+                        title: const Text("Alert"),
                         content: Text(value.message),
                         actions: [
                           ElevatedButton(
                               onPressed: () {
-                                context.read<AuthenticationBloc>().add(
-                                    AuthenticationEvent.getSignIn(
-                                        repo.firebaseAuth));
+                                // context.read<AuthenticationBloc>().add(
+                                //     AuthenticationEvent.getSignIn(
+                                //         repo.firebaseAuth));
+                                if (value.message == 'Register Succsess') {
+                                  appRoute.go(ScreenPaths.login);
+                                  appRoute.pop();
+                                } else {
+                                  appRoute.pop();
+                                }
                               },
                               child: const Text("Ok"))
                         ],
@@ -75,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ListView(children: [
                   MyBackButton(
                     onTap: () {
-                      appRoute.pop();
+                      appRoute.go(ScreenPaths.login);
                     },
                   ),
                   Padding(
@@ -151,7 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // REGISTER BUTTON
                         MyButton(
                           title: "Register",
-                          onPressed: () async {
+                          onPressed: () {
+                            print(passwordController.text);
+                            print(
+                                'this retype ${retypePasswordController.text}');
                             if (passwordController.text ==
                                 retypePasswordController.text) {
                               context.read<AuthenticationBloc>().add(
@@ -161,12 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       fullNameController.text));
                               print('cliked');
                             } else {
-                              await showDialog(
-                                context: context,
-                                builder: (context) => SnackBar(
-                                    content: Text(
-                                        "Retype password tidak sama dengan password")),
-                              );
+                              print('password not match');
                             }
                           },
                           color: $styles.colors.accent1,

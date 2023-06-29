@@ -18,7 +18,7 @@ class MyBackButton extends StatelessWidget {
           children: [
             InkWell(
               borderRadius: BorderRadius.circular(12),
-              onTap: () {},
+              onTap: onTap,
               child: Container(
                 height: 22,
                 child: Row(

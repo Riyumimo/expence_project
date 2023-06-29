@@ -190,7 +190,7 @@ class _MyHomePageState extends State<LoginScreens> {
                                     child: MyTextButton(
                                   title: "Don't have account? Register here",
                                   onPressed: () {
-                                    appRoute.push(ScreenPaths.register);
+                                    appRoute.go(ScreenPaths.register);
                                   },
                                 ))
                               ]),

@@ -1,3 +1,5 @@
+import 'package:either_dart/either.dart';
+import 'package:expence_project/logic/common/encrypt.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuple/tuple.dart';
@@ -5,7 +7,7 @@ import 'package:tuple/tuple.dart';
 abstract class AuthenticationRepository {
   Future<Tuple2<UserCredential?, bool>> signInWithGoogle();
   Future<void> signOut();
-  Future<Tuple2<UserCredential?, bool>> signInWithEmail(
+  Future<Either<String, Tuple2<UserCredential?, bool>>> signInWithEmail(
       String email, String password);
   Future<String> registerWithEmail(String email, String password);
 }
@@ -50,24 +52,26 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<Tuple2<UserCredential?, bool>> signInWithEmail(
+  Future<Either<String, Tuple2<UserCredential?, bool>>> signInWithEmail(
       String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       print(userCredential.user?.email);
-
-      return Tuple2(userCredential, true);
+      return Right(Tuple2(userCredential, true));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('User dengan email tersebut tidak ditemukan.');
+        return const Left('User dengan email tersebut tidak ditemukan.');
       } else if (e.code == 'wrong-password') {
         print('Password yang dimasukkan salah.');
+        return const Left('Password yang dimasukkan salah.');
       } else {
         print('Terjadi kesalahan: ${e.message}');
+        return Left('Terjadi kesalahan: ${e.message}');
       }
     }
-    return const Tuple2(null, false);
+    // return const Tuple2(null, false);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:either_dart/either.dart';
 import 'package:expence_project/logic/common/validate_data.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +33,7 @@ class AuthenticationBloc
             if (event.firebaseAuth.currentUser != null) {
               print(event.firebaseAuth.currentUser);
 
-              emit(const _Authenticated());
+              // emit(const _Authenticated());
             }
           });
 
@@ -62,24 +63,30 @@ class AuthenticationBloc
           // Sign in with Email
           on<_SignInWithEmailEvent>((event, emit) async {
             emit(const _Loaded(isLoading: true));
+            String encryptPasswod = encryptPassword(event.password);
             final result =
-                await repo.signInWithEmail(event.email, event.password);
-            if (result.item1 != null) {
+                await repo.signInWithEmail(event.email, encryptPasswod);
+            if (result.right.item1 != null) {
               await SharedPreferences.getInstance().then(
                 (value) {
-                  value.setString('auth', result.item1!.user!.uid);
+                  value.setString('auth', result.right.item1!.user!.uid);
                 },
               );
-              print('login succsess');
-              emit(const _Loaded(isLoading: false));
-              emit(const _Authenticated());
-            } else {
-              emit(_Loaded(isLoading: result.item2));
             }
+            result.fold((left) {
+              emit(_ErrorState(left));
+              emit(const _Loaded(isLoading: false));
+            }, (right) {
+              emit(const _Authenticated());
+              print(' wtih email login succsess');
+              emit(_Loaded(isLoading: right.item2));
+            });
           });
 
           // Register With Email
           on<_RegisterWithEmailEvent>((event, emit) async {
+            print('register');
+            emit(const _Loaded(isLoading: true));
             final validate = ValidateData();
             String? email = validate.validateEmail(event.email);
             String? pass = validate.validatePassword(event.password);
@@ -87,12 +94,15 @@ class AuthenticationBloc
             //validasi state yang akan di keluarkan berdasarkan if statement
             if (email != null) {
               emit(_$_ErrorState(email));
+              emit(const _Loaded(isLoading: true));
             } else if (pass != null) {
               emit(_$_ErrorState(pass));
+              emit(const _Loaded(isLoading: true));
             } else {
               String encryptPasswod = encryptPassword(event.password);
               await repo.registerWithEmail(event.email, encryptPasswod);
-              print("Register Succsess ");
+              emit(const _Loaded(isLoading: true));
+              emit(const _ErrorState('Register Succsess'));
             }
           });
 
