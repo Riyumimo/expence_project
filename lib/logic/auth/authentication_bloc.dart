@@ -65,20 +65,20 @@ class AuthenticationBloc
             String encryptPasswod = encryptPassword(event.password);
             final result =
                 await repo.signInWithEmail(event.email, encryptPasswod);
-            if (result.right.item1 != null) {
-              await SharedPreferences.getInstance().then(
-                (value) {
-                  value.setString('auth', result.right.item1!.user!.uid);
-                },
-              );
-            }
-            result.fold((left) {
-              emit(_ErrorState(left));
+            final sharedpref = result.fold((left) {
               emit(const _Loaded(isLoading: false));
+              emit(_ErrorState(left));
             }, (right) {
               emit(const _Authenticated());
               print(' wtih email login succsess');
               emit(_Loaded(isLoading: right.item2));
+              if (result.right.item1 != null) {
+                SharedPreferences.getInstance().then(
+                  (value) {
+                    value.setString('auth', result.right.item1!.user!.uid);
+                  },
+                );
+              }
             });
           });
 
@@ -102,6 +102,7 @@ class AuthenticationBloc
               await repo.registerWithEmail(event.email, encryptPasswod);
               emit(const _Loaded(isLoading: true));
               emit(const _ErrorState('Register Succsess'));
+              emit(_Unauthenticated());
             }
           });
 

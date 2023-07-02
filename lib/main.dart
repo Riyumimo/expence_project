@@ -1,10 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/app_logic.dart';
+import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/styles/styles.dart';
 import 'package:expence_project/ui/app_scafold.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 
@@ -32,15 +34,52 @@ class MyApp extends StatelessWidget with GetItMixin {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationProvider: appRoute.routeInformationProvider,
-      routeInformationParser: appRoute.routeInformationParser,
-      // showSemanticsDebugger: true,
-      debugShowCheckedModeBanner: false,
-      routerDelegate: appRoute.routerDelegate,
-      theme: ThemeData(
-        fontFamily: $styles.text.body.fontFamily,
-        useMaterial3: true,
+    return BlocProvider(
+      create: (context) => AuthenticationBloc(repo, connectivity)
+        ..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          print(state);
+          state.map(
+              intial: (intial) {},
+              authenticated: (value) {
+                appRoute.go(ScreenPaths.home);
+              },
+              loaded: (loaded) {},
+              unauthenticated: (unauthenticated) {
+                appRoute.go(ScreenPaths.login);
+              },
+              error: (value) {
+                // showDialog(
+                //     context: context,
+                //     builder: (BuildContext build) {
+                //       return AlertDialog(
+                //         title: const Text("Error Message"),
+                //         content: Text(value.message),
+                //         actions: [
+                //           ElevatedButton(
+                //               onPressed: () {
+                //                 context.read<AuthenticationBloc>().add(
+                //                     AuthenticationEvent.getSignIn(
+                //                         repo.firebaseAuth));
+                //               },
+                //               child: const Text("Ok"))
+                //         ],
+                //       );
+                //     });
+              });
+        },
+        child: MaterialApp.router(
+          routeInformationProvider: appRoute.routeInformationProvider,
+          routeInformationParser: appRoute.routeInformationParser,
+          // showSemanticsDebugger: true,
+          debugShowCheckedModeBanner: false,
+          routerDelegate: appRoute.routerDelegate,
+          theme: ThemeData(
+            fontFamily: $styles.text.body.fontFamily,
+            useMaterial3: true,
+          ),
+        ),
       ),
     );
   }

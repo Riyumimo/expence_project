@@ -23,37 +23,13 @@ class _HomeScreensState extends State<HomeScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-          print(state);
-          state.map(
-              intial: (value) {
-                return;
-              },
-              authenticated: (value) {},
-              unauthenticated: (value) => appRoute.go(ScreenPaths.login),
-              loaded: (value) {},
-              error: (value) {
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<AuthenticationBloc>().add(
-                          AuthenticationEvent.getSignIn(repo.firebaseAuth));
-                    },
-                    child: const Text("Ok"));
-              });
+        body: Center(
+      child: ElevatedButton(
+        onPressed: () {
+          context.read<AuthenticationBloc>().add(AuthenticationEvent.signOut());
         },
-        builder: (context, state) {
-          return Center(
-              child: ElevatedButton(
-            onPressed: () {
-              context
-                  .read<AuthenticationBloc>()
-                  .add(AuthenticationEvent.signOut());
-            },
-            child: Text("test"),
-          ));
-        },
+        child: Text("test"),
       ),
-    );
+    ));
   }
 }

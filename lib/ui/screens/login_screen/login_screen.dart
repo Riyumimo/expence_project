@@ -22,13 +22,6 @@ class _MyHomePageState extends State<LoginScreens> {
   final TextEditingController passwordController = TextEditingController();
   bool _obscureTextPassword = true;
 
-  @override
-  void initState() {
-    BlocProvider.of<AuthenticationBloc>(context)
-        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
-    super.initState();
-  }
-
   void load() {
     setState(() {
       isLoading = true;
@@ -41,9 +34,7 @@ class _MyHomePageState extends State<LoginScreens> {
       listener: (context, state) {
         state.map(
             intial: (intial) {},
-            authenticated: (value) {
-              appRoute.go(ScreenPaths.home);
-            },
+            authenticated: (value) {},
             loaded: (loaded) {
               setState(() {
                 isLoading = loaded.isLoading;
@@ -54,24 +45,25 @@ class _MyHomePageState extends State<LoginScreens> {
               showDialog(
                   context: context,
                   builder: (BuildContext build) {
-                    return AlertDialog(
-                      title: const Text("Error Message"),
-                      content: Text(value.message),
-                      actions: [
-                        ElevatedButton(
-                            onPressed: () {
-                              context.read<AuthenticationBloc>().add(
-                                  AuthenticationEvent.getSignIn(
-                                      repo.firebaseAuth));
-                            },
-                            child: const Text("Ok"))
-                      ],
-                    );
+                    return CustomDialog();
+                    // return AlertDialog(
+                    //   title: const Text("Error Message"),
+                    //   content: Text(value.message),
+                    //   actions: [
+                    //     ElevatedButton(
+                    //         onPressed: () {
+                    //           context.read<AuthenticationBloc>().add(
+                    //               AuthenticationEvent.getSignIn(
+                    //                   repo.firebaseAuth));
+                    //         },
+                    //         child: const Text("Ok"))
+                    //   ],
+                    // );
                   });
             });
       },
       builder: (context, state) {
-        print(isLoading);
+        print('isLoading : $isLoading');
         return Scaffold(
           // backgroundColor: Color(0xFFE5E5E5),
           appBar: AppBar(
@@ -212,5 +204,74 @@ class _MyHomePageState extends State<LoginScreens> {
         );
       },
     );
+  }
+}
+
+class CustomDialog extends StatelessWidget {
+  const CustomDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+            // padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                'Testing',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text('content'),
+              SizedBox(height: 24.0),
+              Container(
+                width: double.infinity,
+                // padding: EdgeInsets.only(bottom: 5),
+                decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      color: Colors.black,
+                      height: 50,
+                    ),
+                    Divider(
+                      color: Colors.white,
+                      height: 1,
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        child: SizedBox(
+                          // color: Colors.red,
+                          height: 50,
+                          child: Center(child: Text('cancel')),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ])));
   }
 }

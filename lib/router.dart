@@ -47,10 +47,7 @@ class AppRoute extends GoRoute {
           routes: routes,
           pageBuilder: (context, state) {
             final pageContent = Scaffold(
-              body: BlocProvider(
-                create: (context) => AuthenticationBloc(repo, connectivity),
-                child: builder(state),
-              ),
+              body: builder(state),
               resizeToAvoidBottomInset: false,
             );
             if (useFade) {

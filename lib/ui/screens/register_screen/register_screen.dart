@@ -23,12 +23,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController retypePasswordController =
       TextEditingController();
-  @override
-  void initState() {
-    BlocProvider.of<AuthenticationBloc>(context)
-        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
