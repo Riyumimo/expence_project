@@ -40,7 +40,12 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         ),
         AppRoute(ScreenPaths.home, (s) => const HomeScreens()),
         AppRoute(ScreenPaths.register, (s) => const RegisterScreen()),
-        AppRoute(ScreenPaths.dashboard, (s) => DashboardScreen()),
+        AppRoute(
+            ScreenPaths.dashboard,
+            (s) => DashboardScreen(
+                  initialTabIndex: 1,
+                  isSlide: s.extra is bool ?? false,
+                )),
         AppRoute('/page0', (s) => const Page1()),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),

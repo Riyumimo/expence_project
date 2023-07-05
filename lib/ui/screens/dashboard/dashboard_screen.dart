@@ -2,8 +2,6 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/ui/common/alert_dialog.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/transaction/page1.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../../commons_libs.dart';
 import '../../../main.dart';
@@ -12,8 +10,10 @@ import '../page1 copy.dart';
 
 @immutable
 class DashboardScreen extends StatefulWidget {
-  int initialTabIndex;
-  DashboardScreen({super.key, this.initialTabIndex = 0});
+  final int initialTabIndex;
+  final bool isSlide;
+  const DashboardScreen(
+      {super.key, this.initialTabIndex = 0, this.isSlide = false});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -21,14 +21,33 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
-  int initialTabIndex = 0;
-  final _pageController = PageController();
+  int? initialTabIndex;
+  bool? _islide;
+  final PageController _pageController = PageController();
   late TabController tabController;
   @override
   void initState() {
     initialTabIndex = widget.initialTabIndex;
+    _islide = widget.isSlide;
     tabController = TabController(length: 5, vsync: this);
+    if (initialTabIndex! >= 2) {
+      final tabIndex = initialTabIndex!;
+      tabController.animateTo(
+        tabIndex + 1,
+      );
+    } else {
+      tabController.animateTo(
+        initialTabIndex!,
+      );
+    }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController;
+    _pageController;
+    super.dispose();
   }
 
   final List<Widget> _buildScreens = [
@@ -41,26 +60,34 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     print('initial : $initialTabIndex');
+    print(_islide);
 
     return Scaffold(
-      body: PageView(
+      body: PageView.builder(
+        physics: _islide! ? NeverScrollableScrollPhysics() : ScrollPhysics(),
+        itemCount: _buildScreens.length,
+        itemBuilder: (_, index) {
+          index = initialTabIndex!;
+          return _buildScreens[index];
+        },
         controller: _pageController,
         onPageChanged: (index) {
+          print('on index : $index');
+          initialTabIndex = index;
           setState(() {
-            initialTabIndex = index;
             if (index >= 2) {
-              tabController.animateTo(initialTabIndex + 1);
+              tabController.animateTo(initialTabIndex! + 1);
             } else {
-              tabController.animateTo(initialTabIndex);
+              tabController.animateTo(initialTabIndex!);
             }
           });
         },
-        children: _buildScreens,
+        // children: _buildScreens,
       ),
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.fixedCircle,
         // top: 1,
-        // curveSize: -100,
+        curveSize: -100,
         height: 70,
         initialActiveIndex: widget.initialTabIndex,
         color: $styles.colors.greyMedium,
@@ -79,12 +106,14 @@ class _DashboardScreenState extends State<DashboardScreen>
               title: 'Home'),
           const TabItem(icon: Icons.compare_arrows_rounded, title: 'Discovery'),
           TabItem<FloatingActionButton>(
-              icon: FloatingActionButton(
+              icon: FloatingActionButton.small(
+                // label: Icon(Icons.add),
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (builder) => const AlertDialog1());
                 },
+                elevation: 0,
                 child: const Icon(Icons.add),
               ),
               title: 'Add'),
@@ -96,48 +125,46 @@ class _DashboardScreenState extends State<DashboardScreen>
         //   return true;
         // },
         onTap: (i) {
+          _islide = false;
           print('ontap :$i');
           switch (i) {
             case 0:
               setState(() {
                 initialTabIndex = i;
-                _pageController.animateToPage(initialTabIndex,
-                    duration: Duration(microseconds: 500),
+                _pageController.animateToPage(initialTabIndex!,
+                    duration: const Duration(milliseconds: 100),
                     curve: Curves.linear);
-
-                print('ke page 1');
               });
               break;
             case 1:
               setState(() {
                 initialTabIndex = i;
-                _pageController.animateToPage(initialTabIndex,
-                    duration: Duration(microseconds: 500),
+                _pageController.animateToPage(initialTabIndex!,
+                    duration: const Duration(milliseconds: 100),
                     curve: Curves.linear);
-                print('ke page 1');
               });
               break;
             case 2:
-              setState(() {
-                initialTabIndex;
-                _pageController.animateToPage(initialTabIndex,
-                    duration: Duration(microseconds: 500),
-                    curve: Curves.linear);
-              });
+            // setState(() {
+            //   initialTabIndex = i;
+            //   _pageController.animateToPage(initialTabIndex!,
+            //       duration: const Duration(milliseconds: 100),
+            //       curve: Curves.linear);
+            // });
 
             case 3:
               setState(() {
                 initialTabIndex = i - 1;
-                _pageController.animateToPage(initialTabIndex,
-                    duration: Duration(microseconds: 500),
+                _pageController.animateToPage(initialTabIndex!,
+                    duration: const Duration(milliseconds: 100),
                     curve: Curves.linear);
               });
 
             case 4:
               setState(() {
                 initialTabIndex = i - 1;
-                _pageController.animateToPage(initialTabIndex,
-                    duration: Duration(microseconds: 500),
+                _pageController.animateToPage(initialTabIndex!,
+                    duration: const Duration(milliseconds: 100),
                     curve: Curves.linear);
               });
             default:

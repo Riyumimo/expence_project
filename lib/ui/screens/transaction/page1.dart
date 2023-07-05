@@ -11,7 +11,7 @@ class Page1 extends StatelessWidget {
         body: Center(
       child: ElevatedButton(
           onPressed: () {
-            appRoute.push('/page2');
+            appRoute.push(ScreenPaths.dashboard, extra: true);
           },
           child: Text('page 2')),
     ));
