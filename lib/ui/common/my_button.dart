@@ -22,7 +22,7 @@ class MyButton extends StatelessWidget {
         height: 54,
         decoration: BoxDecoration(
             color: isTransparant ? $styles.colors.offWhite : color,
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(15),
             border: Border.all(
                 width: isTransparant ? .5 : 0,
                 color: isTransparant ? $styles.colors.greyStrong : color!)),

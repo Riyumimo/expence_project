@@ -33,42 +33,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           print(state);
           state.map(
               intial: (intial) {},
-              authenticated: (value) {
-                appRoute.go(ScreenPaths.home);
-              },
+              authenticated: (value) {},
+              unauthenticated: (unauthenticated) {},
+              error: (value) {},
               loaded: (loaded) {
                 setState(() {
                   isLoading = loaded.isLoading;
                 });
-              },
-              unauthenticated: (unauthenticated) {},
-              error: (value) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext build) {
-                      return AlertDialog(
-                        title: const Text("Alert"),
-                        content: Text(value.message),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // context.read<AuthenticationBloc>().add(
-                                //     AuthenticationEvent.getSignIn(
-                                //         repo.firebaseAuth));
-                                if (value.message == 'Register Succsess') {
-                                  appRoute.go(ScreenPaths.login);
-                                  appRoute.pop();
-                                } else {
-                                  appRoute.pop();
-                                }
-                              },
-                              child: const Text("Ok"))
-                        ],
-                      );
-                    });
               });
         },
         builder: (context, state) {
+          print('IsLoading : $isLoading');
           return SafeArea(
             child: Stack(
               children: [
@@ -162,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       emailController.text,
                                       passwordController.text,
                                       fullNameController.text));
+
                               print('cliked');
                             } else {
                               print('password not match');

@@ -8,7 +8,7 @@ class AppColors {
   final Color caption = const Color(0xFF7D7873);
   final Color body = const Color(0xFF514F4D);
   final Color greyStrong = const Color(0xFF272625);
-  final Color greyMedium = const Color(0xFF9D9995);
+  final Color greyMedium = const Color(0xFFC6C6C6);
   final Color white = Colors.white;
   final Color textWhite = Color(0xFFC8C5CB);
   final Color black = const Color(0xFF1E1B18);

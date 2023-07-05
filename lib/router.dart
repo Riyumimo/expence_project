@@ -1,21 +1,26 @@
-import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
+import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
+import 'package:expence_project/ui/screens/page1%20copy%202.dart';
+import 'package:expence_project/ui/screens/page1%20copy.dart';
+import 'package:expence_project/ui/screens/transaction/page1.dart';
 import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:expence_project/ui/screens/verification_screens/verifications_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import 'commons_libs.dart';
+import 'logic/auth/authentication_bloc.dart';
 
 class ScreenPaths {
   static String splash = '/';
   static String intro = '/welcome';
   static String login = '/login';
   static String register = '/register';
+  static String verification = '/verification';
   static String home = '/home';
+  static String dashboard = '/dashboard';
 }
 
 final appRoute = GoRouter(redirect: _handleRedirect, routes: [
@@ -34,7 +39,11 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
           (s) => const LoginScreens(),
         ),
         AppRoute(ScreenPaths.home, (s) => const HomeScreens()),
-        AppRoute(ScreenPaths.register, (s) => const RegisterScreen())
+        AppRoute(ScreenPaths.register, (s) => const RegisterScreen()),
+        AppRoute(ScreenPaths.dashboard, (s) => DashboardScreen()),
+        AppRoute('/page0', (s) => const Page1()),
+        AppRoute('/page1', (s) => const Page2()),
+        AppRoute('/page2', (s) => const Page3()),
       ])
 ]);
 

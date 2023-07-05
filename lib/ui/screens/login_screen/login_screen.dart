@@ -45,20 +45,17 @@ class _MyHomePageState extends State<LoginScreens> {
               showDialog(
                   context: context,
                   builder: (BuildContext build) {
-                    return CustomDialog();
-                    // return AlertDialog(
-                    //   title: const Text("Error Message"),
-                    //   content: Text(value.message),
-                    //   actions: [
-                    //     ElevatedButton(
-                    //         onPressed: () {
-                    //           context.read<AuthenticationBloc>().add(
-                    //               AuthenticationEvent.getSignIn(
-                    //                   repo.firebaseAuth));
-                    //         },
-                    //         child: const Text("Ok"))
-                    //   ],
-                    // );
+                    return AlertDialog(
+                      title: const Text("Alert"),
+                      content: Text(value.message),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              appRoute.pop();
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    );
                   });
             });
       },
@@ -79,115 +76,103 @@ class _MyHomePageState extends State<LoginScreens> {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Gap(height * .05),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      child: SeparatedColumn(
+                          separatorBuilder: () => const Gap(16),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Let's Login",
+                              style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w700, fontSize: 32),
+                            ),
+                            Text(
+                              "Management Your Money",
+                              style: GoogleFonts.inter(
+                                  // fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: const Color(0xFF827D89)),
+                            ),
+                            const Gap(32),
+                            MyInputField(
+                                title: "Email Address",
+                                textEditingController: emailController,
+                                hint: "Example: johndoe@gmail.com",
+                                color: const Color(0xFFC8C5CB)),
+                            MyInputField(
+                                title: "Password",
+                                hint: "******",
+                                textEditingController: passwordController,
+                                isPassword: true,
+                                obscureText: _obscureTextPassword,
+                                icon: _obscureTextPassword
+                                    ? const Icon(
+                                        Icons.visibility,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility_off,
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureTextPassword =
+                                        !_obscureTextPassword;
+                                  });
+                                },
+                                color: const Color(0xFFC8C5CB)),
+                            MyTextButton(
+                              title: "Forgot password",
+                              onPressed: () {},
+                            ),
+                            MyButton(
+                              title: "Login",
+                              onPressed: () {
+                                context.read<AuthenticationBloc>().add(
+                                    AuthenticationEvent.signInWithEmail(
+                                        emailController.text,
+                                        passwordController.text));
+                              },
+                              color: $styles.colors.accent1,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    height: .2,
+                                    width: 100,
+                                    color: Colors.black,
+                                  ),
+                                ),
                                 Text(
-                                  "Let's Login",
-                                  style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 32),
+                                  "Or",
+                                  style: $styles.text.bodySmall,
                                 ),
-                                const Gap(16),
-                                Text(
-                                  "Management Your Money",
-                                  style: GoogleFonts.inter(
-                                      // fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      color: const Color(0xFF827D89)),
+                                Expanded(
+                                  child: Container(
+                                    height: .2,
+                                    width: 100,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                                const Gap(32),
-                                MyInputField(
-                                    title: "Email Address",
-                                    textEditingController: emailController,
-                                    hint: "Example: johndoe@gmail.com",
-                                    color: Color(0xFFC8C5CB)),
-                                const Gap(16),
-                                MyInputField(
-                                    title: "Password",
-                                    hint: "******",
-                                    textEditingController: passwordController,
-                                    isPassword: true,
-                                    obscureText: _obscureTextPassword,
-                                    icon: _obscureTextPassword
-                                        ? const Icon(
-                                            Icons.visibility,
-                                          )
-                                        : const Icon(
-                                            Icons.visibility_off,
-                                          ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _obscureTextPassword =
-                                            !_obscureTextPassword;
-                                      });
-                                    },
-                                    color: Color(0xFFC8C5CB)),
-                                const Gap(12),
-                                MyTextButton(
-                                  title: "Forgot password",
-                                  onPressed: () {},
-                                ),
-                                const Gap(32),
-                                MyButton(
-                                  title: "Login",
-                                  onPressed: () {
-                                    context.read<AuthenticationBloc>().add(
-                                        AuthenticationEvent.signInWithEmail(
-                                            emailController.text,
-                                            passwordController.text));
-                                  },
-                                  color: $styles.colors.accent1,
-                                ),
-                                const Gap(16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        height: .2,
-                                        width: 100,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Or",
-                                      style: $styles.text.bodySmall,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        height: .2,
-                                        width: 100,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Gap(16),
-                                MyButton(
-                                  title: "Login With Google",
-                                  isTransparant: true,
-                                  onPressed: () async {
-                                    // GET google sign in here
-                                    context.read<AuthenticationBloc>().add(
-                                        AuthenticationEvent.signInWithGoogle());
-                                  },
-                                ),
-                                const Gap(24),
-                                Center(
-                                    child: MyTextButton(
-                                  title: "Don't have account? Register here",
-                                  onPressed: () {
-                                    appRoute.go(ScreenPaths.register);
-                                  },
-                                ))
-                              ]),
-                        ],
-                      ),
+                              ],
+                            ),
+                            MyButton(
+                              title: "Login With Google",
+                              isTransparant: true,
+                              onPressed: () async {
+                                // GET google sign in here
+                                context.read<AuthenticationBloc>().add(
+                                    const AuthenticationEvent
+                                        .signInWithGoogle());
+                              },
+                            ),
+                            Center(
+                                child: MyTextButton(
+                              title: "Don't have account? Register here",
+                              onPressed: () {
+                                appRoute.push(ScreenPaths.register);
+                              },
+                            ))
+                          ]),
                     ),
                   ),
                 ),
@@ -227,20 +212,20 @@ class CustomDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Text(
+              const Text(
                 'Testing',
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text('content'),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 16.0),
+              const Text('content'),
+              const SizedBox(height: 24.0),
               Container(
                 width: double.infinity,
                 // padding: EdgeInsets.only(bottom: 5),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.amber,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -251,7 +236,7 @@ class CustomDialog extends StatelessWidget {
                       color: Colors.black,
                       height: 50,
                     ),
-                    Divider(
+                    const Divider(
                       color: Colors.white,
                       height: 1,
                     ),
@@ -259,10 +244,10 @@ class CustomDialog extends StatelessWidget {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {},
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
-                        child: SizedBox(
+                        child: const SizedBox(
                           // color: Colors.red,
                           height: 50,
                           child: Center(child: Text('cancel')),

@@ -3,9 +3,9 @@ import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/common/validate_data.dart';
 import 'package:expence_project/logic/data/auth_repository.dart';
+import 'package:expence_project/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/encrypt.dart';
@@ -32,7 +32,7 @@ class AuthenticationBloc
             if (event.firebaseAuth.currentUser != null) {
               print(event.firebaseAuth.currentUser);
 
-              // emit(const _Authenticated());
+              emit(const _Authenticated());
             }
           });
 
@@ -65,7 +65,7 @@ class AuthenticationBloc
             String encryptPasswod = encryptPassword(event.password);
             final result =
                 await repo.signInWithEmail(event.email, encryptPasswod);
-            final sharedpref = result.fold((left) {
+            result.fold((left) {
               emit(const _Loaded(isLoading: false));
               emit(_ErrorState(left));
             }, (right) {
@@ -93,16 +93,15 @@ class AuthenticationBloc
             //validasi state yang akan di keluarkan berdasarkan if statement
             if (email != null) {
               emit(_$_ErrorState(email));
-              emit(const _Loaded(isLoading: true));
+              emit(const _Loaded(isLoading: false));
             } else if (pass != null) {
               emit(_$_ErrorState(pass));
-              emit(const _Loaded(isLoading: true));
+              emit(const _Loaded(isLoading: false));
             } else {
               String encryptPasswod = encryptPassword(event.password);
               await repo.registerWithEmail(event.email, encryptPasswod);
-              emit(const _Loaded(isLoading: true));
-              emit(const _ErrorState('Register Succsess'));
-              emit(_Unauthenticated());
+              emit(const _Loaded(isLoading: false));
+              appRoute.go(ScreenPaths.verification);
             }
           });
 

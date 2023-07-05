@@ -50,6 +50,7 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
     return const Tuple2(null, false);
   }
 
+//sign in with email
   @override
   Future<Either<String, Tuple2<UserCredential?, bool>>> signInWithEmail(
       String email, String password) async {
@@ -82,6 +83,9 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         password: password,
       );
       User? user = userCredential.user;
+      if (user != null) {
+        user.emailVerified ? null : user.sendEmailVerification();
+      }
       return 'Registrasi berhasil! User ID: ${user?.uid}';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

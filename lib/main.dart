@@ -43,31 +43,13 @@ class MyApp extends StatelessWidget with GetItMixin {
           state.map(
               intial: (intial) {},
               authenticated: (value) {
-                appRoute.go(ScreenPaths.home);
+                appRoute.go(ScreenPaths.dashboard);
               },
               loaded: (loaded) {},
               unauthenticated: (unauthenticated) {
                 appRoute.go(ScreenPaths.login);
               },
-              error: (value) {
-                // showDialog(
-                //     context: context,
-                //     builder: (BuildContext build) {
-                //       return AlertDialog(
-                //         title: const Text("Error Message"),
-                //         content: Text(value.message),
-                //         actions: [
-                //           ElevatedButton(
-                //               onPressed: () {
-                //                 context.read<AuthenticationBloc>().add(
-                //                     AuthenticationEvent.getSignIn(
-                //                         repo.firebaseAuth));
-                //               },
-                //               child: const Text("Ok"))
-                //         ],
-                //       );
-                //     });
-              });
+              error: (value) {});
         },
         child: MaterialApp.router(
           routeInformationProvider: appRoute.routeInformationProvider,

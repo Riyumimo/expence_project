@@ -63,7 +63,7 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    AuthenticationScreenRouter().handleAuthentication();
+    AuthenticationScreenRouter().redirectToScreen();
     // if (showIntro) {
     //   appRouter.go(ScreenPaths.intro);
     // } else {

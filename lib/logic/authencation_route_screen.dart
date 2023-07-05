@@ -36,6 +36,6 @@ class AuthenticationScreenRouter {
   }
 
   void redirectToScreen() {
-    appRoute.go(ScreenPaths.register);
+    appRoute.go(ScreenPaths.dashboard);
   }
 }

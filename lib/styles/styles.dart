@@ -123,9 +123,9 @@ class _Text {
   late final TextStyle quote1 = _createFont(quoteFont,
       sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
   late final TextStyle quote2 =
-      _createFont(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
+      _createFont(quoteFont, sizePx: 24, heightPx: 29, weight: FontWeight.w600);
   late final TextStyle quote2Sub =
-      _createFont(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+      _createFont(body, sizePx: 16, heightPx: 19, weight: FontWeight.w500);
 
   late final TextStyle caption = _createFont(contentFont,
           sizePx: 14, heightPx: 20, weight: FontWeight.w500)

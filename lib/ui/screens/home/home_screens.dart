@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../logic/auth/authentication_bloc.dart';
-import '../../../router.dart';
 
 class HomeScreens extends StatefulWidget {
   const HomeScreens({super.key});
@@ -26,9 +25,11 @@ class _HomeScreensState extends State<HomeScreens> {
         body: Center(
       child: ElevatedButton(
         onPressed: () {
-          context.read<AuthenticationBloc>().add(AuthenticationEvent.signOut());
+          context
+              .read<AuthenticationBloc>()
+              .add(const AuthenticationEvent.signOut());
         },
-        child: Text("test"),
+        child: const Text("test"),
       ),
     ));
   }

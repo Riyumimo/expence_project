@@ -1,4 +1,6 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 
 import '../commons_libs.dart';
 import '../styles/styles.dart';
@@ -26,11 +28,13 @@ class AppScaffold extends StatelessWidget {
           style: $styles.text.body,
           // Use a custom scroll behavior across entire app
           child: ScrollConfiguration(
-            behavior: const ScrollBehavior(),
-            child: child,
-          ),
+              behavior: const ScrollBehavior(), child: child),
         ),
       ),
     );
   }
 }
+
+// List screenChange(int i) {
+//   appRoute.go('/page1');
+// }
