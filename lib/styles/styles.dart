@@ -121,7 +121,7 @@ class _Text {
       sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
   late final TextStyle quote1 = _createFont(quoteFont,
-      sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+      sizePx: 32, heightPx: 44, weight: FontWeight.w600, spacingPc: -3);
   late final TextStyle quote2 =
       _createFont(quoteFont, sizePx: 24, heightPx: 29, weight: FontWeight.w600);
   late final TextStyle quote2Sub =

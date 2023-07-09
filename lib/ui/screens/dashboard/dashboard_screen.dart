@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/ui/common/alert_dialog.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
@@ -11,9 +12,10 @@ import '../page1 copy.dart';
 @immutable
 class DashboardScreen extends StatefulWidget {
   final int initialTabIndex;
-  final bool isSlide;
-  const DashboardScreen(
-      {super.key, this.initialTabIndex = 0, this.isSlide = false});
+  const DashboardScreen({
+    super.key,
+    this.initialTabIndex = 0,
+  });
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -22,13 +24,12 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
   int? initialTabIndex;
-  bool? _islide;
-  final PageController _pageController = PageController();
+  PageController? _pageController;
   late TabController tabController;
   @override
   void initState() {
     initialTabIndex = widget.initialTabIndex;
-    _islide = widget.isSlide;
+    _pageController = PageController(initialPage: initialTabIndex!);
     tabController = TabController(length: 5, vsync: this);
     if (initialTabIndex! >= 2) {
       final tabIndex = initialTabIndex!;
@@ -43,10 +44,29 @@ class _DashboardScreenState extends State<DashboardScreen>
     super.initState();
   }
 
+  void onChangePage(int index) {
+    print('on index : $index');
+    setState(() {
+      initialTabIndex = index;
+      if (index >= 2) {
+        tabController.animateTo(initialTabIndex! + 1);
+      } else {
+        tabController.animateTo(initialTabIndex!);
+      }
+    });
+  }
+
+  void changePage(int index) {
+    setState(() {
+      initialTabIndex = index;
+    });
+  }
+
   @override
   void dispose() {
     tabController;
     _pageController;
+    initialTabIndex;
     super.dispose();
   }
 
@@ -60,28 +80,24 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     print('initial : $initialTabIndex');
-    print(_islide);
 
     return Scaffold(
       body: PageView.builder(
-        physics: _islide! ? NeverScrollableScrollPhysics() : ScrollPhysics(),
-        itemCount: _buildScreens.length,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 4,
         itemBuilder: (_, index) {
           index = initialTabIndex!;
-          return _buildScreens[index];
+          return PageTransitionSwitcher(
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+                return FadeThroughTransition(
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: _buildScreens[index]);
         },
         controller: _pageController,
-        onPageChanged: (index) {
-          print('on index : $index');
-          initialTabIndex = index;
-          setState(() {
-            if (index >= 2) {
-              tabController.animateTo(initialTabIndex! + 1);
-            } else {
-              tabController.animateTo(initialTabIndex!);
-            }
-          });
-        },
         // children: _buildScreens,
       ),
       bottomNavigationBar: ConvexAppBar(
@@ -89,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         // top: 1,
         curveSize: -100,
         height: 70,
-        initialActiveIndex: widget.initialTabIndex,
+        initialActiveIndex: initialTabIndex!,
         color: $styles.colors.greyMedium,
         activeColor: $styles.colors.accent1,
         backgroundColor: $styles.colors.offWhite,
@@ -125,23 +141,22 @@ class _DashboardScreenState extends State<DashboardScreen>
         //   return true;
         // },
         onTap: (i) {
-          _islide = false;
           print('ontap :$i');
           switch (i) {
             case 0:
-              setState(() {
-                initialTabIndex = i;
-                _pageController.animateToPage(initialTabIndex!,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.linear);
-              });
+              changePage(i);
+              // _pageController.jumpToPage(
+              //   initialTabIndex!,
+              // );
               break;
             case 1:
               setState(() {
                 initialTabIndex = i;
-                _pageController.animateToPage(initialTabIndex!,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.linear);
+                changePage(initialTabIndex!);
+
+                // _pageController.animateToPage(initialTabIndex!,
+                //     duration: const Duration(milliseconds: 100),
+                //     curve: Curves.linear);
               });
               break;
             case 2:
@@ -155,17 +170,19 @@ class _DashboardScreenState extends State<DashboardScreen>
             case 3:
               setState(() {
                 initialTabIndex = i - 1;
-                _pageController.animateToPage(initialTabIndex!,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.linear);
+                changePage(initialTabIndex!);
+                // _pageController.jumpToPage(
+                //   initialTabIndex!,
+                // );
               });
 
             case 4:
               setState(() {
                 initialTabIndex = i - 1;
-                _pageController.animateToPage(initialTabIndex!,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.linear);
+                changePage(initialTabIndex!);
+                // _pageController.animateToPage(initialTabIndex!,
+                //     duration: const Duration(milliseconds: 100),
+                // curve: Curves.linear);
               });
             default:
           }
