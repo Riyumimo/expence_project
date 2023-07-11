@@ -3,17 +3,26 @@ part of '../home_screens.dart';
 class IncomeExpenseWidget extends StatelessWidget {
   const IncomeExpenseWidget({
     super.key,
+    this.ontap,
+    required this.icon,
+    this.color,
+    required this.amount,
+    required this.title,
   });
+  final Function()? ontap;
+  final Icon icon;
+  final Color? color;
+  final String amount;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: ontap,
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-            color: $styles.colors.accent1,
-            borderRadius: BorderRadius.circular(16)),
+            color: color, borderRadius: BorderRadius.circular(16)),
         child: SeparatedRow(
           padding: EdgeInsets.all(16),
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,19 +36,19 @@ class IncomeExpenseWidget extends StatelessWidget {
               child: Icon(
                 Icons.trending_up,
                 size: 32,
-                color: $styles.colors.accent1,
+                color: color,
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Income',
-                  style: $styles.text.body,
+                  title,
+                  style: $styles.text.body.copyWith(color: Colors.white),
                 ),
                 Text(
-                  '\$5000',
-                  style: $styles.text.quote2,
+                  amount,
+                  style: $styles.text.quote2.copyWith(color: Colors.white),
                 ),
               ],
             )

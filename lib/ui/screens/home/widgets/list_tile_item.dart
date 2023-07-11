@@ -16,7 +16,7 @@ class ListTileItem extends StatelessWidget {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: Color(0xFFFCEED4),
+              color: const Color(0xFFFCEED4),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Icon(
@@ -25,7 +25,7 @@ class ListTileItem extends StatelessWidget {
               color: $styles.colors.accent1,
             ),
           ),
-          Gap(9),
+          const Gap(9),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -37,23 +37,24 @@ class ListTileItem extends StatelessWidget {
                       'Shopping',
                       style: $styles.text.bodyBold,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      '-120',
-                      style: $styles.text.bodyBold,
+                      '\$-120',
+                      style: $styles.text.bodyBold
+                          .copyWith(color: Colors.red[800]),
                     )
                   ],
                 ),
                 Row(
                   children: [
                     Text(
-                      'Shopping',
-                      style: $styles.text.bodyBold,
+                      'Buy some groceries',
+                      style: $styles.text.body,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      '-120',
-                      style: $styles.text.bodyBold,
+                      '10:00 AM',
+                      style: $styles.text.body,
                     )
                   ],
                 )
