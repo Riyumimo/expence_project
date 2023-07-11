@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/router.dart';
-import 'package:expence_project/ui/common/alert_dialog.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/transaction/page1.dart';
 
@@ -214,53 +213,30 @@ class _DashboardScreenState extends State<DashboardScreen>
           const TabItem(icon: Icons.message, title: 'Message'),
           const TabItem(icon: Icons.people, title: 'Profile'),
         ],
-        // onTabNotify: (i) {
-        //   print('test');
-        //   return true;
-        // },
+
         onTap: (i) {
           print('ontap :$i');
           switch (i) {
             case 0:
               changePage(i);
-              // _pageController.jumpToPage(
-              //   initialTabIndex!,
-              // );
               break;
             case 1:
               setState(() {
                 initialTabIndex = i;
                 changePage(initialTabIndex!);
-
-                // _pageController.animateToPage(initialTabIndex!,
-                //     duration: const Duration(milliseconds: 100),
-                //     curve: Curves.linear);
               });
               break;
             case 2:
-            // setState(() {
-            //   initialTabIndex = i;
-            //   _pageController.animateToPage(initialTabIndex!,
-            //       duration: const Duration(milliseconds: 100),
-            //       curve: Curves.linear);
-            // });
-
             case 3:
               setState(() {
                 initialTabIndex = i - 1;
                 changePage(initialTabIndex!);
-                // _pageController.jumpToPage(
-                //   initialTabIndex!,
-                // );
               });
 
             case 4:
               setState(() {
                 initialTabIndex = i - 1;
                 changePage(initialTabIndex!);
-                // _pageController.animateToPage(initialTabIndex!,
-                //     duration: const Duration(milliseconds: 100),
-                // curve: Curves.linear);
               });
             default:
           }
