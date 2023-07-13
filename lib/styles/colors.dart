@@ -9,8 +9,8 @@ class AppColors {
   final Color body = const Color(0xFF514F4D);
   final Color greyStrong = const Color(0xFF272625);
   final Color greyMedium = const Color(0xFFC6C6C6);
-  final Color white = Colors.white;
-  final Color textWhite = Color(0xFFC8C5CB);
+  final Color white = const Color(0xFFF1F1FA);
+  final Color textWhite = const Color(0xFFC8C5CB);
   final Color black = const Color(0xFF1E1B18);
 
   final bool isDark = false;

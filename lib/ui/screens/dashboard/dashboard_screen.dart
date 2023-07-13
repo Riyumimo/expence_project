@@ -175,7 +175,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                           () {
                                         appRoute.pop();
                                       });
-                                      appRoute.push('/page1');
+                                      appRoute.push(ScreenPaths.record,
+                                          extra: 'Income');
                                     },
                                   ),
                                   PopupButton(

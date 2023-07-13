@@ -5,6 +5,7 @@ import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:expence_project/ui/screens/page1%20copy%202.dart';
 import 'package:expence_project/ui/screens/page1%20copy.dart';
+import 'package:expence_project/ui/screens/record_keeping/record_keeping_screens.dart';
 import 'package:expence_project/ui/screens/transaction/page1.dart';
 import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
 import 'package:expence_project/ui/screens/verification_screens/verifications_screen.dart';
@@ -21,6 +22,7 @@ class ScreenPaths {
   static String verification = '/verification';
   static String home = '/home';
   static String dashboard = '/dashboard';
+  static String record = '/record';
 }
 
 final appRoute = GoRouter(redirect: _handleRedirect, routes: [
@@ -41,6 +43,11 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(ScreenPaths.home, (s) => const HomeScreens()),
         AppRoute(ScreenPaths.register, (s) => const RegisterScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => DashboardScreen()),
+        AppRoute(
+            ScreenPaths.record,
+            (s) => RecordKeppingScreen(
+                  title: s.extra.toString(),
+                )),
         AppRoute('/page0', (s) => Page1()),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),
