@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:expence_project/ui/common/alert_dialog.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/transaction/page1.dart';
 
@@ -8,6 +10,8 @@ import '../../../commons_libs.dart';
 import '../../../main.dart';
 import '../page1 copy 2.dart';
 import '../page1 copy.dart';
+
+part './widgets/pop_up_button.dart';
 
 @immutable
 class DashboardScreen extends StatefulWidget {
@@ -41,8 +45,27 @@ class _DashboardScreenState extends State<DashboardScreen>
         initialTabIndex!,
       );
     }
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 375));
+    _animations = CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.easeOut,
+        reverseCurve: Curves.easeIn);
+
+    _controller!.addListener(() {
+      setState(() {});
+    });
+
     super.initState();
   }
+
+  AnimationController? _controller;
+  Animation? _animations;
+  bool toggle = true;
+
+  Alignment alignment1 = const Alignment(-0.4, -0.6);
+  Alignment alignment2 = const Alignment(-0.0, -1.5);
+  Alignment alignment3 = const Alignment(0.4, -0.6);
 
   void onChangePage(int index) {
     print('on index : $index');
@@ -65,6 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void dispose() {
     tabController;
+    _controller;
     _pageController;
     initialTabIndex;
     super.dispose();
@@ -72,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   final List<Widget> _buildScreens = [
     const HomeScreens(),
-    const Page1(),
+    Page1(),
     const Page2(),
     const Page3(),
   ];
@@ -83,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     return Scaffold(
       body: PageView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 4,
         itemBuilder: (_, index) {
           index = initialTabIndex!;
@@ -123,66 +147,99 @@ class _DashboardScreenState extends State<DashboardScreen>
           const TabItem(icon: Icons.compare_arrows_rounded, title: 'Discovery'),
           TabItem<FloatingActionButton>(
               icon: FloatingActionButton.small(
-                // label: Icon(Icons.add),
-                onPressed: () {
-                  showDialog(
+                onPressed: () async {
+                  setState(() {
+                    toggle = !toggle;
+                    _controller!.forward();
+                  });
+                  await showDialog(
+                      anchorPoint: const Offset(200, 200),
+                      barrierColor: Colors.transparent,
                       context: context,
-                      builder: (builder) => const AlertDialog1());
+                      builder: (context) {
+                        return Column(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              // color: Colors.amber,
+                              height: 150,
+                              child: Stack(
+                                children: [
+                                  PopupButton(
+                                    aligment: alignment1,
+                                    color: const Color(0xFF00A86B),
+                                    icon: const Icon(Icons.cloud_download_sharp,
+                                        color: Colors.white),
+                                    ontap: () {
+                                      Future.delayed(Duration(milliseconds: 10),
+                                          () {
+                                        appRoute.pop();
+                                      });
+                                      appRoute.push(ScreenPaths.record,
+                                          extra: 'Income');
+                                    },
+                                  ),
+                                  PopupButton(
+                                      aligment: alignment2,
+                                      color: const Color(0xFF0077FF),
+                                      icon: const Icon(
+                                          Icons.screen_rotation_alt_rounded,
+                                          color: Colors.white)),
+                                  PopupButton(
+                                      aligment: alignment3,
+                                      color: const Color(0xFFFD3C4A),
+                                      icon: const Icon(
+                                        Icons.cloud_upload,
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      });
+                  setState(() {
+                    toggle = !toggle;
+                    _controller!.reverse();
+                  });
                 },
+                splashColor: $styles.colors.offWhite,
                 elevation: 0,
-                child: const Icon(Icons.add),
+                child: Transform.rotate(
+                    angle: _animations!.value * pi * (3 / 4),
+                    child: const Icon(
+                      Icons.add,
+                      size: 34,
+                    )),
               ),
               title: 'Add'),
           const TabItem(icon: Icons.message, title: 'Message'),
           const TabItem(icon: Icons.people, title: 'Profile'),
         ],
-        // onTabNotify: (i) {
-        //   print('test');
-        //   return true;
-        // },
+
         onTap: (i) {
           print('ontap :$i');
           switch (i) {
             case 0:
               changePage(i);
-              // _pageController.jumpToPage(
-              //   initialTabIndex!,
-              // );
               break;
             case 1:
               setState(() {
                 initialTabIndex = i;
                 changePage(initialTabIndex!);
-
-                // _pageController.animateToPage(initialTabIndex!,
-                //     duration: const Duration(milliseconds: 100),
-                //     curve: Curves.linear);
               });
               break;
             case 2:
-            // setState(() {
-            //   initialTabIndex = i;
-            //   _pageController.animateToPage(initialTabIndex!,
-            //       duration: const Duration(milliseconds: 100),
-            //       curve: Curves.linear);
-            // });
-
             case 3:
               setState(() {
                 initialTabIndex = i - 1;
                 changePage(initialTabIndex!);
-                // _pageController.jumpToPage(
-                //   initialTabIndex!,
-                // );
               });
 
             case 4:
               setState(() {
                 initialTabIndex = i - 1;
                 changePage(initialTabIndex!);
-                // _pageController.animateToPage(initialTabIndex!,
-                //     duration: const Duration(milliseconds: 100),
-                // curve: Curves.linear);
               });
             default:
           }
