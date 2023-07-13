@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "652142256876-atps185c9j9oae8sdq3dmj5jafv0ftic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.expence_project",
+            "certificate_hash": "37f31387a4627143b6e3e95edc332e12cf94fbbf"
+          }
+        },
+        {
           "client_id": "652142256876-vhcsg405as33i1sul4vbci42frd3914k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -50,6 +58,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "652142256876-gioe5akjscejm042hcuinbv0hs68j8l7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.signin",
+            "certificate_hash": "37f31387a4627143b6e3e95edc332e12cf94fbbf"
+          }
+        },
         {
           "client_id": "652142256876-1posuqobu48vj0jc8adurbdd8attarei.apps.googleusercontent.com",
           "client_type": 3

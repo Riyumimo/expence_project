@@ -10,7 +10,7 @@ class IncomeExpenseWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        height: 80,
+        height: 90,
         decoration: BoxDecoration(
             color: $styles.colors.accent1,
             borderRadius: BorderRadius.circular(16)),
@@ -30,18 +30,20 @@ class IncomeExpenseWidget extends StatelessWidget {
                 color: $styles.colors.accent1,
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Income',
-                  style: $styles.text.body,
-                ),
-                Text(
-                  '\$5000',
-                  style: $styles.text.quote2,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Income',
+                    style: $styles.text.body,
+                  ),
+                  Text(
+                    '\$5000',
+                    style: $styles.text.quote2,
+                  ),
+                ],
+              ),
             )
           ],
         ),

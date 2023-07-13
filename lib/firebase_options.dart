@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -51,6 +48,15 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDqPb09Q6n8F9bsfRK_aktAVV71EMH5H4A',
+    appId: '1:652142256876:web:22ab7320a2a117ecd5fbc9',
+    messagingSenderId: '652142256876',
+    projectId: 'gogglesignin-1bbda',
+    authDomain: 'gogglesignin-1bbda.firebaseapp.com',
+    storageBucket: 'gogglesignin-1bbda.appspot.com',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA5vua_zznakFWyVf8c0gNPl5WTWIyE2Bw',
