@@ -16,7 +16,41 @@ class RecordKeppingScreen extends StatefulWidget {
 }
 
 class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
-  bool isRepeat = false;
+  final TextEditingController _textMoneyController = TextEditingController();
+  final TextEditingController _textDescController = TextEditingController();
+  bool _isRepeat = false;
+  String _hintCategory = 'Category';
+  String _hintWallet = 'Wallet';
+  List<String> categoryList = ["Food", "Subcriptions", "Shoping", "Monthly"];
+  List<String> walletList = ["Bank", "E-Money", "Cash"];
+  IconData? categoryIcon(String category) {
+    switch (category) {
+      case "Food":
+        return Icons.food_bank_outlined;
+      case "Subcriptions":
+        return Icons.table_view_rounded;
+      case "Shoping":
+        return Icons.shopping_bag_rounded;
+      case "Monthly":
+        return Icons.calendar_month;
+      default:
+    }
+    return null;
+  }
+
+  IconData? walletIcon(String wallet) {
+    switch (wallet) {
+      case "Bank":
+        return Icons.wallet;
+      case "E-Money":
+        return Icons.paypal;
+      case "Cash":
+        return Icons.money;
+      default:
+    }
+    return null;
+  }
+
   Color? colorScheme(String title) {
     switch (title) {
       case 'Expense':
@@ -72,6 +106,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   child: TextFormField(
                     keyboardType: const TextInputType.numberWithOptions(),
                     style: $styles.text.h1.copyWith(color: Colors.white),
+                    controller: _textMoneyController,
                     decoration: InputDecoration(
                         hintText: '0',
                         hintStyle:
@@ -90,6 +125,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
           Gap(16),
           Container(
             // height: 395,
+            width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -100,25 +136,88 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
               separatorBuilder: () => Gap(12),
               children: [
                 MyInputField(
-                  hint: 'Category',
+                  hint: _hintCategory,
                   color: $styles.colors.white,
-                  widget: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 32,
-                    color: Color(0xFF91919F),
+                  widget: DropdownButton(
+                    dropdownColor: Colors.white,
+                    iconSize: 32,
+                    icon: const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        //
+                        color: Color(0xFF91919F),
+                      ),
+                    ),
+                    underline: Container(),
+                    onChanged: (value) {
+                      setState(() {
+                        _hintCategory = value!;
+                      });
+                    },
+                    elevation: 4,
+                    items: categoryList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Row(
+                            children: [
+                              Icon(categoryIcon(value),
+                                  color: $styles.colors.greyStrong),
+                              const Gap(5),
+                              Text(
+                                value,
+                                style: $styles.text.bodyBold
+                                    .copyWith(color: $styles.colors.greyStrong),
+                              ),
+                            ],
+                          ));
+                    }).toList(),
                   ),
                 ),
                 MyInputField(
+                  textEditingController: _textMoneyController,
                   hint: 'Description',
                   color: $styles.colors.white,
                 ),
                 MyInputField(
-                  hint: 'Wallet',
+                  hint: _hintWallet,
                   color: $styles.colors.white,
-                  widget: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 32,
-                    color: Color(0xFF91919F),
+                  widget: DropdownButton(
+                    dropdownColor: Colors.white,
+                    iconSize: 32,
+                    icon: const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        //
+                        color: Color(0xFF91919F),
+                      ),
+                    ),
+                    underline: Container(),
+                    onChanged: (value) {
+                      setState(() {
+                        _hintWallet = value!;
+                      });
+                    },
+                    elevation: 4,
+                    items: walletList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Row(
+                            children: [
+                              Icon(walletIcon(value),
+                                  color: $styles.colors.greyStrong),
+                              Gap(5),
+                              Text(
+                                value,
+                                style: $styles.text.bodyBold
+                                    .copyWith(color: $styles.colors.greyStrong),
+                              ),
+                            ],
+                          ));
+                    }).toList(),
                   ),
                 ),
                 AttachmentWidget(),
@@ -145,10 +244,10 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                           ),
                         ),
                         Switch(
-                            value: isRepeat,
+                            value: _isRepeat,
                             onChanged: (value) {
                               setState(() {
-                                isRepeat = value;
+                                _isRepeat = value;
                               });
                             }),
                       ],
