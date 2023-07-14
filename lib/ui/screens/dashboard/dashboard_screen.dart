@@ -171,7 +171,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     icon: const Icon(Icons.cloud_download_sharp,
                                         color: Colors.white),
                                     ontap: () {
-                                      Future.delayed(Duration(milliseconds: 10),
+                                      Future.delayed(Duration(microseconds: 10),
                                           () {
                                         appRoute.pop();
                                       });
@@ -186,12 +186,21 @@ class _DashboardScreenState extends State<DashboardScreen>
                                           Icons.screen_rotation_alt_rounded,
                                           color: Colors.white)),
                                   PopupButton(
-                                      aligment: alignment3,
-                                      color: const Color(0xFFFD3C4A),
-                                      icon: const Icon(
-                                        Icons.cloud_upload,
-                                        color: Colors.white,
-                                      ))
+                                    aligment: alignment3,
+                                    color: const Color(0xFFFD3C4A),
+                                    icon: const Icon(
+                                      Icons.cloud_upload,
+                                      color: Colors.white,
+                                    ),
+                                    ontap: () {
+                                      Future.delayed(Duration(microseconds: 10),
+                                          () {
+                                        appRoute.pop();
+                                      });
+                                      appRoute.push(ScreenPaths.record,
+                                          extra: 'Expense');
+                                    },
+                                  )
                                 ],
                               ),
                             ),

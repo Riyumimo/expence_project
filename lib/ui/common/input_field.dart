@@ -9,6 +9,7 @@ class MyInputField extends StatelessWidget {
   final Widget? widget;
   final bool isPassword;
   final bool? obscureText;
+  final bool? colorText;
   final Function()? onPressed;
   final Icon? icon;
 
@@ -25,6 +26,7 @@ class MyInputField extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.obscureText,
+    this.colorText,
   }) : super(key: key);
 
   @override
@@ -78,7 +80,11 @@ class MyInputField extends StatelessWidget {
                     hintStyle: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
-                        color: $styles.colors.textWhite),
+                        color: colorText == null
+                            ? $styles.colors.textWhite
+                            : colorText == false
+                                ? $styles.colors.textWhite
+                                : $styles.colors.black),
                     focusedBorder: const UnderlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.transparent, width: 0)),

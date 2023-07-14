@@ -1,11 +1,16 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/common/input_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 part './widgets/attachment_widget.dart';
+part './widgets/input_record.dart';
+part './widgets/item_bottom_sheet.dart';
+part './widgets/record_button.dart';
 
 class RecordKeppingScreen extends StatefulWidget {
   final String? title;
@@ -23,6 +28,18 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   String _hintWallet = 'Wallet';
   List<String> categoryList = ["Food", "Subcriptions", "Shoping", "Monthly"];
   List<String> walletList = ["Bank", "E-Money", "Cash"];
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickImage != null) {
+      setState(() {
+        _image = File(pickImage.path);
+      });
+    }
+  }
+
   IconData? categoryIcon(String category) {
     switch (category) {
       case "Food":
@@ -103,28 +120,14 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   style: $styles.text.h1.copyWith(color: Colors.white),
                 ),
                 Expanded(
-                  child: TextFormField(
-                    keyboardType: const TextInputType.numberWithOptions(),
-                    style: $styles.text.h1.copyWith(color: Colors.white),
-                    controller: _textMoneyController,
-                    decoration: InputDecoration(
-                        hintText: '0',
-                        hintStyle:
-                            $styles.text.h1.copyWith(color: Colors.white),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0)),
-                        enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0))),
-                  ),
+                  child: RecordInputField(
+                      textMoneyController: _textMoneyController),
                 ),
               ],
             ),
           ),
           Gap(16),
           Container(
-            // height: 395,
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -136,6 +139,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
               separatorBuilder: () => Gap(12),
               children: [
                 MyInputField(
+                  colorText: _hintCategory == "Category" ? false : true,
                   hint: _hintCategory,
                   color: $styles.colors.white,
                   widget: DropdownButton(
@@ -175,12 +179,18 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     }).toList(),
                   ),
                 ),
+                //Description
                 MyInputField(
-                  textEditingController: _textMoneyController,
+                  colorText:
+                      _textDescController.value.text != '' ? true : false,
+                  textEditingController: _textDescController,
                   hint: 'Description',
                   color: $styles.colors.white,
                 ),
+
+                //Wallet
                 MyInputField(
+                  colorText: _hintWallet == 'Wallet' ? false : true,
                   hint: _hintWallet,
                   color: $styles.colors.white,
                   widget: DropdownButton(
@@ -220,7 +230,11 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     }).toList(),
                   ),
                 ),
-                AttachmentWidget(),
+                AttachmentWidget(
+                  ontap: () {
+                    bottomSheet(context);
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -254,29 +268,64 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    print('object');
-                  },
-                  child: Container(
-                    height: 54,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: $styles.colors.accent1,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Center(
-                        child: Text(
-                      'Continue',
-                      style: $styles.text.bodyBold
-                          .copyWith(fontSize: 18, color: Colors.white),
-                    )),
-                  ),
-                )
+                RecordButton()
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  Future<dynamic> bottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (contex) {
+          return Container(
+              height: 200,
+              // color: Colors.white,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(24),
+                      topLeft: Radius.circular(24))),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 4,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: $styles.colors.greyMedium),
+                    ),
+                    Spacer(),
+                    Expanded(
+                        child: SeparatedRow(
+                      separatorBuilder: () => Gap(8),
+                      children: [
+                        ItemBottomSheet(
+                          title: 'Camera',
+                          icon: Icons.camera_enhance_rounded,
+                          ontap: () {},
+                        ),
+                        ItemBottomSheet(
+                          title: 'Image',
+                          icon: Icons.image_rounded,
+                          ontap: () {},
+                        ),
+                        ItemBottomSheet(
+                          title: 'Dokument',
+                          icon: Icons.file_upload,
+                          ontap: () {},
+                        ),
+                      ],
+                    ))
+                  ],
+                ),
+              ));
+        });
   }
 }
