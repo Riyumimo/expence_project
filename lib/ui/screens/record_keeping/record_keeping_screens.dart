@@ -84,6 +84,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(_image);
     switch (widget.title) {
       case 'Income':
         break;
@@ -230,11 +231,67 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     }).toList(),
                   ),
                 ),
-                AttachmentWidget(
-                  ontap: () {
-                    bottomSheet(context);
-                  },
-                ),
+
+                _image == null
+                    ? AttachmentWidget(
+                        ontap: () {
+                          bottomSheet(context);
+                        },
+                      )
+                    : Row(
+                        children: [
+                          Container(
+                            width: 112,
+                            height: 112,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: Image.file(
+                                        _image!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                    top: -15,
+                                    right: -15,
+                                    child: IconButton(
+                                      iconSize: 16,
+                                      onPressed: () async {
+                                        setState(() {
+                                          if (_image!.existsSync()) {
+                                            _image!.deleteSync();
+                                            _image = null;
+                                            print('File deleted successfully');
+                                          } else {
+                                            print('File not found');
+                                          }
+                                        });
+                                        print(_image?.existsSync());
+                                      },
+                                      icon: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Container(
+                                              color: $styles.colors.greyMedium
+                                                  .withOpacity(.7),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ))),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -314,7 +371,9 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                         ItemBottomSheet(
                           title: 'Image',
                           icon: Icons.image_rounded,
-                          ontap: () {},
+                          ontap: () async {
+                            await _pickImage();
+                          },
                         ),
                         ItemBottomSheet(
                           title: 'Dokument',
