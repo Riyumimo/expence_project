@@ -24,7 +24,7 @@ class _HomeScreensState extends State<HomeScreens> {
   ];
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _isLoaded = true;
       });
@@ -50,7 +50,7 @@ class _HomeScreensState extends State<HomeScreens> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 64,
               child: SeparatedRow(
                   padding:
@@ -68,7 +68,7 @@ class _HomeScreensState extends State<HomeScreens> {
                             fit: BoxFit.contain,
                           ),
                         )),
-                    MyTextButton(title: 'Oktober'),
+                    const MyTextButton(title: 'Oktober'),
                     IconButton(
                         onPressed: () {}, icon: const Icon(Icons.notifications))
                   ]),
@@ -201,14 +201,14 @@ class _HomeScreensState extends State<HomeScreens> {
                     ],
                   )),
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               height: 200,
               child: ListView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 27,
                 ),
-                children: [
+                children: const [
                   ListTileItem(),
                   ListTileItem(),
                   ListTileItem(),
@@ -252,12 +252,12 @@ class _HomeScreensState extends State<HomeScreens> {
           );
         },
       ),
-      titlesData: FlTitlesData(
+      titlesData: const FlTitlesData(
         show: false,
-        rightTitles: const AxisTitles(
+        rightTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: const AxisTitles(
+        topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
         bottomTitles: AxisTitles(

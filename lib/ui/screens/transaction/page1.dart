@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Page1 extends StatelessWidget {
-  Page1({this.isShowingMainData = false});
+  const Page1({super.key, this.isShowingMainData = false});
 
   final bool isShowingMainData;
 

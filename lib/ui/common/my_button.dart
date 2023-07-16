@@ -31,7 +31,7 @@ class MyButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Spacer(),
+              const Spacer(),
               isTransparant
                   ? SizedBox(
                       height: 24,

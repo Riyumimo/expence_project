@@ -3,7 +3,9 @@ part of '../record_keeping_screens.dart';
 class AttachmentWidget extends StatelessWidget {
   const AttachmentWidget({
     super.key,
+    this.ontap,
   });
+  final Function()? ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +14,13 @@ class AttachmentWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         highlightColor: $styles.colors.white,
-        onTap: () {},
+        onTap: ontap,
         child: DottedBorder(
           color: $styles.colors.white,
-          dashPattern: [8, 6],
-          radius: Radius.circular(8),
+          dashPattern: const [8, 6],
+          radius: const Radius.circular(8),
           borderType: BorderType.RRect,
-          child: Container(
+          child: SizedBox(
             height: 52,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

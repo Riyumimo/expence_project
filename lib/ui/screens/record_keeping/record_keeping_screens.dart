@@ -1,11 +1,19 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/logic/permission/camera_permission.dart';
+import 'package:expence_project/logic/permission/galery_permission.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 part './widgets/attachment_widget.dart';
+part './widgets/input_record.dart';
+part './widgets/item_bottom_sheet.dart';
+part './widgets/record_button.dart';
 
 class RecordKeppingScreen extends StatefulWidget {
   final String? title;
@@ -23,6 +31,55 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   String _hintWallet = 'Wallet';
   List<String> categoryList = ["Food", "Subcriptions", "Shoping", "Monthly"];
   List<String> walletList = ["Bank", "E-Money", "Cash"];
+  File? _image;
+  CameraImagePickerHandler? cameraImagePickerHandler;
+  GaleryPermissionHandler? galeryPermissionHandler;
+  String? capturedImagePath;
+
+  @override
+  void dispose() {
+    _textMoneyController.dispose();
+    _textDescController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    cameraImagePickerHandler = CameraImagePickerHandler();
+    galeryPermissionHandler = GaleryPermissionHandler();
+    super.initState();
+  }
+
+  Future<void> _pickImage() async {
+    final hasPermission =
+        await galeryPermissionHandler!.requestGalleryPermission();
+    if (!hasPermission) return;
+    final picker = ImagePicker();
+    final pickImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickImage != null) {
+      setState(() {
+        _image = File(pickImage.path);
+      });
+    }
+  }
+
+  Future<void> _takePickture() async {
+    final hasPermission =
+        await cameraImagePickerHandler!.requestCameraPermision();
+    if (!hasPermission) return;
+    final imagePath = await appRoute.push(ScreenPaths.camera);
+
+    try {
+      if (imagePath != null) {
+        setState(() {
+          _image = File(imagePath.toString());
+        });
+      }
+    } catch (e) {
+      print('Error taking picture: $e');
+    }
+  }
+
   IconData? categoryIcon(String category) {
     switch (category) {
       case "Food":
@@ -67,6 +124,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(_image);
     switch (widget.title) {
       case 'Income':
         break;
@@ -84,7 +142,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
             child: Text(
@@ -93,7 +151,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   .copyWith(color: $styles.colors.offWhite.withOpacity(.7)),
             ),
           ),
-          Gap(13),
+          const Gap(13),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
             child: Row(
@@ -103,28 +161,14 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   style: $styles.text.h1.copyWith(color: Colors.white),
                 ),
                 Expanded(
-                  child: TextFormField(
-                    keyboardType: const TextInputType.numberWithOptions(),
-                    style: $styles.text.h1.copyWith(color: Colors.white),
-                    controller: _textMoneyController,
-                    decoration: InputDecoration(
-                        hintText: '0',
-                        hintStyle:
-                            $styles.text.h1.copyWith(color: Colors.white),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0)),
-                        enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: 0))),
-                  ),
+                  child: RecordInputField(
+                      textMoneyController: _textMoneyController),
                 ),
               ],
             ),
           ),
-          Gap(16),
+          const Gap(16),
           Container(
-            // height: 395,
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -133,9 +177,10 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
             ),
             child: SeparatedColumn(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              separatorBuilder: () => Gap(12),
+              separatorBuilder: () => const Gap(12),
               children: [
                 MyInputField(
+                  colorText: _hintCategory == "Category" ? false : true,
                   hint: _hintCategory,
                   color: $styles.colors.white,
                   widget: DropdownButton(
@@ -175,12 +220,18 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     }).toList(),
                   ),
                 ),
+                //Description
                 MyInputField(
-                  textEditingController: _textMoneyController,
+                  colorText:
+                      _textDescController.value.text != '' ? true : false,
+                  textEditingController: _textDescController,
                   hint: 'Description',
                   color: $styles.colors.white,
                 ),
+
+                //Wallet
                 MyInputField(
+                  colorText: _hintWallet == 'Wallet' ? false : true,
                   hint: _hintWallet,
                   color: $styles.colors.white,
                   widget: DropdownButton(
@@ -209,7 +260,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                             children: [
                               Icon(walletIcon(value),
                                   color: $styles.colors.greyStrong),
-                              Gap(5),
+                              const Gap(5),
                               Text(
                                 value,
                                 style: $styles.text.bodyBold
@@ -220,10 +271,70 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     }).toList(),
                   ),
                 ),
-                AttachmentWidget(),
+
+                _image == null
+                    ? AttachmentWidget(
+                        ontap: () {
+                          bottomSheet(context);
+                        },
+                      )
+                    : Row(
+                        children: [
+                          SizedBox(
+                            width: 112,
+                            height: 112,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: Image.file(
+                                        _image!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                    top: -15,
+                                    right: -15,
+                                    child: IconButton(
+                                      iconSize: 16,
+                                      onPressed: () async {
+                                        setState(() {
+                                          if (_image!.existsSync()) {
+                                            _image!.deleteSync();
+                                            _image = null;
+                                            print('File deleted successfully');
+                                          } else {
+                                            print('File not found');
+                                          }
+                                        });
+                                        print(_image?.existsSync());
+                                      },
+                                      icon: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Container(
+                                              color: $styles.colors.greyMedium
+                                                  .withOpacity(.7),
+                                              child: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ))),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Container(
+                  child: SizedBox(
                     height: 59,
                     child: Row(
                       children: [
@@ -254,29 +365,72 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    print('object');
-                  },
-                  child: Container(
-                    height: 54,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: $styles.colors.accent1,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Center(
-                        child: Text(
-                      'Continue',
-                      style: $styles.text.bodyBold
-                          .copyWith(fontSize: 18, color: Colors.white),
-                    )),
-                  ),
-                )
+                const RecordButton()
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  // Method //
+
+  Future<dynamic> bottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (contex) {
+          return Container(
+              height: 200,
+              // color: Colors.white,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(24),
+                      topLeft: Radius.circular(24))),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 4,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: $styles.colors.greyMedium),
+                    ),
+                    const Spacer(),
+                    Expanded(
+                        child: SeparatedRow(
+                      separatorBuilder: () => const Gap(8),
+                      children: [
+                        ItemBottomSheet(
+                          title: 'Camera',
+                          icon: Icons.camera_enhance_rounded,
+                          ontap: () async {
+                            appRoute.pop();
+                            await _takePickture();
+                          },
+                        ),
+                        ItemBottomSheet(
+                          title: 'Image',
+                          icon: Icons.image_rounded,
+                          ontap: () async {
+                            appRoute.pop();
+                            await _pickImage();
+                          },
+                        ),
+                        ItemBottomSheet(
+                          title: 'Dokument',
+                          icon: Icons.file_upload,
+                          ontap: () {},
+                        ),
+                      ],
+                    ))
+                  ],
+                ),
+              ));
+        });
   }
 }
