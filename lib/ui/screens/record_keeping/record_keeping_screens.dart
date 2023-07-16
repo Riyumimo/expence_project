@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/logic/permission/camera_permission.dart';
+import 'package:expence_project/logic/permission/galery_permission.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,14 +33,51 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   List<String> categoryList = ["Food", "Subcriptions", "Shoping", "Monthly"];
   List<String> walletList = ["Bank", "E-Money", "Cash"];
   File? _image;
+  CameraImagePickerHandler? cameraImagePickerHandler;
+  GaleryPermissionHandler? galeryPermissionHandler;
+  String? capturedImagePath;
+
+  @override
+  void dispose() {
+    _textDescController.dispose();
+    _textDescController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    cameraImagePickerHandler = CameraImagePickerHandler();
+    galeryPermissionHandler = GaleryPermissionHandler();
+    super.initState();
+  }
 
   Future<void> _pickImage() async {
+    final hasPermission =
+        await galeryPermissionHandler!.requestGalleryPermission();
+    if (!hasPermission) return;
     final picker = ImagePicker();
     final pickImage = await picker.pickImage(source: ImageSource.gallery);
     if (pickImage != null) {
       setState(() {
         _image = File(pickImage.path);
       });
+    }
+  }
+
+  Future<void> _takePickture() async {
+    final hasPermission =
+        await cameraImagePickerHandler!.requestCameraPermision();
+    if (!hasPermission) return;
+    final imagePath = await appRoute.push(ScreenPaths.camera);
+
+    try {
+      if (imagePath != null) {
+        setState(() {
+          _image = File(imagePath.toString());
+        });
+      }
+    } catch (e) {
+      print('Error taking picture: $e');
     }
   }
 
@@ -282,7 +323,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                                           child: Container(
                                               color: $styles.colors.greyMedium
                                                   .withOpacity(.7),
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.close,
                                                 color: Colors.white,
                                               ))),
@@ -334,6 +375,8 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
     );
   }
 
+  // Method //
+
   Future<dynamic> bottomSheet(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -366,7 +409,9 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                         ItemBottomSheet(
                           title: 'Camera',
                           icon: Icons.camera_enhance_rounded,
-                          ontap: () {},
+                          ontap: () async {
+                            await _takePickture();
+                          },
                         ),
                         ItemBottomSheet(
                           title: 'Image',

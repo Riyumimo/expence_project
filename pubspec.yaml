@@ -31,6 +31,7 @@ dependencies:
   animate_do: ^3.0.2
   animations: ^2.0.7
   bloc: ^8.1.2
+  camera: ^0.10.5+2
   connectivity_plus: ^4.0.1
   convex_bottom_bar: ^3.2.0
   crypto: ^3.0.3
@@ -60,6 +61,7 @@ dependencies:
   iconsax: ^0.0.8
   image_picker: ^1.0.1
   internet_connection_checker: ^1.0.0+1
+  permission_handler: ^10.4.3
   platform_info: ^4.0.0
   shared_preferences: ^2.1.2
   sized_context: ^1.0.0+4
