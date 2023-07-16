@@ -39,7 +39,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   void dispose() {
-    _textDescController.dispose();
+    _textMoneyController.dispose();
     _textDescController.dispose();
     super.dispose();
   }
@@ -410,6 +410,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                           title: 'Camera',
                           icon: Icons.camera_enhance_rounded,
                           ontap: () async {
+                            appRoute.pop();
                             await _takePickture();
                           },
                         ),
@@ -417,6 +418,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                           title: 'Image',
                           icon: Icons.image_rounded,
                           ontap: () async {
+                            appRoute.pop();
                             await _pickImage();
                           },
                         ),
