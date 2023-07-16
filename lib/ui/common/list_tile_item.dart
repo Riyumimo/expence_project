@@ -1,4 +1,4 @@
-part of '../home_screens.dart';
+part of '../screens/home/home_screens.dart';
 
 class ListTileItem extends StatelessWidget {
   const ListTileItem({

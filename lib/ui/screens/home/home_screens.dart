@@ -4,7 +4,7 @@ import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
-part './widgets/list_tile_item.dart';
+part '../../common/list_tile_item.dart';
 part './widgets/chip_button.dart';
 part './widgets/income_expense.dart';
 

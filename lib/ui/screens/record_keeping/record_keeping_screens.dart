@@ -125,11 +125,6 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   @override
   Widget build(BuildContext context) {
     print(_image);
-    switch (widget.title) {
-      case 'Income':
-        break;
-      default:
-    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

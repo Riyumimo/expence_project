@@ -7,7 +7,7 @@ import 'package:expence_project/ui/screens/page1%20copy%202.dart';
 import 'package:expence_project/ui/screens/page1%20copy.dart';
 import 'package:expence_project/ui/screens/record_keeping/camera_screen.dart';
 import 'package:expence_project/ui/screens/record_keeping/record_keeping_screens.dart';
-import 'package:expence_project/ui/screens/transaction/page1.dart';
+import 'package:expence_project/ui/screens/transaction/transaction_screen.dart';
 import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'commons_libs.dart';
@@ -48,7 +48,7 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
             (s) => RecordKeppingScreen(
                   title: s.extra.toString(),
                 )),
-        AppRoute('/page0', (s) => Page1()),
+        AppRoute('/page0', (s) => const TransactionScreen()),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),
       ])

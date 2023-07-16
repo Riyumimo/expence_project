@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
-import 'package:expence_project/ui/screens/transaction/page1.dart';
+import 'package:expence_project/ui/screens/transaction/transaction_screen.dart';
 
 import '../../../commons_libs.dart';
 import '../../../main.dart';
@@ -96,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   final List<Widget> _buildScreens = [
     const HomeScreens(),
-    const Page1(),
+    const TransactionScreen(),
     const Page2(),
     const Page3(),
   ];
