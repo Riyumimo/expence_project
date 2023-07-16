@@ -157,10 +157,10 @@ class _Text {
 
 @immutable
 class _Times {
-  final Duration fast = Duration(milliseconds: 300);
-  final Duration med = Duration(milliseconds: 600);
-  final Duration slow = Duration(milliseconds: 900);
-  final Duration pageTransition = Duration(milliseconds: 200);
+  final Duration fast = const Duration(milliseconds: 300);
+  final Duration med = const Duration(milliseconds: 600);
+  final Duration slow = const Duration(milliseconds: 900);
+  final Duration pageTransition = const Duration(milliseconds: 200);
 }
 
 @immutable
@@ -174,7 +174,7 @@ class _Sizes {
   double get maxContentWidth1 => 800;
   double get maxContentWidth2 => 600;
   double get maxContentWidth3 => 500;
-  final Size minAppSize = Size(380, 250);
+  final Size minAppSize = const Size(380, 250);
 }
 
 @immutable
@@ -197,19 +197,19 @@ class _Shadows {
   final textSoft = [
     Shadow(
         color: Colors.black.withOpacity(.25),
-        offset: Offset(0, 2),
+        offset: const Offset(0, 2),
         blurRadius: 4),
   ];
   final text = [
     Shadow(
         color: Colors.black.withOpacity(.6),
-        offset: Offset(0, 2),
+        offset: const Offset(0, 2),
         blurRadius: 2),
   ];
   final textStrong = [
     Shadow(
         color: Colors.black.withOpacity(.6),
-        offset: Offset(0, 4),
+        offset: const Offset(0, 4),
         blurRadius: 6),
   ];
 }

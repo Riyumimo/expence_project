@@ -56,7 +56,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Camera'),
+        title: const Text('Camera'),
       ),
       body: FutureBuilder<void>(
         future: _cameraInitializeFuture,
@@ -64,13 +64,13 @@ class _CameraScreenState extends State<CameraScreen> {
           if (snapshot.connectionState == ConnectionState.done) {
             return CameraPreview(_cameraController);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _imageCapture,
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
     );
   }

@@ -45,7 +45,7 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         return const Tuple2(null, false);
       }
     } on FirebaseAuthException catch (e) {
-      print('Error ${e}');
+      print('Error $e');
     }
     return const Tuple2(null, false);
   }

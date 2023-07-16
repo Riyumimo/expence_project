@@ -24,9 +24,9 @@ class IncomeExpenseWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: color, borderRadius: BorderRadius.circular(16)),
         child: SeparatedRow(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           crossAxisAlignment: CrossAxisAlignment.center,
-          separatorBuilder: () => Gap(10),
+          separatorBuilder: () => const Gap(10),
           children: [
             Container(
               height: 48,

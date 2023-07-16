@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:expence_project/logic/permission/permission_handler.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';

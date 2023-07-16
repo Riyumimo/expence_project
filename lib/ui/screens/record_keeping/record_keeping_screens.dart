@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/permission/camera_permission.dart';
@@ -143,7 +142,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
             child: Text(
@@ -152,7 +151,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   .copyWith(color: $styles.colors.offWhite.withOpacity(.7)),
             ),
           ),
-          Gap(13),
+          const Gap(13),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
             child: Row(
@@ -168,7 +167,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
               ],
             ),
           ),
-          Gap(16),
+          const Gap(16),
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
@@ -178,7 +177,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
             ),
             child: SeparatedColumn(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              separatorBuilder: () => Gap(12),
+              separatorBuilder: () => const Gap(12),
               children: [
                 MyInputField(
                   colorText: _hintCategory == "Category" ? false : true,
@@ -261,7 +260,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                             children: [
                               Icon(walletIcon(value),
                                   color: $styles.colors.greyStrong),
-                              Gap(5),
+                              const Gap(5),
                               Text(
                                 value,
                                 style: $styles.text.bodyBold
@@ -281,7 +280,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                       )
                     : Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 112,
                             height: 112,
                             child: Stack(
@@ -335,7 +334,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                       ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Container(
+                  child: SizedBox(
                     height: 59,
                     child: Row(
                       children: [
@@ -366,7 +365,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     ),
                   ),
                 ),
-                RecordButton()
+                const RecordButton()
               ],
             ),
           )
@@ -401,10 +400,10 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                           borderRadius: BorderRadius.circular(4),
                           color: $styles.colors.greyMedium),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                         child: SeparatedRow(
-                      separatorBuilder: () => Gap(8),
+                      separatorBuilder: () => const Gap(8),
                       children: [
                         ItemBottomSheet(
                           title: 'Camera',

@@ -17,10 +17,10 @@ class AttachmentWidget extends StatelessWidget {
         onTap: ontap,
         child: DottedBorder(
           color: $styles.colors.white,
-          dashPattern: [8, 6],
-          radius: Radius.circular(8),
+          dashPattern: const [8, 6],
+          radius: const Radius.circular(8),
           borderType: BorderType.RRect,
-          child: Container(
+          child: SizedBox(
             height: 52,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -96,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   final List<Widget> _buildScreens = [
     const HomeScreens(),
-    Page1(),
+    const Page1(),
     const Page2(),
     const Page3(),
   ];
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                         return Column(
                           children: [
                             const Spacer(),
-                            Container(
+                            SizedBox(
                               // color: Colors.amber,
                               height: 150,
                               child: Stack(
@@ -171,8 +171,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     icon: const Icon(Icons.cloud_download_sharp,
                                         color: Colors.white),
                                     ontap: () {
-                                      Future.delayed(Duration(microseconds: 10),
-                                          () {
+                                      Future.delayed(
+                                          const Duration(microseconds: 10), () {
                                         appRoute.pop();
                                       });
                                       appRoute.push(ScreenPaths.record,
@@ -193,8 +193,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                       color: Colors.white,
                                     ),
                                     ontap: () {
-                                      Future.delayed(Duration(microseconds: 10),
-                                          () {
+                                      Future.delayed(
+                                          const Duration(microseconds: 10), () {
                                         appRoute.pop();
                                       });
                                       appRoute.push(ScreenPaths.record,

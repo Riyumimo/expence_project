@@ -1,5 +1,4 @@
 import 'package:expence_project/main.dart';
-import 'package:expence_project/styles/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -129,12 +128,12 @@ class _Page2State extends State<Page2> {
           );
         },
       ),
-      titlesData: FlTitlesData(
+      titlesData: const FlTitlesData(
         show: false,
-        rightTitles: const AxisTitles(
+        rightTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: const AxisTitles(
+        topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
         bottomTitles: AxisTitles(
@@ -215,7 +214,7 @@ class _Page2State extends State<Page2> {
           );
         },
       ),
-      titlesData: FlTitlesData(
+      titlesData: const FlTitlesData(
         show: true,
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
@@ -233,10 +232,10 @@ class _Page2State extends State<Page2> {
             interval: 1,
           ),
         ),
-        topTitles: const AxisTitles(
+        topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        rightTitles: const AxisTitles(
+        rightTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
       ),

@@ -1,6 +1,4 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
 
 import '../commons_libs.dart';
 import '../styles/styles.dart';

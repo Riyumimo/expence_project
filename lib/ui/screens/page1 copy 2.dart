@@ -14,17 +14,17 @@ class _Page3State extends State<Page3> with TickerProviderStateMixin {
   Animation? _animations;
   bool toggle = true;
 
-  Alignment alignment1 = Alignment(0.0, 0.0);
-  Alignment alignment2 = Alignment(0.0, 0.0);
-  Alignment alignment3 = Alignment(0.0, 0.0);
+  Alignment alignment1 = const Alignment(0.0, 0.0);
+  Alignment alignment2 = const Alignment(0.0, 0.0);
+  Alignment alignment3 = const Alignment(0.0, 0.0);
   double size1 = 50.0;
   double size2 = 50.0;
   double size3 = 50.0;
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 375));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 375));
     _animations = CurvedAnimation(
         parent: _controller!,
         curve: Curves.easeOut,
@@ -40,7 +40,7 @@ class _Page3State extends State<Page3> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: 250,
           width: 250,
           child: Stack(children: [
@@ -70,7 +70,8 @@ class _Page3State extends State<Page3> with TickerProviderStateMixin {
                             if (toggle) {
                               toggle = !toggle;
                               _controller!.forward();
-                              Future.delayed(Duration(milliseconds: 10), () {
+                              Future.delayed(const Duration(milliseconds: 10),
+                                  () {
                                 alignment1 = const Alignment(-0.7, -0.4);
                                 alignment2 = const Alignment(-0.0, -0.8);
                                 alignment3 = const Alignment(0.7, -0.4);
@@ -100,12 +101,13 @@ class _Page3State extends State<Page3> with TickerProviderStateMixin {
 
   AnimatedAlign secondButton(Alignment aligment, double size) {
     return AnimatedAlign(
-      duration:
-          toggle ? Duration(milliseconds: 275) : Duration(milliseconds: 875),
+      duration: toggle
+          ? const Duration(milliseconds: 275)
+          : const Duration(milliseconds: 875),
       alignment: aligment,
       curve: toggle ? Curves.easeIn : Curves.elasticInOut,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 270),
+        duration: const Duration(milliseconds: 270),
         curve: toggle ? Curves.easeIn : Curves.elasticInOut,
         height: size,
         width: size,
@@ -113,7 +115,7 @@ class _Page3State extends State<Page3> with TickerProviderStateMixin {
           color: Colors.black54,
           borderRadius: BorderRadius.circular(60),
         ),
-        child: Icon(
+        child: const Icon(
           Icons.message,
           color: Colors.white,
         ),

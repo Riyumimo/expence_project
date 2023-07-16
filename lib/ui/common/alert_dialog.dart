@@ -9,7 +9,7 @@ class AlertDialog1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Alert"),
-      content: Text('test'),
+      content: const Text('test'),
       actions: [
         ElevatedButton(
             onPressed: () {
