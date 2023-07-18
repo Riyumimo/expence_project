@@ -1,7 +1,8 @@
-part of '../home_screens.dart';
+import '../../commons_libs.dart';
+import '../../main.dart';
 
-class RowChipDates extends StatelessWidget {
-  const RowChipDates({
+class RowChipButton extends StatelessWidget {
+  const RowChipButton({
     super.key,
     required this.label,
     this.onSelected,

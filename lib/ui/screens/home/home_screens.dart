@@ -4,8 +4,9 @@ import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
+
+import '../../common/chip_button.dart';
 part '../../common/list_tile_item.dart';
-part './widgets/chip_button.dart';
 part './widgets/income_expense.dart';
 
 class HomeScreens extends StatefulWidget {
@@ -135,7 +136,7 @@ class _HomeScreensState extends State<HomeScreens> {
               child: Row(
                 children: [
                   Expanded(
-                      child: RowChipDates(
+                      child: RowChipButton(
                     label: 'Today',
                     onSelected: () {
                       setState(() {
@@ -145,7 +146,7 @@ class _HomeScreensState extends State<HomeScreens> {
                     isSelected: _isSelected == 0,
                   )),
                   Expanded(
-                      child: RowChipDates(
+                      child: RowChipButton(
                     label: 'Week',
                     isSelected: _isSelected == 1,
                     onSelected: () {
@@ -155,7 +156,7 @@ class _HomeScreensState extends State<HomeScreens> {
                     },
                   )),
                   Expanded(
-                      child: RowChipDates(
+                      child: RowChipButton(
                     label: 'Month',
                     isSelected: _isSelected == 2,
                     onSelected: () {
@@ -165,7 +166,7 @@ class _HomeScreensState extends State<HomeScreens> {
                     },
                   )),
                   Expanded(
-                      child: RowChipDates(
+                      child: RowChipButton(
                     label: 'Year',
                     isSelected: _isSelected == 3,
                     onSelected: () {
@@ -190,7 +191,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
                       Expanded(
-                          child: RowChipDates(
+                          child: RowChipButton(
                         label: 'See all',
                         isSelected: true,
                         backgroundColor: const Color(0xFFEEE5FF),

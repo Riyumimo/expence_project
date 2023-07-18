@@ -1,5 +1,6 @@
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/ui/common/chip_button.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,8 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   String mothly = 'Moth';
   List<String> dateList = ["Year", "Month", "Week"];
+  int? filterBy;
+  int? sortBy;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       return DropdownMenuItem<String>(
                                           value: e, child: Text(e));
                                     }).toList(),
-                                    icon: Icon(
+                                    icon: const Icon(
                                         Icons.keyboard_arrow_down_outlined)),
                               ),
                               // Gap(8),
@@ -82,13 +85,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         // hoverColor: $styles.colors.greyMedium,
                         onTap: () {
                           showBottomSheet(
+                            backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) {
-                              return const SizedBox(
-                                width: double.infinity,
-                                height: 200,
-                                child: Text('Data'),
-                              );
+                              return bottomSheetMenu();
                             },
                           );
                         },
@@ -127,7 +127,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   height: 48,
                   child: Text(
                     'Today',
@@ -157,7 +157,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 SizedBox(
                   height: 200,
                   child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     children: const <Widget>[
                       ListTileItem(),
                       ListTileItem(),
@@ -170,6 +170,147 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  StatefulBuilder bottomSheetMenu() {
+    return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+      return Container(
+        width: double.infinity,
+        height: 485,
+        decoration: BoxDecoration(
+          color: $styles.colors.offWhite,
+          borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(24), right: Radius.circular(24)),
+        ),
+        child: SeparatedColumn(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          separatorBuilder: () => const Gap(16),
+          children: [
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: $styles.colors.greyMedium),
+            ),
+            // const Spacer(),
+
+            Text(
+              'Filter By',
+              style: $styles.text.bodyBold,
+            ),
+            filterByButton(setState),
+            Text(
+              'Filter By',
+              style: $styles.text.bodyBold,
+            ),
+            sortByButton(),
+            Container(
+              padding: const EdgeInsets.all(16),
+              height: 56,
+              child: Row(children: [
+                Text(
+                  'Choose Category',
+                  style: $styles.text.body,
+                ),
+                // const Spacer(),
+              ]),
+            )
+          ],
+        ),
+      );
+    });
+  }
+
+  Column sortByButton() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+                child: RowChipButton(
+              label: 'Income',
+              isSelected: sortBy == 0,
+              onSelected: () {
+                setState(() {
+                  sortBy = 0;
+                });
+              },
+            )),
+            Expanded(
+                child: RowChipButton(
+              label: 'Income',
+              isSelected: sortBy == 0,
+              onSelected: () {
+                setState(() {
+                  sortBy = 0;
+                });
+              },
+            )),
+            Expanded(
+                child: RowChipButton(
+              label: 'Income',
+              isSelected: sortBy == 0,
+              onSelected: () {
+                setState(() {
+                  sortBy = 0;
+                });
+              },
+            )),
+          ],
+        ),
+        SizedBox(
+          width: 106,
+          child: RowChipButton(
+            label: 'Income',
+            isSelected: sortBy == 0,
+            onSelected: () {
+              setState(() {
+                sortBy = 0;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row filterByButton(StateSetter setState) {
+    return Row(
+      children: [
+        Expanded(
+            child: RowChipButton(
+          label: 'Income',
+          isSelected: filterBy == 0,
+          onSelected: () {
+            setState(() {
+              filterBy = 0;
+            });
+          },
+        )),
+        Expanded(
+            child: RowChipButton(
+          label: 'Expense',
+          isSelected: filterBy == 1,
+          onSelected: () {
+            setState(() {
+              filterBy = 1;
+            });
+          },
+        )),
+        Expanded(
+            child: RowChipButton(
+          label: 'Transfer',
+          isSelected: filterBy == 2,
+          onSelected: () {
+            setState(() {
+              filterBy = 2;
+            });
+          },
+        )),
+      ],
     );
   }
 }
