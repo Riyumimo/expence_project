@@ -21,10 +21,10 @@ class RowChipButton extends StatelessWidget {
     return GestureDetector(
       onTap: onSelected,
       child: Container(
-        height: 34,
+        height: 42,
         decoration: BoxDecoration(
             color: isSelected ? backgroundColor : $styles.colors.offWhite,
-            borderRadius: BorderRadius.circular(16)),
+            borderRadius: BorderRadius.circular(24)),
         child: Center(
           child: Text(
             label,

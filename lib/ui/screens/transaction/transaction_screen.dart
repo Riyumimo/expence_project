@@ -1,6 +1,7 @@
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/common/chip_button.dart';
+import 'package:expence_project/ui/common/my_button.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:flutter/material.dart';
 
@@ -176,55 +177,92 @@ class _TransactionScreenState extends State<TransactionScreen> {
   StatefulBuilder bottomSheetMenu() {
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-      return Container(
-        width: double.infinity,
-        height: 485,
-        decoration: BoxDecoration(
-          color: $styles.colors.offWhite,
-          borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(24), right: Radius.circular(24)),
-        ),
-        child: SeparatedColumn(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          separatorBuilder: () => const Gap(16),
-          children: [
-            Container(
-              width: 36,
-              height: 4,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: $styles.colors.greyMedium),
-            ),
-            // const Spacer(),
+      return SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          // height: 485,
+          decoration: BoxDecoration(
+            color: $styles.colors.greyMedium,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          ),
+          child: SeparatedColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.all(16),
+            separatorBuilder: () => const Gap(16),
+            children: [
+              Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: $styles.colors.greyMedium),
+              ),
+              // const Spacer(),
 
-            Text(
-              'Filter By',
-              style: $styles.text.bodyBold,
-            ),
-            filterByButton(setState),
-            Text(
-              'Filter By',
-              style: $styles.text.bodyBold,
-            ),
-            sortByButton(),
-            Container(
-              padding: const EdgeInsets.all(16),
-              height: 56,
-              child: Row(children: [
-                Text(
-                  'Choose Category',
-                  style: $styles.text.body,
+              SizedBox(
+                height: 32,
+                child: Row(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Filter Transaction',
+                      style: $styles.text.bodyBold,
+                    ),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        print('object');
+                      },
+                      child: Container(
+                        width: 71,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            color: $styles.colors.accent2,
+                            borderRadius: BorderRadius.circular(40)),
+                        child: const Center(child: Text('Reset')),
+                      ),
+                    )
+                  ],
                 ),
-                // const Spacer(),
-              ]),
-            )
-          ],
+              ),
+              Text(
+                'Filter By',
+                style: $styles.text.bodyBold,
+              ),
+              filterByButton(setState),
+              Text(
+                'Filter By',
+                style: $styles.text.bodyBold,
+              ),
+              sortByButton(setState),
+              Text(
+                'Category',
+                style: $styles.text.bodyBold,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                height: 56,
+                child: Row(children: [
+                  Text(
+                    'Choose Category',
+                    style: $styles.text.body,
+                  ),
+                  // const Spacer(),
+                ]),
+              ),
+              MyButton(
+                title: 'Apply',
+                color: $styles.colors.accent1,
+              )
+            ],
+          ),
         ),
       );
     });
   }
 
-  Column sortByButton() {
+  Column sortByButton(StateSetter setState) {
     return Column(
       children: [
         Row(
@@ -277,8 +315,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
     );
   }
 
-  Row filterByButton(StateSetter setState) {
-    return Row(
+  SeparatedRow filterByButton(StateSetter setState) {
+    return SeparatedRow(
+      separatorBuilder: () => Gap(8),
       children: [
         Expanded(
             child: RowChipButton(
