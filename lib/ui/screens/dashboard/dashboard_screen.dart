@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
-import 'package:expence_project/ui/screens/transaction/transaction_screen.dart';
+import 'package:expence_project/ui/screens/transaction_screen/transaction_screen.dart';
 
 import '../../../commons_libs.dart';
 import '../../../main.dart';
