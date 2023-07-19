@@ -23,6 +23,9 @@ class RowChipButton extends StatelessWidget {
       child: Container(
         height: 42,
         decoration: BoxDecoration(
+            border: Border.all(
+                width: 1,
+                color: isSelected ? backgroundColor : Color(0xFFE3E5E5)),
             color: isSelected ? backgroundColor : $styles.colors.offWhite,
             borderRadius: BorderRadius.circular(24)),
         child: Center(

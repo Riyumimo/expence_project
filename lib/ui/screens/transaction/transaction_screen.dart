@@ -1,9 +1,9 @@
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/chip_button.dart';
 import 'package:expence_project/ui/common/my_button.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
-import 'package:flutter/material.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key, this.isShowingMainData = false});
@@ -15,7 +15,7 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
-  String mothly = 'Moth';
+  String monthly = 'Moth';
   List<String> dateList = ["Year", "Month", "Week"];
   int? filterBy;
   int? sortBy;
@@ -38,45 +38,36 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      Container(
+                        // padding: EdgeInsets.symmetric(horizontal: 5),
+                        height: 40,
                         width: 96,
-                        child: Container(
-                          height: 40,
-                          width: 96,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1, color: $styles.colors.textWhite),
-                              borderRadius: BorderRadius.circular(40)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(child: Text(mothly)),
-
-                              Expanded(
-                                child: DropdownButton(
-                                    elevation: 0,
-                                    isExpanded: true,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        mothly = value!;
-                                      });
-                                    },
-                                    underline: Container(),
-                                    items: dateList
-                                        .map<DropdownMenuItem<String>>(
-                                            (String e) {
-                                      return DropdownMenuItem<String>(
-                                          value: e, child: Text(e));
-                                    }).toList(),
-                                    icon: const Icon(
-                                        Icons.keyboard_arrow_down_outlined)),
-                              ),
-                              // Gap(8),
-                              // Gap(8),
-                            ],
-                          ),
-                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1, color: $styles.colors.textWhite),
+                            borderRadius: BorderRadius.circular(40)),
+                        child: DropdownButton(
+                            // dropdownColor: Color,
+                            borderRadius: BorderRadius.circular(40),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            // iconSize: 24,
+                            // value: monhly,
+                            hint: Text(monthly),
+                            elevation: 0,
+                            isExpanded: true,
+                            onChanged: (value) {
+                              setState(() {
+                                monthly = value!;
+                              });
+                            },
+                            underline: Container(),
+                            items: dateList
+                                .map<DropdownMenuItem<String>>((String e) {
+                              return DropdownMenuItem<String>(
+                                  value: e, child: Text(e));
+                            }).toList(),
+                            icon:
+                                const Icon(Icons.keyboard_arrow_down_outlined)),
                       ),
                       const Spacer(),
                       InkWell(
@@ -108,22 +99,27 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   height: 64,
-                  child: Container(
-                    padding: const EdgeInsetsDirectional.symmetric(
-                        horizontal: 16, vertical: 8),
-                    height: 48,
-                    decoration: BoxDecoration(
-                        color: $styles.colors.accent1.withOpacity(.3),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          'See your financial report',
-                          style: $styles.text.body,
-                        ),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded)
-                      ],
+                  child: InkWell(
+                    onTap: () {
+                      appRoute.push(ScreenPaths.status);
+                    },
+                    child: Container(
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          horizontal: 16, vertical: 8),
+                      height: 48,
+                      decoration: BoxDecoration(
+                          color: $styles.colors.accent1.withOpacity(.3),
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            'See your financial report',
+                            style: $styles.text.body,
+                          ),
+                          const Spacer(),
+                          const Icon(Icons.arrow_forward_ios_rounded)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -182,7 +178,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
           width: double.infinity,
           // height: 485,
           decoration: BoxDecoration(
-            color: $styles.colors.greyMedium,
+            color: $styles.colors.offWhite,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24), topRight: Radius.circular(24)),
           ),
@@ -199,7 +195,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     color: $styles.colors.greyMedium),
               ),
               // const Spacer(),
-
               SizedBox(
                 height: 32,
                 child: Row(
@@ -218,9 +213,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         width: 71,
                         height: 32,
                         decoration: BoxDecoration(
-                            color: $styles.colors.accent2,
+                            color: $styles.colors.accent1.withOpacity(.2),
                             borderRadius: BorderRadius.circular(40)),
-                        child: const Center(child: Text('Reset')),
+                        child: Center(
+                            child: Text(
+                          'Reset',
+                          style: $styles.text.bodyBold.copyWith(
+                              color: $styles.colors.accent1, height: 0),
+                        )),
                       ),
                     )
                   ],
@@ -232,7 +232,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
               ),
               filterByButton(setState),
               Text(
-                'Filter By',
+                'Sort By',
                 style: $styles.text.bodyBold,
               ),
               sortByButton(setState),
@@ -248,7 +248,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     'Choose Category',
                     style: $styles.text.body,
                   ),
-                  // const Spacer(),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Expanded(
+                      child: SizedBox(
+                        child: Row(
+                          children: [
+                            Text('0 Selected'),
+                            Icon(Icons.keyboard_arrow_right_outlined)
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ]),
               ),
               MyButton(
@@ -262,14 +275,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
     });
   }
 
-  Column sortByButton(StateSetter setState) {
-    return Column(
+  SeparatedColumn sortByButton(StateSetter setState) {
+    return SeparatedColumn(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      separatorBuilder: () => const Gap(8),
       children: [
-        Row(
+        SeparatedRow(
+          separatorBuilder: () => Gap(8),
           children: [
             Expanded(
                 child: RowChipButton(
-              label: 'Income',
+              label: 'Highest',
               isSelected: sortBy == 0,
               onSelected: () {
                 setState(() {
@@ -279,21 +295,21 @@ class _TransactionScreenState extends State<TransactionScreen> {
             )),
             Expanded(
                 child: RowChipButton(
-              label: 'Income',
-              isSelected: sortBy == 0,
+              label: 'Lowest',
+              isSelected: sortBy == 1,
               onSelected: () {
                 setState(() {
-                  sortBy = 0;
+                  sortBy = 1;
                 });
               },
             )),
             Expanded(
                 child: RowChipButton(
-              label: 'Income',
-              isSelected: sortBy == 0,
+              label: 'Newest',
+              isSelected: sortBy == 2,
               onSelected: () {
                 setState(() {
-                  sortBy = 0;
+                  sortBy = 2;
                 });
               },
             )),
@@ -302,11 +318,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
         SizedBox(
           width: 106,
           child: RowChipButton(
-            label: 'Income',
-            isSelected: sortBy == 0,
+            label: 'Oldest',
+            isSelected: sortBy == 3,
             onSelected: () {
               setState(() {
-                sortBy = 0;
+                sortBy = 3;
               });
             },
           ),
@@ -317,7 +333,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   SeparatedRow filterByButton(StateSetter setState) {
     return SeparatedRow(
-      separatorBuilder: () => Gap(8),
+      separatorBuilder: () => const Gap(8),
       children: [
         Expanded(
             child: RowChipButton(

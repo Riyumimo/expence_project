@@ -21,7 +21,9 @@ class MyButton extends StatelessWidget {
         width: double.infinity,
         height: 54,
         decoration: BoxDecoration(
-            color: isTransparant ? $styles.colors.offWhite : color,
+            color: isTransparant
+                ? $styles.colors.offWhite
+                : color ?? $styles.colors.accent1,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
                 width: isTransparant ? .5 : 0,
@@ -57,13 +59,15 @@ class MyButton extends StatelessWidget {
                           ? $styles.colors.black
                           : $styles.colors.offWhite)),
               const Spacer(),
-              Icon(
-                Icons.arrow_forward,
-                size: 24,
-                color: isTransparant
-                    ? $styles.colors.black
-                    : $styles.colors.offWhite,
-              ),
+              isTransparant
+                  ? Icon(
+                      Icons.arrow_forward,
+                      size: 24,
+                      color: isTransparant
+                          ? $styles.colors.black
+                          : $styles.colors.offWhite,
+                    )
+                  : Container(),
             ],
           ),
         ),

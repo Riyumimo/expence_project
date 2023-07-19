@@ -7,6 +7,7 @@ import 'package:expence_project/ui/screens/page1%20copy%202.dart';
 import 'package:expence_project/ui/screens/page1%20copy.dart';
 import 'package:expence_project/ui/screens/record_keeping/camera_screen.dart';
 import 'package:expence_project/ui/screens/record_keeping/record_keeping_screens.dart';
+import 'package:expence_project/ui/screens/transaction/status_screen.dart';
 import 'package:expence_project/ui/screens/transaction/transaction_screen.dart';
 import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,8 @@ class ScreenPaths {
   static String dashboard = '/dashboard';
   static String record = '/record';
   static String camera = '/camera';
+  static String status = '/status';
+  static String transaction = '/transactions';
 }
 
 final appRoute = GoRouter(redirect: _handleRedirect, routes: [
@@ -48,7 +51,8 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
             (s) => RecordKeppingScreen(
                   title: s.extra.toString(),
                 )),
-        AppRoute('/page0', (s) => const TransactionScreen()),
+        AppRoute(ScreenPaths.transaction, (s) => const TransactionScreen()),
+        AppRoute(ScreenPaths.status, (s) => const FinancialStatusScreen()),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),
       ])
