@@ -1,6 +1,7 @@
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
 import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
+import 'package:expence_project/ui/screens/detail_screen/detail_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:expence_project/ui/screens/page1%20copy%202.dart';
@@ -25,6 +26,7 @@ class ScreenPaths {
   static String camera = '/camera';
   static String status = '/status';
   static String transaction = '/transactions';
+  static String detail = '/detail';
 }
 
 final appRoute = GoRouter(redirect: _handleRedirect, routes: [
@@ -53,6 +55,11 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
                 )),
         AppRoute(ScreenPaths.transaction, (s) => const TransactionScreen()),
         AppRoute(ScreenPaths.status, (s) => const FinancialStatusScreen()),
+        AppRoute(
+            ScreenPaths.detail,
+            (s) => DetailScreen(
+                  title: s.extra.toString(),
+                )),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),
       ])

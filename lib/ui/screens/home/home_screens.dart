@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -209,8 +210,12 @@ class _HomeScreensState extends State<HomeScreens> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 27,
                 ),
-                children: const [
-                  ListTileItem(),
+                children: [
+                  ListTileItem(
+                    ontap: () {
+                      appRoute.push(ScreenPaths.detail, extra: 'Income');
+                    },
+                  ),
                   ListTileItem(),
                   ListTileItem(),
                 ],
