@@ -144,7 +144,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                 'assets/icons/inactive_home.svg',
               ),
               title: 'Home'),
-          const TabItem(icon: Icons.compare_arrows_rounded, title: 'Discovery'),
+          TabItem(
+              activeIcon: SvgPicture.asset(
+                'assets/icons/transaction.svg',
+              ),
+              icon: SvgPicture.asset(
+                'assets/icons/inactive_transaction.svg',
+              ),
+              title: 'Discovery'),
           TabItem<FloatingActionButton>(
               icon: FloatingActionButton.small(
                 onPressed: () async {
@@ -152,61 +159,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     toggle = !toggle;
                     _controller!.forward();
                   });
-                  await showDialog(
-                      anchorPoint: const Offset(200, 200),
-                      barrierColor: Colors.transparent,
-                      context: context,
-                      builder: (context) {
-                        return Column(
-                          children: [
-                            const Spacer(),
-                            SizedBox(
-                              // color: Colors.amber,
-                              height: 150,
-                              child: Stack(
-                                children: [
-                                  PopupButton(
-                                    aligment: alignment1,
-                                    color: const Color(0xFF00A86B),
-                                    icon: const Icon(Icons.cloud_download_sharp,
-                                        color: Colors.white),
-                                    ontap: () {
-                                      Future.delayed(
-                                          const Duration(microseconds: 10), () {
-                                        appRoute.pop();
-                                      });
-                                      appRoute.push(ScreenPaths.record,
-                                          extra: 'Income');
-                                    },
-                                  ),
-                                  PopupButton(
-                                      aligment: alignment2,
-                                      color: const Color(0xFF0077FF),
-                                      icon: const Icon(
-                                          Icons.screen_rotation_alt_rounded,
-                                          color: Colors.white)),
-                                  PopupButton(
-                                    aligment: alignment3,
-                                    color: const Color(0xFFFD3C4A),
-                                    icon: const Icon(
-                                      Icons.cloud_upload,
-                                      color: Colors.white,
-                                    ),
-                                    ontap: () {
-                                      Future.delayed(
-                                          const Duration(microseconds: 10), () {
-                                        appRoute.pop();
-                                      });
-                                      appRoute.push(ScreenPaths.record,
-                                          extra: 'Expense');
-                                    },
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      });
+                  await showTabIcon(context);
                   setState(() {
                     toggle = !toggle;
                     _controller!.reverse();
@@ -222,8 +175,22 @@ class _DashboardScreenState extends State<DashboardScreen>
                     )),
               ),
               title: 'Add'),
-          const TabItem(icon: Icons.message, title: 'Message'),
-          const TabItem(icon: Icons.people, title: 'Profile'),
+          TabItem(
+              icon: SvgPicture.asset(
+                'assets/icons/inactive_pie-chart.svg',
+              ),
+              activeIcon: SvgPicture.asset(
+                'assets/icons/pie-chart.svg',
+              ),
+              title: 'Message'),
+          TabItem(
+              icon: SvgPicture.asset(
+                'assets/icons/inactive_user.svg',
+              ),
+              activeIcon: SvgPicture.asset(
+                'assets/icons/user.svg',
+              ),
+              title: 'Profile'),
         ],
 
         onTap: (i) {
@@ -255,5 +222,60 @@ class _DashboardScreenState extends State<DashboardScreen>
         },
       ),
     );
+  }
+
+  Future<dynamic> showTabIcon(BuildContext context) {
+    return showDialog(
+        anchorPoint: const Offset(200, 200),
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Column(
+            children: [
+              const Spacer(),
+              SizedBox(
+                // color: Colors.amber,
+                height: 150,
+                child: Stack(
+                  children: [
+                    PopupButton(
+                      aligment: alignment1,
+                      color: const Color(0xFF00A86B),
+                      icon: SvgPicture.asset(
+                        'assets/icons/income.svg',
+                      ),
+                      ontap: () {
+                        Future.delayed(const Duration(microseconds: 10), () {
+                          appRoute.pop();
+                        });
+                        appRoute.push(ScreenPaths.record, extra: 'Income');
+                      },
+                    ),
+                    PopupButton(
+                      aligment: alignment2,
+                      color: const Color(0xFF0077FF),
+                      icon: SvgPicture.asset(
+                        'assets/icons/currency-exchange.svg',
+                      ),
+                    ),
+                    PopupButton(
+                      aligment: alignment3,
+                      color: const Color(0xFFFD3C4A),
+                      icon: SvgPicture.asset(
+                        'assets/icons/expense.svg',
+                      ),
+                      ontap: () {
+                        Future.delayed(const Duration(microseconds: 10), () {
+                          appRoute.pop();
+                        });
+                        appRoute.push(ScreenPaths.record, extra: 'Expense');
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

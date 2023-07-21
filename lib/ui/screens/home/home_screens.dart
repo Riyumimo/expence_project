@@ -93,19 +93,32 @@ class _HomeScreensState extends State<HomeScreens> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
               separatorBuilder: () => const Gap(16),
               children: [
-                const Expanded(
+                Expanded(
                     child: IncomeExpenseWidget(
                   title: 'Income',
-                  color: Color(0xFF00A86B),
+                  color: const Color(0xFF00A86B),
                   amount: '\$10000',
-                  icon: Icons.trending_up,
+                  icon: ColorFiltered(
+                    colorFilter: const ColorFilter.mode(
+                        Color(0xFF00A86B), BlendMode.srcIn),
+                    child: SvgPicture.asset(
+                      'assets/icons/income.svg',
+                    ),
+                  ),
                 )),
                 Expanded(
                   child: IncomeExpenseWidget(
-                      title: 'Expense',
-                      color: Colors.red[800],
-                      amount: '\$5000',
-                      icon: Icons.trending_down),
+                    title: 'Expense',
+                    color: const Color(0xFFFD3C4A),
+                    amount: '\$5000',
+                    icon: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(
+                          Color(0xFFFD3C4A), BlendMode.srcIn),
+                      child: SvgPicture.asset(
+                        'assets/icons/expense.svg',
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),

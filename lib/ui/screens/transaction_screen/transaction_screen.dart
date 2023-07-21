@@ -47,27 +47,29 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 width: 1, color: $styles.colors.textWhite),
                             borderRadius: BorderRadius.circular(40)),
                         child: DropdownButton(
-                            // dropdownColor: Color,
-                            borderRadius: BorderRadius.circular(40),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            // iconSize: 24,
-                            // value: monhly,
-                            hint: Text(monthly),
-                            elevation: 0,
-                            isExpanded: true,
-                            onChanged: (value) {
-                              setState(() {
-                                monthly = value!;
-                              });
-                            },
-                            underline: Container(),
-                            items: dateList
-                                .map<DropdownMenuItem<String>>((String e) {
-                              return DropdownMenuItem<String>(
-                                  value: e, child: Text(e));
-                            }).toList(),
-                            icon:
-                                const Icon(Icons.keyboard_arrow_down_outlined)),
+                          // dropdownColor: Color,
+                          borderRadius: BorderRadius.circular(40),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          // iconSize: 24,
+                          // value: monhly,
+                          hint: Text(monthly),
+                          elevation: 0,
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              monthly = value!;
+                            });
+                          },
+                          underline: Container(),
+                          items: dateList
+                              .map<DropdownMenuItem<String>>((String e) {
+                            return DropdownMenuItem<String>(
+                                value: e, child: Text(e));
+                          }).toList(),
+                          icon: SvgPicture.asset(
+                            'assets/icons/arrow-down.svg',
+                          ),
+                        ),
                       ),
                       const Spacer(),
                       InkWell(

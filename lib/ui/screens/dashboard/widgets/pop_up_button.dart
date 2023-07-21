@@ -11,7 +11,7 @@ class PopupButton extends StatelessWidget {
 
   final Alignment aligment;
   final Function()? ontap;
-  final Icon icon;
+  final Widget icon;
   final Color color;
 
   @override

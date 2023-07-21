@@ -192,12 +192,10 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     widget: DropdownButton(
                       dropdownColor: Colors.white,
                       iconSize: 32,
-                      icon: const Padding(
+                      icon: Padding(
                         padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          //
-                          color: Color(0xFF91919F),
+                        child: SvgPicture.asset(
+                          'assets/icons/arrow-down.svg',
                         ),
                       ),
                       underline: Container(),
@@ -243,12 +241,10 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     widget: DropdownButton(
                       dropdownColor: Colors.white,
                       iconSize: 32,
-                      icon: const Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          //
-                          color: Color(0xFF91919F),
+                      icon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/icons/arrow-down.svg',
                         ),
                       ),
                       underline: Container(),

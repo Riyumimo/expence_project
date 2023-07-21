@@ -11,7 +11,7 @@ class IncomeExpenseWidget extends StatelessWidget {
     // this.isExpense = false,
   });
   final Function()? ontap;
-  final IconData icon;
+  final Widget icon;
   final Color? color;
   final String amount;
   final String title;
@@ -34,16 +34,12 @@ class IncomeExpenseWidget extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              height: 48,
-              width: 48,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(16)),
-              child: Icon(
-                icon,
-                size: 32,
-                color: color,
-              ),
-            ),
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16)),
+                child: icon),
             const Gap(8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
