@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:animations/animations.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/permission/camera_permission.dart';
@@ -125,246 +126,259 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   @override
   Widget build(BuildContext context) {
     print(_image);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: colorScheme(widget.title!) ?? $styles.colors.offWhite,
-        centerTitle: true,
-        title: Text(widget.title ?? " "),
+    return PageTransitionSwitcher(
+      transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
+          FadeThroughTransition(
+        animation: primaryAnimation,
+        secondaryAnimation: secondaryAnimation,
+        child: child,
       ),
-      backgroundColor: colorScheme(widget.title!) ?? $styles.colors.offWhite,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: Text(
-              'How Much?',
-              style: $styles.text.body
-                  .copyWith(color: $styles.colors.offWhite.withOpacity(.7)),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor:
+              colorScheme(widget.title!) ?? $styles.colors.offWhite,
+          centerTitle: true,
+          title: Text(widget.title ?? " "),
+        ),
+        backgroundColor: colorScheme(widget.title!) ?? $styles.colors.offWhite,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 26),
+              child: Text(
+                'How Much?',
+                style: $styles.text.body
+                    .copyWith(color: $styles.colors.offWhite.withOpacity(.7)),
+              ),
             ),
-          ),
-          const Gap(13),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: Row(
-              children: [
-                Text(
-                  '\$',
-                  style: $styles.text.h1.copyWith(color: Colors.white),
-                ),
-                Expanded(
-                  child: RecordInputField(
-                      textMoneyController: _textMoneyController),
-                ),
-              ],
-            ),
-          ),
-          const Gap(16),
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(32), topLeft: Radius.circular(32)),
-            ),
-            child: SeparatedColumn(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              separatorBuilder: () => const Gap(12),
-              children: [
-                MyInputField(
-                  colorText: _hintCategory == "Category" ? false : true,
-                  hint: _hintCategory,
-                  color: $styles.colors.white,
-                  widget: DropdownButton(
-                    dropdownColor: Colors.white,
-                    iconSize: 32,
-                    icon: const Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        //
-                        color: Color(0xFF91919F),
-                      ),
-                    ),
-                    underline: Container(),
-                    onChanged: (value) {
-                      setState(() {
-                        _hintCategory = value!;
-                      });
-                    },
-                    elevation: 4,
-                    items: categoryList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Icon(categoryIcon(value),
-                                  color: $styles.colors.greyStrong),
-                              const Gap(5),
-                              Text(
-                                value,
-                                style: $styles.text.bodyBold
-                                    .copyWith(color: $styles.colors.greyStrong),
-                              ),
-                            ],
-                          ));
-                    }).toList(),
+            const Gap(13),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 26),
+              child: Row(
+                children: [
+                  Text(
+                    '\$',
+                    style: $styles.text.h1.copyWith(color: Colors.white),
                   ),
-                ),
-                //Description
-                MyInputField(
-                  colorText:
-                      _textDescController.value.text != '' ? true : false,
-                  textEditingController: _textDescController,
-                  hint: 'Description',
-                  color: $styles.colors.white,
-                ),
-
-                //Wallet
-                MyInputField(
-                  colorText: _hintWallet == 'Wallet' ? false : true,
-                  hint: _hintWallet,
-                  color: $styles.colors.white,
-                  widget: DropdownButton(
-                    dropdownColor: Colors.white,
-                    iconSize: 32,
-                    icon: const Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        //
-                        color: Color(0xFF91919F),
-                      ),
-                    ),
-                    underline: Container(),
-                    onChanged: (value) {
-                      setState(() {
-                        _hintWallet = value!;
-                      });
-                    },
-                    elevation: 4,
-                    items: walletList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Icon(walletIcon(value),
-                                  color: $styles.colors.greyStrong),
-                              const Gap(5),
-                              Text(
-                                value,
-                                style: $styles.text.bodyBold
-                                    .copyWith(color: $styles.colors.greyStrong),
-                              ),
-                            ],
-                          ));
-                    }).toList(),
+                  Expanded(
+                    child: RecordInputField(
+                        textMoneyController: _textMoneyController),
                   ),
-                ),
-
-                _image == null
-                    ? AttachmentWidget(
-                        ontap: () {
-                          bottomSheet(context);
-                        },
-                      )
-                    : Row(
-                        children: [
-                          SizedBox(
-                            width: 112,
-                            height: 112,
-                            child: Stack(
+                ],
+              ),
+            ),
+            const Gap(16),
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(32),
+                    topLeft: Radius.circular(32)),
+              ),
+              child: SeparatedColumn(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                separatorBuilder: () => const Gap(12),
+                children: [
+                  MyInputField(
+                    colorText: _hintCategory == "Category" ? false : true,
+                    hint: _hintCategory,
+                    color: $styles.colors.white,
+                    widget: DropdownButton(
+                      dropdownColor: Colors.white,
+                      iconSize: 32,
+                      icon: const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          //
+                          color: Color(0xFF91919F),
+                        ),
+                      ),
+                      underline: Container(),
+                      onChanged: (value) {
+                        setState(() {
+                          _hintCategory = value!;
+                        });
+                      },
+                      elevation: 4,
+                      items: categoryList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Row(
                               children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 100,
-                                      child: Image.file(
-                                        _image!,
-                                        fit: BoxFit.cover,
+                                Icon(categoryIcon(value),
+                                    color: $styles.colors.greyStrong),
+                                const Gap(5),
+                                Text(
+                                  value,
+                                  style: $styles.text.bodyBold.copyWith(
+                                      color: $styles.colors.greyStrong),
+                                ),
+                              ],
+                            ));
+                      }).toList(),
+                    ),
+                  ),
+                  //Description
+                  MyInputField(
+                    colorText:
+                        _textDescController.value.text != '' ? true : false,
+                    textEditingController: _textDescController,
+                    hint: 'Description',
+                    color: $styles.colors.white,
+                  ),
+
+                  //Wallet
+                  MyInputField(
+                    colorText: _hintWallet == 'Wallet' ? false : true,
+                    hint: _hintWallet,
+                    color: $styles.colors.white,
+                    widget: DropdownButton(
+                      dropdownColor: Colors.white,
+                      iconSize: 32,
+                      icon: const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          //
+                          color: Color(0xFF91919F),
+                        ),
+                      ),
+                      underline: Container(),
+                      onChanged: (value) {
+                        setState(() {
+                          _hintWallet = value!;
+                        });
+                      },
+                      elevation: 4,
+                      items: walletList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Icon(walletIcon(value),
+                                    color: $styles.colors.greyStrong),
+                                const Gap(5),
+                                Text(
+                                  value,
+                                  style: $styles.text.bodyBold.copyWith(
+                                      color: $styles.colors.greyStrong),
+                                ),
+                              ],
+                            ));
+                      }).toList(),
+                    ),
+                  ),
+
+                  _image == null
+                      ? AttachmentWidget(
+                          ontap: () {
+                            bottomSheet(context);
+                          },
+                        )
+                      : Row(
+                          children: [
+                            SizedBox(
+                              width: 112,
+                              height: 112,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: Image.file(
+                                          _image!,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
+                                  Positioned(
+                                      top: -15,
+                                      right: -15,
+                                      child: IconButton(
+                                        iconSize: 16,
+                                        onPressed: () async {
+                                          setState(() {
+                                            if (_image!.existsSync()) {
+                                              _image!.deleteSync();
+                                              _image = null;
+                                              print(
+                                                  'File deleted successfully');
+                                            } else {
+                                              print('File not found');
+                                            }
+                                          });
+                                          print(_image?.existsSync());
+                                        },
+                                        icon: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Container(
+                                                color: $styles.colors.greyMedium
+                                                    .withOpacity(.7),
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                ))),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SizedBox(
+                      height: 59,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Repeat',
+                                  style: $styles.text.bodyBold,
                                 ),
-                                Positioned(
-                                    top: -15,
-                                    right: -15,
-                                    child: IconButton(
-                                      iconSize: 16,
-                                      onPressed: () async {
-                                        setState(() {
-                                          if (_image!.existsSync()) {
-                                            _image!.deleteSync();
-                                            _image = null;
-                                            print('File deleted successfully');
-                                          } else {
-                                            print('File not found');
-                                          }
-                                        });
-                                        print(_image?.existsSync());
-                                      },
-                                      icon: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Container(
-                                              color: $styles.colors.greyMedium
-                                                  .withOpacity(.7),
-                                              child: const Icon(
-                                                Icons.close,
-                                                color: Colors.white,
-                                              ))),
-                                    ))
+                                Text(
+                                  'Repeat transaction',
+                                  style: $styles.text.bodySmall.copyWith(
+                                      height: 0,
+                                      color: $styles.colors.textWhite),
+                                )
                               ],
                             ),
                           ),
+                          Switch(
+                              value: _isRepeat,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isRepeat = value;
+                                });
+                              }),
                         ],
                       ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: SizedBox(
-                    height: 59,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Repeat',
-                                style: $styles.text.bodyBold,
-                              ),
-                              Text(
-                                'Repeat transaction',
-                                style: $styles.text.bodySmall.copyWith(
-                                    height: 0, color: $styles.colors.textWhite),
-                              )
-                            ],
-                          ),
-                        ),
-                        Switch(
-                            value: _isRepeat,
-                            onChanged: (value) {
-                              setState(() {
-                                _isRepeat = value;
-                              });
-                            }),
-                      ],
                     ),
                   ),
-                ),
-                const RecordButton()
-              ],
-            ),
-          )
-        ],
+                  const RecordButton()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

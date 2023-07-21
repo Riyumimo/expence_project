@@ -72,44 +72,40 @@ class _HomeScreensState extends State<HomeScreens> {
                         )),
                     const MyTextButton(title: 'Oktober'),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.notifications))
+                        onPressed: () {},
+                        icon: SvgPicture.asset('assets/icons/notifiaction.svg'))
                   ]),
             ),
             Center(
                 child: Text(
               'Account Balance',
-              style: $styles.text.quote2Sub
-                  .copyWith(color: ($styles.colors.textWhite)),
+              style: $styles.text.body
+                  .copyWith(height: 0, color: ($styles.colors.textWhite)),
             )),
+            Gap(9),
             Center(
-              child: SizedBox(
-                height: 44,
-                width: 328,
-                child: Center(
-                  child: Text(
-                    '\$9400',
-                    style: $styles.text.quote1,
-                  ),
-                ),
+              child: Text(
+                '\$9400',
+                style: $styles.text.quote1.copyWith(fontSize: 40, height: 0),
               ),
             ),
             SeparatedRow(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
               separatorBuilder: () => const Gap(16),
               children: [
-                Expanded(
+                const Expanded(
                     child: IncomeExpenseWidget(
                   title: 'Income',
-                  color: $styles.colors.accent1,
-                  amount: '\$5000',
-                  icon: const Icon(Icons.trending_up),
+                  color: Color(0xFF00A86B),
+                  amount: '\$10000',
+                  icon: Icons.trending_up,
                 )),
                 Expanded(
                   child: IncomeExpenseWidget(
                       title: 'Expense',
                       color: Colors.red[800],
                       amount: '\$5000',
-                      icon: const Icon(Icons.trending_down)),
+                      icon: Icons.trending_down),
                 )
               ],
             ),
@@ -134,7 +130,8 @@ class _HomeScreensState extends State<HomeScreens> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
               ),
-              child: Row(
+              child: SeparatedRow(
+                separatorBuilder: () => const Gap(8),
                 children: [
                   Expanded(
                       child: RowChipButton(

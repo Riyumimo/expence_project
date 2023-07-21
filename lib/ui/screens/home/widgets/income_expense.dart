@@ -8,25 +8,30 @@ class IncomeExpenseWidget extends StatelessWidget {
     this.color,
     required this.amount,
     required this.title,
+    // this.isExpense = false,
   });
   final Function()? ontap;
-  final Icon icon;
+  final IconData icon;
   final Color? color;
   final String amount;
   final String title;
+  // final bool isExpense;
 
   @override
   Widget build(BuildContext context) {
+    // final width = MediaQuery.sizeOf(context).width;
+    // final height = MediaQuery.sizeOf(context).height;
     return GestureDetector(
       onTap: ontap,
       child: Container(
+        padding: const EdgeInsets.only(left: 8),
         height: 90,
         decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(16)),
-        child: SeparatedRow(
-          padding: const EdgeInsets.all(16),
+            color: color, borderRadius: BorderRadius.circular(28)),
+        child: Row(
+          // padding: const EdgeInsets.all(16),
           crossAxisAlignment: CrossAxisAlignment.center,
-          separatorBuilder: () => const Gap(10),
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               height: 48,
@@ -34,21 +39,27 @@ class IncomeExpenseWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(16)),
               child: Icon(
-                Icons.trending_up,
+                icon,
                 size: 32,
                 color: color,
               ),
             ),
+            const Gap(8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Income',
-                  style: $styles.text.body,
+                  title,
+                  style: $styles.text.title2.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFFCFCFC)),
                 ),
+                const Gap(4),
                 Text(
-                  '\$5000',
-                  style: $styles.text.quote2,
+                  amount,
+                  style: $styles.text.quote2
+                      .copyWith(fontSize: 22, color: const Color(0xFFFCFCFC)),
                 ),
               ],
             )

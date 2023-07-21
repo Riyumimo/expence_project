@@ -2,9 +2,9 @@ import '../commons_libs.dart';
 
 class AppColors {
   /// Common
-  final Color accent1 = const Color(0xFFE4935D);
+  final Color accent1 = const Color(0xFF7F3DFF);
   final Color accent2 = const Color(0xFFBEABA1);
-  final Color offWhite = const Color(0xFFF8ECE5);
+  final Color offWhite = const Color(0xFFFFFFFF);
   final Color caption = const Color(0xFF7D7873);
   final Color body = const Color(0xFF514F4D);
   final Color greyStrong = const Color(0xFF272625);
