@@ -1,6 +1,6 @@
-import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/common/my_button.dart';
+import '../../../commons_libs.dart';
+import '../../../main.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.title});
@@ -12,12 +12,11 @@ class DetailScreen extends StatelessWidget {
         return const Color(0xFFFD3C4A);
       case 'Income':
         return const Color(0xFF00A86B);
-      case 'Tranfer':
+      case 'Transfer':
         return const Color(0xFF0077FF);
       default:
-        Colors.amber;
+        return Colors.amber;
     }
-    return null;
   }
 
   @override
@@ -29,7 +28,6 @@ class DetailScreen extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           SeparatedColumn(
-            // padding: const EdgeInsets.only(bottom),
             separatorBuilder: () => const Gap(16),
             children: [
               Container(
@@ -62,9 +60,10 @@ class DetailScreen extends StatelessWidget {
                                 'Detail Transaction',
                                 textAlign: TextAlign.center,
                                 style: $styles.text.quote2.copyWith(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    height: 0),
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  height: 0,
+                                ),
                               ),
                               const Icon(
                                 Icons.delete_forever,
@@ -89,7 +88,9 @@ class DetailScreen extends StatelessWidget {
                         Text(
                           'Buy some grocery',
                           style: $styles.text.body.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.w500),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         Text(
                           'Saturday 4 June 2021 16:20',
@@ -103,7 +104,6 @@ class DetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // Gap(16),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -152,68 +152,68 @@ class DetailScreen extends StatelessWidget {
           ),
           Positioned(
             top: height / 2 - height * .1847,
-            // left: width / 2 - 50,
             child: Container(
               height: 70,
               width: width * .914,
-              padding: const EdgeInsets.symmetric(
-                vertical: 6,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(width: 1, color: const Color(0xFFF1F1FA))),
-              child: Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Type',
-                          style: $styles.text.body.copyWith(
-                              color: const Color(0xFF91919F), fontSize: 14),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(width: 1, color: const Color(0xFFF1F1FA)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Type',
+                        style: $styles.text.body.copyWith(
+                          color: const Color(0xFF91919F),
+                          fontSize: 14,
                         ),
-                        Text(
-                          'Income',
-                          style: $styles.text.bodyBold,
-                        )
-                      ],
-                    ),
-                    // const Spacer(),
-                    Column(
-                      children: [
-                        Text(
-                          'Type',
-                          style: $styles.text.body.copyWith(
-                              color: const Color(0xFF91919F), fontSize: 14),
+                      ),
+                      Text(
+                        'Income',
+                        style: $styles.text.bodyBold,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Type',
+                        style: $styles.text.body.copyWith(
+                          color: const Color(0xFF91919F),
+                          fontSize: 14,
                         ),
-                        Text(
-                          'Income',
-                          style: $styles.text.bodyBold,
-                        )
-                      ],
-                    ),
-                    // const Spacer(),
-                    Column(
-                      children: [
-                        Text(
-                          'Type',
-                          style: $styles.text.body.copyWith(
-                              color: const Color(0xFF91919F), fontSize: 14),
+                      ),
+                      Text(
+                        'Income',
+                        style: $styles.text.bodyBold,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Type',
+                        style: $styles.text.body.copyWith(
+                          color: const Color(0xFF91919F),
+                          fontSize: 14,
                         ),
-                        Text(
-                          'Income',
-                          style: $styles.text.bodyBold,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      Text(
+                        'Income',
+                        style: $styles.text.bodyBold,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
