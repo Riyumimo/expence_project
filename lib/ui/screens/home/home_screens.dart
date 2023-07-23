@@ -201,15 +201,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       ),
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
-                      Expanded(
-                          child: RowChipButton(
-                        label: 'See all',
-                        isSelected: true,
-                        backgroundColor: const Color(0xFFEEE5FF),
-                        color: const Color(0xFF7F3DFF),
-                        // selected: 0,
-                        onSelected: () {},
-                      ))
+                      FilledButton(onPressed: () {}, child: Text("See all"))
                     ],
                   )),
             ),
