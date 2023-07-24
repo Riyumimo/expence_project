@@ -1,4 +1,6 @@
 import 'package:either_dart/either.dart';
+import 'package:expence_project/data/models/user.dart';
+import 'package:expence_project/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tuple/tuple.dart';
@@ -8,7 +10,8 @@ abstract class AuthenticationRepository {
   Future<void> signOut();
   Future<Either<String, Tuple2<UserCredential?, bool>>> signInWithEmail(
       String email, String password);
-  Future<String> registerWithEmail(String email, String password);
+  Future<String> registerWithEmail(
+      String email, String password, String? fullname);
 }
 
 class FirebaseAuthenticationRepository extends AuthenticationRepository {
@@ -75,7 +78,8 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<String> registerWithEmail(String email, String password) async {
+  Future<String> registerWithEmail(
+      String email, String password, String? fullname) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -86,7 +90,10 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
       if (user != null) {
         user.emailVerified ? null : user.sendEmailVerification();
       }
-      return 'Registrasi berhasil! User ID: ${user?.uid}';
+      storage.addUser(
+          UserModel(fullname!, email, password, DateTime.now(), DateTime.now()),
+          user!.uid);
+      return 'Registrasi berhasil! User ID: ${user.uid}';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'Password yang Anda masukkan terlalu lemah.';

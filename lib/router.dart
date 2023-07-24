@@ -11,6 +11,7 @@ import 'package:expence_project/ui/screens/record_keeping_screen/record_keeping_
 import 'package:expence_project/ui/screens/transaction_screen/status_screen.dart';
 import 'package:expence_project/ui/screens/transaction_screen/transaction_screen.dart';
 import 'package:expence_project/ui/screens/register_screen/register_screen.dart';
+import 'package:expence_project/ui/screens/verification_screens/verifications_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'commons_libs.dart';
 
@@ -46,6 +47,7 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         ),
         AppRoute(ScreenPaths.home, (s) => const HomeScreens()),
         AppRoute(ScreenPaths.register, (s) => const RegisterScreen()),
+        AppRoute(ScreenPaths.verification, (s) => const VerificationScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => const DashboardScreen()),
         AppRoute(ScreenPaths.camera, (s) => const CameraScreen()),
         AppRoute(

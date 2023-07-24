@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/common/validate_data.dart';
-import 'package:expence_project/data/firebse_service/auth_repository.dart';
+import 'package:expence_project/data/firebase_service/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -99,7 +99,8 @@ class AuthenticationBloc
               emit(const _Loaded(isLoading: false));
             } else {
               String encryptPasswod = encryptPassword(event.password);
-              await repo.registerWithEmail(event.email, encryptPasswod);
+              await repo.registerWithEmail(
+                  event.email, encryptPasswod, event.fullName);
               emit(const _Loaded(isLoading: false));
               appRoute.go(ScreenPaths.verification);
             }

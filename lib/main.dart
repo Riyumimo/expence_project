@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:expence_project/logic/app_logic.dart';
 import 'package:expence_project/logic/auth/authentication_bloc.dart';
-import 'package:expence_project/data/firebse_service/auth_repository.dart';
+import 'package:expence_project/data/firebase_service/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/styles/styles.dart';
 import 'package:expence_project/ui/app_scafold.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -35,8 +38,10 @@ class MyApp extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthenticationBloc(repo, connectivity)
-        ..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
+      create: (context) => AuthenticationBloc(
+        repo,
+        connectivity,
+      )..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           print(state);
@@ -73,6 +78,9 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<Connectivity>(() => Connectivity());
   GetIt.I.registerLazySingleton<FirebaseAuthenticationRepository>(
       () => FirebaseAuthenticationRepository());
+  GetIt.I.registerLazySingleton<FirebaseStorageRepository>(() =>
+      FirebaseStorageRepository(
+          FirebaseFirestore.instance, FirebaseAuth.instance));
 }
 
 /// Add syntax sugar for quickly accessing the main "logic" controllers in the app
@@ -81,5 +89,6 @@ AppLogic get appLogic => GetIt.I.get<AppLogic>();
 Connectivity get connectivity => GetIt.I.get<Connectivity>();
 FirebaseAuthenticationRepository get repo =>
     GetIt.I.get<FirebaseAuthenticationRepository>();
-
+FirebaseStorageRepository get storage =>
+    GetIt.I.get<FirebaseStorageRepository>();
 AppStyle get $styles => AppScaffold.style;

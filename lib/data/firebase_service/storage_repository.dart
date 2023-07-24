@@ -6,7 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 
 abstract class StorageRepository {
-  Future<void> addUser(UserModel user);
+  Future<void> getUser();
+
+  Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
 }
@@ -21,7 +23,7 @@ class FirebaseStorageRepository extends StorageRepository {
   final accountCollection = 'account';
   final transactionCollection = 'transaction';
   @override
-  Future<void> addUser(UserModel user) async {
+  Future<void> addUser(UserModel user, String uid) async {
     try {
       var uid = firebaseAuth.currentUser?.uid;
       firestore.collection(userCollection).doc(uid).set(user.toFireStore());
@@ -55,6 +57,22 @@ class FirebaseStorageRepository extends StorageRepository {
           .collection(transactionCollection)
           .doc(transaction.id.toString())
           .set(transaction.toFirestore());
+    } catch (e) {}
+  }
+
+  @override
+  Future<void> getUser() async {
+    String uid = firebaseAuth.currentUser!.uid;
+
+    try {
+      CollectionReference userRef = firestore.collection(userCollection);
+      DocumentSnapshot<Object?> dokumentSnapshot = await userRef.doc(uid).get();
+      Map<String, dynamic> data =
+          dokumentSnapshot.data() as Map<String, dynamic>;
+
+      print(data);
+
+      // UserModel.fromJson(data);
     } catch (e) {}
   }
 }
