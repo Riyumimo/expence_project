@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/app_logic.dart';
 import 'package:expence_project/logic/auth/authentication_bloc.dart';
-import 'package:expence_project/data/repository/auth_repository.dart';
+import 'package:expence_project/data/firebse_service/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/styles/styles.dart';
 import 'package:expence_project/ui/app_scafold.dart';

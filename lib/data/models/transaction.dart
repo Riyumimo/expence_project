@@ -1,4 +1,6 @@
-class Transaction {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class TransactionModel {
   final int id;
   final String type; // Income or Expense
   final String name;
@@ -9,7 +11,7 @@ class Transaction {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Transaction(
+  TransactionModel(
     this.id,
     this.type,
     this.name,
@@ -20,4 +22,18 @@ class Transaction {
     this.createdAt,
     this.updatedAt,
   );
+  // Konversi objek TransactionModel menjadi Map untuk menyimpan di Firestore
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'type': type,
+      'name': name,
+      'amount': amount,
+      'date': Timestamp.fromDate(date),
+      'description': description,
+      'categoryId': categoryId,
+      'createdAt': Timestamp.fromDate(createdAt),
+      'updatedAt': Timestamp.fromDate(updatedAt),
+    };
+  }
 }

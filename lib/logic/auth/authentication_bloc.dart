@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/logic/common/validate_data.dart';
-import 'package:expence_project/data/repository/auth_repository.dart';
+import 'package:expence_project/data/firebse_service/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
