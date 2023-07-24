@@ -26,22 +26,6 @@ class ListTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-<<<<<<< HEAD
-
-    return GestureDetector(
-      onTap: ontap,
-      child: SizedBox(
-        width: double.infinity,
-        height: height * .1099,
-        child: Row(
-          children: [
-            Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFCEED4),
-                borderRadius: BorderRadius.circular(16),
-=======
     return Card(
       elevation: 0,
       clipBehavior: Clip.hardEdge,
@@ -67,7 +51,6 @@ class ListTileItem extends StatelessWidget {
                   size: 40,
                   color: $styles.colors.accent1,
                 ),
->>>>>>> 9d5e257a993cb29f2d8938b658ff04e584378cd4
               ),
               const Gap(9),
               Expanded(
