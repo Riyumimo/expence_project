@@ -26,6 +26,7 @@ class ListTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+<<<<<<< HEAD
 
     return GestureDetector(
       onTap: ontap,
@@ -40,50 +41,72 @@ class ListTileItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFFCEED4),
                 borderRadius: BorderRadius.circular(16),
+=======
+    return Card(
+      elevation: 0,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        splashColor: $styles.colors.accent1.withOpacity(.3),
+        hoverColor: $styles.colors.accent1.withOpacity(.3),
+        onTap: ontap,
+        child: SizedBox(
+          width: double.infinity,
+          height: height * 0.1099,
+          child: Row(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFCEED4),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(
+                  Icons.shopping_bag_rounded,
+                  size: 40,
+                  color: $styles.colors.accent1,
+                ),
+>>>>>>> 9d5e257a993cb29f2d8938b658ff04e584378cd4
               ),
-              child: Icon(
-                Icons.shopping_bag_rounded,
-                size: 40,
-                color: $styles.colors.accent1,
-              ),
-            ),
-            const Gap(9),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Shopping',
-                        style: $styles.text.bodyBold,
-                      ),
-                      const Spacer(),
-                      Text(
-                        '\$-120',
-                        style: $styles.text.bodyBold
-                            .copyWith(color: Colors.red[800]),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Buy some groceries',
-                        style: $styles.text.body,
-                      ),
-                      const Spacer(),
-                      Text(
-                        '10:00 AM',
-                        style: $styles.text.body,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+              const Gap(9),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Shopping',
+                          style: $styles.text.bodyBold,
+                        ),
+                        const Spacer(),
+                        Text(
+                          '\$-120',
+                          style: $styles.text.bodyBold
+                              .copyWith(color: Colors.red[800]),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Buy some groceries',
+                          style: $styles.text.body,
+                        ),
+                        const Spacer(),
+                        Text(
+                          '10:00 AM',
+                          style: $styles.text.body,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
