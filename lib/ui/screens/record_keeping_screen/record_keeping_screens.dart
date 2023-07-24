@@ -30,7 +30,17 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
   bool _isRepeat = false;
   String _hintCategory = 'Category';
   String _hintWallet = 'Wallet';
-  List<String> categoryList = ["Food", "Subcriptions", "Shoping", "Monthly"];
+  List<String> categoryListExpense = [
+    "Food",
+    "Subcriptions",
+    "Shoping",
+    "Monthly"
+  ];
+  List<String> categoryListIncome = [
+    "Salary",
+    "Bussines",
+    "Divide",
+  ];
   List<String> walletList = ["Bank", "E-Money", "Cash"];
   File? _image;
   CameraImagePickerHandler? cameraImagePickerHandler;
@@ -205,23 +215,41 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                         });
                       },
                       elevation: 4,
-                      items: categoryList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Row(
-                              children: [
-                                Icon(categoryIcon(value),
-                                    color: $styles.colors.greyStrong),
-                                const Gap(5),
-                                Text(
-                                  value,
-                                  style: $styles.text.bodyBold.copyWith(
-                                      color: $styles.colors.greyStrong),
-                                ),
-                              ],
-                            ));
-                      }).toList(),
+                      items: widget.title == 'Income'
+                          ? categoryListIncome
+                              .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      Icon(categoryIcon(value),
+                                          color: $styles.colors.greyStrong),
+                                      const Gap(5),
+                                      Text(
+                                        value,
+                                        style: $styles.text.bodyBold.copyWith(
+                                            color: $styles.colors.greyStrong),
+                                      ),
+                                    ],
+                                  ));
+                            }).toList()
+                          : categoryListExpense
+                              .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      Icon(categoryIcon(value),
+                                          color: $styles.colors.greyStrong),
+                                      const Gap(5),
+                                      Text(
+                                        value,
+                                        style: $styles.text.bodyBold.copyWith(
+                                            color: $styles.colors.greyStrong),
+                                      ),
+                                    ],
+                                  ));
+                            }).toList(),
                     ),
                   ),
                   //Description

@@ -7,15 +7,31 @@ class ListTileItem extends StatelessWidget {
   });
   final Function()? ontap;
 
+  Color? colorIcon(String category) {
+    switch (category) {
+      case "Food":
+        return Colors.amber;
+      case "Subcriptions":
+        return Colors.red;
+      case "Shoping":
+        return Colors.green;
+      case "Monthly":
+        return Colors.amber;
+      default:
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
+    // final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+
     return GestureDetector(
       onTap: ontap,
       child: SizedBox(
         width: double.infinity,
-        height: 89,
+        height: height * .1099,
         child: Row(
           children: [
             Container(
