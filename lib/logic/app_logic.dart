@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:expence_project/logic/authencation_route_screen.dart';
+import 'package:expence_project/router.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 
 import '../commons_libs.dart';
@@ -29,7 +30,7 @@ class AppLogic {
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
     debugPrint('bootstrap start...');
-    print('testing');
+    // print('testing');
     // Set min-sizes for desktop apps
     // if (PlatformInfo.isDesktop) {
     //   await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
@@ -63,7 +64,7 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    AuthenticationScreenRouter().handleAuthentication();
+    AuthenticationScreenRouter().redirectToScreen(ScreenPaths.account);
     // if (showIntro) {
     //   appRouter.go(ScreenPaths.intro);
     // } else {

@@ -39,33 +39,31 @@ class MyApp extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AuthenticationBloc(
-            repo,
-            connectivity,
-          )..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
-        ),
-        BlocProvider(
-          create: (context) => AccountBloc()..add(const AccountEvent.started()),
-        ),
-      ],
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              print(state);
-              state.map(
-                  intial: (intial) {},
-                  authenticated: (value) {},
-                  loaded: (loaded) {},
-                  unauthenticated: (unauthenticated) {
-                    appRoute.go(ScreenPaths.login);
-                  },
-                  error: (value) {});
-            },
+        providers: [
+          BlocProvider(
+            create: (context) => AuthenticationBloc(
+              repo,
+              connectivity,
+            )..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
           ),
-          BlocListener<AccountBloc, AccountState>(
+          BlocProvider(
+            create: (context) =>
+                AccountBloc()..add(const AccountEvent.started()),
+          ),
+        ],
+        child: BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            print(state);
+            state.map(
+                intial: (intial) {},
+                authenticated: (value) {},
+                loaded: (loaded) {},
+                unauthenticated: (unauthenticated) {
+                  appRoute.go(ScreenPaths.login);
+                },
+                error: (value) {});
+          },
+          child: BlocListener<AccountBloc, AccountState>(
             listener: (context, state) {
               print(state);
               state.map(
@@ -81,21 +79,19 @@ class MyApp extends StatelessWidget with GetItMixin {
                   },
                   error: (error) {});
             },
-          )
-        ],
-        child: MaterialApp.router(
-          routeInformationProvider: appRoute.routeInformationProvider,
-          routeInformationParser: appRoute.routeInformationParser,
-          // showSemanticsDebugger: true,
-          debugShowCheckedModeBanner: false,
-          routerDelegate: appRoute.routerDelegate,
-          theme: ThemeData(
-            // fontFamily: //.text.body.fontFamily,
-            useMaterial3: true,
+            child: MaterialApp.router(
+              routeInformationProvider: appRoute.routeInformationProvider,
+              routeInformationParser: appRoute.routeInformationParser,
+              // showSemanticsDebugger: true,
+              debugShowCheckedModeBanner: false,
+              routerDelegate: appRoute.routerDelegate,
+              theme: ThemeData(
+                // fontFamily: //.text.body.fontFamily,
+                useMaterial3: true,
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

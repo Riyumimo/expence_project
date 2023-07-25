@@ -1,5 +1,6 @@
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
+import 'package:expence_project/ui/screens/account/account_screen.dart';
 import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:expence_project/ui/screens/detail_screen/detail_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
@@ -26,6 +27,7 @@ class ScreenPaths {
   static String record = '/record';
   static String camera = '/camera';
   static String status = '/status';
+  static String account = '/account';
   static String transaction = '/transactions';
   static String detail = '/detail';
 }
@@ -50,6 +52,7 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(ScreenPaths.verification, (s) => const VerificationScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => const DashboardScreen()),
         AppRoute(ScreenPaths.camera, (s) => const CameraScreen()),
+        AppRoute(ScreenPaths.account, (s) => const AccountScreen()),
         AppRoute(
             ScreenPaths.record,
             (s) => RecordKeppingScreen(

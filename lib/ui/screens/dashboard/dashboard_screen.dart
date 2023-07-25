@@ -35,9 +35,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   late TabController tabController;
   @override
   void initState() {
-    BlocProvider.of<AuthenticationBloc>(context)
-        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
-    BlocProvider.of<AccountBloc>(context).add(const AccountEvent.started());
+    // BlocProvider.of<AuthenticationBloc>(context)
+    //     .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+    // BlocProvider.of<AccountBloc>(context).add(const AccountEvent.started());
     initialTabIndex = widget.initialTabIndex;
     _pageController = PageController(initialPage: initialTabIndex!);
     tabController = TabController(length: 5, vsync: this);

@@ -10,7 +10,7 @@ class MyButton extends StatelessWidget {
       {super.key,
       required this.title,
       this.onPressed,
-      this.color,
+      this.color = const Color(0xFF7F3DFF),
       this.isTransparant = false});
 
   @override

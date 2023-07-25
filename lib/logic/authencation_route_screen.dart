@@ -18,6 +18,7 @@ class AuthenticationScreenRouter {
         }
 
         final account = value.getBool('account');
+        print(' account $account');
         getAccount = account;
       },
     );
@@ -27,7 +28,6 @@ class AuthenticationScreenRouter {
       if (repo.firebaseAuth.currentUser?.uid != null) {
         print(repo.firebaseAuth.currentUser?.uid);
         if (getAuths == repo.firebaseAuth.currentUser?.uid) {
-          print('getAccount $getAccount');
           if (getAccount != null) {
             getAccount!
                 ? appRoute.go(ScreenPaths.dashboard)
@@ -44,9 +44,10 @@ class AuthenticationScreenRouter {
     } else {
       appRoute.go(ScreenPaths.login);
     }
+    print('getAccount $getAccount');
   }
 
-  void redirectToScreen() {
-    appRoute.go(ScreenPaths.dashboard);
+  void redirectToScreen(String path) {
+    appRoute.go(path);
   }
 }

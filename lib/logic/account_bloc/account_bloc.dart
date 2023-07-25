@@ -11,14 +11,16 @@ part 'account_bloc.freezed.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc() : super(_Initial()) {
-    on<_Started>((event, emit) {
+    on<_Started>((event, emit) async {
       print('bloc_account started');
       List listAccount = [];
-      if (listAccount == []) {
-        SharedPreferences.getInstance()
+      if (listAccount.isEmpty) {
+        await SharedPreferences.getInstance()
             .then((value) => value.setBool('account', false));
-        emit(const _Loaded([]));
+        print('complete');
+        // emit(const _Loaded([]));
       }
     });
+    on<_AddEvent>((event, emit) {});
   }
 }
