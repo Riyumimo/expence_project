@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/transaction_screen/transaction_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../commons_libs.dart';
+import '../../../logic/account_bloc/account_bloc.dart';
 import '../../../main.dart';
 import '../page1 copy 2.dart';
 import '../page1 copy.dart';
@@ -32,6 +35,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   late TabController tabController;
   @override
   void initState() {
+    BlocProvider.of<AuthenticationBloc>(context)
+        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+    BlocProvider.of<AccountBloc>(context).add(const AccountEvent.started());
     initialTabIndex = widget.initialTabIndex;
     _pageController = PageController(initialPage: initialTabIndex!);
     tabController = TabController(length: 5, vsync: this);

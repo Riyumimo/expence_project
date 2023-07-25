@@ -4,14 +4,12 @@ class UserModel {
   // final int id;
   final String name;
   final String email;
-  final String password;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   UserModel(
     this.name,
     this.email,
-    this.password,
     this.createdAt,
     this.updatedAt,
   );
@@ -19,7 +17,6 @@ class UserModel {
     return UserModel(
         data['name'],
         data['email'],
-        data['password'],
         (data['createdAt'] as Timestamp).toDate(),
         (data['updatedAt'] as Timestamp).toDate());
   }
@@ -28,7 +25,6 @@ class UserModel {
     return {
       'name': name,
       'email': email,
-      'password': password,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt)
     };

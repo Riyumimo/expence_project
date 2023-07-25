@@ -6,6 +6,7 @@ import '../router.dart';
 class AuthenticationScreenRouter {
   void handleAuthentication() async {
     String? getAuths;
+    bool? getAccount;
     await SharedPreferences.getInstance().then(
       (value) {
         final getAuth = value.getString(
@@ -15,15 +16,25 @@ class AuthenticationScreenRouter {
         if (getAuth != null) {
           getAuths = getAuth;
         }
+
+        final account = value.getBool('account');
+        getAccount = account;
       },
     );
 
-    print("S$getAuths");
+    // print("S$getAuths");
     if (getAuths != null) {
       if (repo.firebaseAuth.currentUser?.uid != null) {
         print(repo.firebaseAuth.currentUser?.uid);
         if (getAuths == repo.firebaseAuth.currentUser?.uid) {
-          appRoute.go(ScreenPaths.home);
+          print('getAccount $getAccount');
+          if (getAccount != null) {
+            getAccount!
+                ? appRoute.go(ScreenPaths.dashboard)
+                : appRoute.go(ScreenPaths.home);
+          } else {
+            appRoute.go(ScreenPaths.home);
+          }
         } else {
           appRoute.go(ScreenPaths.login);
         }

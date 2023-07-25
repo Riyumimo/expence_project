@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:expence_project/logic/app_logic.dart';
-import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/data/firebase_service/auth_repository.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/styles/styles.dart';
@@ -15,6 +14,8 @@ import 'package:get_it/get_it.dart';
 
 import 'commons_libs.dart';
 import 'firebase_options.dart';
+import 'logic/account_bloc/account_bloc.dart';
+import 'logic/auth_bloc/authentication_bloc.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -37,25 +38,51 @@ class MyApp extends StatelessWidget with GetItMixin {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(
-        repo,
-        connectivity,
-      )..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
-      child: BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-          print(state);
-          state.map(
-              intial: (intial) {},
-              authenticated: (value) {
-                appRoute.go(ScreenPaths.dashboard);
-              },
-              loaded: (loaded) {},
-              unauthenticated: (unauthenticated) {
-                appRoute.go(ScreenPaths.login);
-              },
-              error: (value) {});
-        },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationBloc(
+            repo,
+            connectivity,
+          )..add(AuthenticationEvent.getSignIn(repo.firebaseAuth)),
+        ),
+        BlocProvider(
+          create: (context) => AccountBloc()..add(const AccountEvent.started()),
+        ),
+      ],
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              print(state);
+              state.map(
+                  intial: (intial) {},
+                  authenticated: (value) {},
+                  loaded: (loaded) {},
+                  unauthenticated: (unauthenticated) {
+                    appRoute.go(ScreenPaths.login);
+                  },
+                  error: (value) {});
+            },
+          ),
+          BlocListener<AccountBloc, AccountState>(
+            listener: (context, state) {
+              print(state);
+              state.map(
+                  initial: (initial) {},
+                  loading: (loading) {},
+                  loaded: (loaded) {
+                    if (loaded.listAccount.isEmpty) {
+                      print('Empity Data');
+                      appRoute.go(ScreenPaths.home);
+                    } else {
+                      appRoute.go(ScreenPaths.dashboard);
+                    }
+                  },
+                  error: (error) {});
+            },
+          )
+        ],
         child: MaterialApp.router(
           routeInformationProvider: appRoute.routeInformationProvider,
           routeInformationParser: appRoute.routeInformationParser,
@@ -63,7 +90,7 @@ class MyApp extends StatelessWidget with GetItMixin {
           debugShowCheckedModeBanner: false,
           routerDelegate: appRoute.routerDelegate,
           theme: ThemeData(
-            fontFamily: $styles.text.body.fontFamily,
+            // fontFamily: //.text.body.fontFamily,
             useMaterial3: true,
           ),
         ),

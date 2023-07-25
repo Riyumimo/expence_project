@@ -1,11 +1,11 @@
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/logic/auth/authentication_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
 import 'package:expence_project/ui/common/my_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../logic/auth_bloc/authentication_bloc.dart';
 import '../../common/my_back_button.dart';
 
 class RegisterScreen extends StatefulWidget {

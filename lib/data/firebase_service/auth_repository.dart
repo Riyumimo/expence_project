@@ -38,6 +38,10 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         if (userCredential.user != null) {
           print(userCredential.user?.email);
           this.userCredential = userCredential;
+          storage.addUser(
+              UserModel(userCredential.user!.displayName!,
+                  userCredential.user!.email!, DateTime.now(), DateTime.now()),
+              userCredential.user!.uid);
           return Tuple2(userCredential, true);
         } else {
           print("Failed to sign in with credential");
@@ -91,7 +95,7 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
         user.emailVerified ? null : user.sendEmailVerification();
       }
       storage.addUser(
-          UserModel(fullname!, email, password, DateTime.now(), DateTime.now()),
+          UserModel(fullname!, email, DateTime.now(), DateTime.now()),
           user!.uid);
       return 'Registrasi berhasil! User ID: ${user.uid}';
     } on FirebaseAuthException catch (e) {
