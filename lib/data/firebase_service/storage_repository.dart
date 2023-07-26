@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 
 abstract class StorageRepository {
-  Future<void> getUser();
+  Future<UserModel> getUser();
   Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
   Future<List<Account>> getAccount();
@@ -83,19 +83,23 @@ class FirebaseStorageRepository extends StorageRepository {
   }
 
   @override
-  Future<void> getUser() async {
+  Future<UserModel> getUser() async {
     String uid = firebaseAuth.currentUser!.uid;
-
     try {
-      CollectionReference userRef = firestore.collection(userCollection);
-      DocumentSnapshot<Object?> dokumentSnapshot = await userRef.doc(uid).get();
-      Map<String, dynamic> data =
-          dokumentSnapshot.data() as Map<String, dynamic>;
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await firestore.collection(userCollection).doc(uid).get();
 
-      print(data);
-
-      // UserModel.fromJson(data);
-    } catch (e) {}
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data = documentSnapshot.data()!;
+        print(data);
+        return UserModel.fromJson(data);
+      } else {
+        throw Exception('User data not found for uid: $uid');
+      }
+    } catch (e) {
+      print('Error occurred while fetching user data: $e');
+      rethrow; // Rethrow the error to propagate it to the calling code.
+    }
   }
 
   @override
@@ -111,7 +115,7 @@ class FirebaseStorageRepository extends StorageRepository {
       QuerySnapshot<Object?> querySnapshot = await accountRef.get();
       List<Account> accountList = querySnapshot.docs.map((document) {
         Map<String, dynamic>? data = document.data() as Map<String, dynamic>;
-        if (data == null) {
+        if (data.isEmpty) {
           throw Exception('Data not available for document: ${document.id}');
         }
         return Account.fromFirestore(data);
