@@ -201,7 +201,13 @@ class _HomeScreensState extends State<HomeScreens> {
                       ),
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
-                      FilledButton(onPressed: () {}, child: Text("See all"))
+                      FilledButton(
+                          onPressed: () async {
+                            print('ontap..');
+                            final data = await storage.getAccount();
+                            print(data[0].createdAt);
+                          },
+                          child: Text("See all"))
                     ],
                   )),
             ),

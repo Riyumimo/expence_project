@@ -32,13 +32,12 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       } else {
         // Semua validasi berhasil, tambahkan akun
         _storageRepository.addAccount(Account(
-          event.accountName,
-          event.initialBalance.toDouble(),
-          event.name,
-          DateTime.now(),
-          DateTime.now(),
-          event.accountType,
-          null,
+          accountName: event.accountName,
+          name: event.name,
+          initialBalance: event.initialBalance.toDouble(),
+          accountType: event.accountType,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         ));
       }
     });

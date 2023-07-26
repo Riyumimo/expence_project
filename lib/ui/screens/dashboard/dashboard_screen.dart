@@ -263,6 +263,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       icon: SvgPicture.asset(
                         'assets/icons/currency-exchange.svg',
                       ),
+                      ontap: () async {},
                     ),
                     PopupButton(
                       aligment: alignment3,

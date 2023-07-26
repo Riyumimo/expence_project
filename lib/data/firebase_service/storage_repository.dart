@@ -7,9 +7,10 @@ import '../models/user.dart';
 
 abstract class StorageRepository {
   Future<void> getUser();
-
   Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
+  Future<List<Account>> getAccount();
+
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
 }
 
@@ -39,13 +40,13 @@ class FirebaseStorageRepository extends StorageRepository {
       if (account.uid == null) {
         throw Exception('Account UID cannot be empty');
       }
-      if (account.accountName.isEmpty) {
+      if (account.accountName == null) {
         throw Exception('Account name cannot be empty');
       }
-      if (account.initialBalance <= 0) {
+      if (account.initialBalance == null) {
         throw Exception('Initial balance must be a positive number');
       }
-      if (account.accountType.isEmpty) {
+      if (account.accountType == null) {
         throw Exception('Please select an account type');
       }
 
@@ -61,7 +62,7 @@ class FirebaseStorageRepository extends StorageRepository {
       // Tangani pengecualian atau kesalahan yang terjadi
       print('Error while adding account: $e');
       // Anda bisa mengirimkan event atau memberikan feedback ke pengguna di sini
-      throw e;
+      rethrow;
     }
   }
 
@@ -95,5 +96,35 @@ class FirebaseStorageRepository extends StorageRepository {
 
       // UserModel.fromJson(data);
     } catch (e) {}
+  }
+
+  @override
+  Future<List<Account>> getAccount() async {
+    print('get account...');
+    String uid = firebaseAuth.currentUser!.uid;
+    try {
+      CollectionReference accountRef = firestore
+          .collection(userCollection)
+          .doc(uid)
+          .collection(accountCollection);
+
+      QuerySnapshot<Object?> documentSnapshot = await accountRef.get();
+      // print(documentSnapshot.docs);
+      List<Object?> data = documentSnapshot.docs.map((e) => e.data()).toList();
+      // print(data);
+      List<Account> accountList = data.map((e) {
+        Map<String, dynamic> data = e as Map<String, dynamic>;
+        // print(e);
+        return Account.fromFirestore(data);
+      }).toList();
+      // print('List Account $accountList');
+      // accountList.map((e) => print(e.toFirestore(e.userId!))).toList();
+      print('complete');
+      return (accountList);
+    } catch (e) {
+      print('this Error $e');
+      return [];
+    }
+    // throw UnimplementedError();
   }
 }

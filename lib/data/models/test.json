@@ -1,0 +1,9 @@
+{
+    "createdAt": "Timestamp(seconds=1690344519, nanoseconds=327017000)",
+    "uid": "75ff5498-36bd-4180-b60e-0c624934174e",
+    "accountName": "Paypal",
+    "initialBalance": 1000.0,
+    "name": "Account ke 2",
+    "userId": "DJNPjeMIBnSRahlZeGZaHp8KIqe2",
+    "updatedAt": "Timestamp(seconds=1690344519, nanoseconds=327023000)"
+}
