@@ -108,23 +108,20 @@ class FirebaseStorageRepository extends StorageRepository {
           .doc(uid)
           .collection(accountCollection);
 
-      QuerySnapshot<Object?> documentSnapshot = await accountRef.get();
-      // print(documentSnapshot.docs);
-      List<Object?> data = documentSnapshot.docs.map((e) => e.data()).toList();
-      // print(data);
-      List<Account> accountList = data.map((e) {
-        Map<String, dynamic> data = e as Map<String, dynamic>;
-        // print(e);
+      QuerySnapshot<Object?> querySnapshot = await accountRef.get();
+      List<Account> accountList = querySnapshot.docs.map((document) {
+        Map<String, dynamic>? data = document.data() as Map<String, dynamic>;
+        if (data == null) {
+          throw Exception('Data not available for document: ${document.id}');
+        }
         return Account.fromFirestore(data);
       }).toList();
-      // print('List Account $accountList');
-      // accountList.map((e) => print(e.toFirestore(e.userId!))).toList();
+
       print('complete');
-      return (accountList);
+      return accountList;
     } catch (e) {
-      print('this Error $e');
-      return [];
+      print('Error occurred while fetching accounts: $e');
+      rethrow; // Rethrow the error to propagate it to the calling code.
     }
-    // throw UnimplementedError();
   }
 }
