@@ -1,24 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class Account {
-  final String uid;
-  final String userId;
+  final String? uid;
+  final String? userId;
+  final String name;
   final String accountName;
+  final String accountType;
   final double initialBalance;
-  final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Account(this.accountName, this.initialBalance, this.description,
-      this.createdAt, this.updatedAt, this.uid, this.userId);
+  Account(this.accountName, this.initialBalance, this.name, this.createdAt,
+      this.updatedAt, this.accountType, this.userId)
+      : uid = const Uuid().v4();
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toFirestore(String userUid) {
     return {
       'uid': uid,
-      'userId': userId,
+      'userId': userUid,
       'accountName': accountName,
       'initialBalance': initialBalance,
-      'description': description,
+      'name': name,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
     };

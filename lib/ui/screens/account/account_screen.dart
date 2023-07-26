@@ -1,8 +1,8 @@
+import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../commons_libs.dart';
+import '../../../logic/account_bloc/account_bloc.dart';
 import '../../../main.dart';
 import '../../common/input_field.dart';
 import '../record_keeping_screen/record_keeping_screens.dart';
@@ -18,18 +18,54 @@ class _AccountScreenState extends State<AccountScreen> {
   final TextEditingController _textMoneyController = TextEditingController();
   final TextEditingController _textDescController = TextEditingController();
   String _hintAccountType = 'Account Type';
-
   List<String> AccountTypeList = ['Bank', 'E-wallet'];
-
   int? _value = 0;
+
+  Widget? switchWidget(int i) {
+    switch (i) {
+      case 0:
+        return const Icon(
+          Icons.bar_chart_rounded,
+        );
+      case 1:
+        return const Icon(Icons.balance);
+      case 2:
+        return const Icon(Icons.margin);
+      case 3:
+        return const Icon(Icons.add_chart);
+      case 4:
+        return const Icon(Icons.bar_chart);
+      default:
+    }
+    return null;
+  }
+
+  String? accountName(int i) {
+    switch (i) {
+      case 0:
+        return "BNI";
+      case 1:
+        return "Paypal";
+      case 2:
+        return "Sryariah";
+      case 3:
+        return "BRI";
+      case 4:
+        return "Mandiri";
+      default:
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text("Add new account"),
+        title: const Text("Add new account"),
       ),
       backgroundColor: const Color(0xFF7F3DFF),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -67,6 +103,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   topRight: Radius.circular(32), topLeft: Radius.circular(32)),
             ),
             child: SeparatedColumn(
+              padding: const EdgeInsets.all(16),
               separatorBuilder: () => const Gap(12),
               children: [
                 MyInputField(
@@ -84,7 +121,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       dropdownColor: Colors.white,
                       iconSize: 32,
                       icon: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
+                        padding: const EdgeInsets.only(right: 8.0),
                         child: SvgPicture.asset(
                           'assets/icons/arrow-down.svg',
                         ),
@@ -109,14 +146,25 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 _hintAccountType == "Account Type"
                     ? Container()
-                    : Container(
+                    : SizedBox(
                         height: 88,
+                        width: double.infinity,
                         child: Wrap(
-                          spacing: 5.0,
+                          alignment: WrapAlignment.spaceBetween,
+                          spacing: 6.0,
                           children: List<Widget>.generate(
-                            3,
+                            5,
                             (int index) => ChoiceChip(
-                              label: Text('Index $index'),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              // labelStyle: const TextStyle(fontSize: 24),
+                              elevation: 0,
+                              pressElevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              selectedColor: const Color(0xFFEEE5FF),
+                              backgroundColor: const Color(0xFFF1F1FA),
+                              label: switchWidget(index)!,
                               selected: _value == index,
                               onSelected: (selected) {
                                 setState(() {
@@ -129,6 +177,16 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                 MyButton(
                   title: 'Continue',
+                  onPressed: () {
+                    final accountNaming = accountName(_value!);
+                    int? intValue = int.tryParse(_textMoneyController.text);
+                    context.read<AccountBloc>().add(AccountEvent.add(
+                        _hintAccountType,
+                        accountNaming!,
+                        _textDescController.text,
+                        intValue ?? 0));
+                    appRoute.go(ScreenPaths.dashboard);
+                  },
                 )
               ],
             ))

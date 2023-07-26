@@ -21,7 +21,7 @@ mixin _$AccountState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Account> listAccount) loaded,
-    required TResult Function() error,
+    required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$AccountState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Account> listAccount)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$AccountState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Account> listAccount)? loaded,
-    TResult Function()? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,7 +126,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Account> listAccount) loaded,
-    required TResult Function() error,
+    required TResult Function(String message) error,
   }) {
     return initial();
   }
@@ -137,7 +137,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Account> listAccount)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
   }) {
     return initial?.call();
   }
@@ -148,7 +148,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Account> listAccount)? loaded,
-    TResult Function()? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -239,7 +239,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Account> listAccount) loaded,
-    required TResult Function() error,
+    required TResult Function(String message) error,
   }) {
     return loading();
   }
@@ -250,7 +250,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Account> listAccount)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
   }) {
     return loading?.call();
   }
@@ -261,7 +261,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Account> listAccount)? loaded,
-    TResult Function()? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -384,7 +384,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Account> listAccount) loaded,
-    required TResult Function() error,
+    required TResult Function(String message) error,
   }) {
     return loaded(listAccount);
   }
@@ -395,7 +395,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Account> listAccount)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
   }) {
     return loaded?.call(listAccount);
   }
@@ -406,7 +406,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Account> listAccount)? loaded,
-    TResult Function()? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -466,6 +466,8 @@ abstract class _Loaded implements AccountState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -474,26 +476,50 @@ class __$$_ErrorCopyWithImpl<$Res>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_Error(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error();
+  const _$_Error(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'AccountState.error()';
+    return 'AccountState.error(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Error);
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -501,9 +527,9 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Account> listAccount) loaded,
-    required TResult Function() error,
+    required TResult Function(String message) error,
   }) {
-    return error();
+    return error(message);
   }
 
   @override
@@ -512,9 +538,9 @@ class _$_Error implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Account> listAccount)? loaded,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
   }) {
-    return error?.call();
+    return error?.call(message);
   }
 
   @override
@@ -523,11 +549,11 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Account> listAccount)? loaded,
-    TResult Function()? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(message);
     }
     return orElse();
   }
@@ -571,7 +597,12 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements AccountState {
-  const factory _Error() = _$_Error;
+  const factory _Error(final String message) = _$_Error;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -579,7 +610,9 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() add,
+    required TResult Function(String accountType, String accountName,
+            String name, int initialBalance)
+        add,
     required TResult Function() update,
     required TResult Function() delete,
   }) =>
@@ -587,7 +620,9 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? add,
+    TResult? Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult? Function()? update,
     TResult? Function()? delete,
   }) =>
@@ -595,7 +630,9 @@ mixin _$AccountEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? add,
+    TResult Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult Function()? update,
     TResult Function()? delete,
     required TResult orElse(),
@@ -684,7 +721,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() add,
+    required TResult Function(String accountType, String accountName,
+            String name, int initialBalance)
+        add,
     required TResult Function() update,
     required TResult Function() delete,
   }) {
@@ -695,7 +734,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? add,
+    TResult? Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult? Function()? update,
     TResult? Function()? delete,
   }) {
@@ -706,7 +747,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? add,
+    TResult Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult Function()? update,
     TResult Function()? delete,
     required TResult orElse(),
@@ -764,6 +807,12 @@ abstract class _$$_AddEventCopyWith<$Res> {
   factory _$$_AddEventCopyWith(
           _$_AddEvent value, $Res Function(_$_AddEvent) then) =
       __$$_AddEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String accountType,
+      String accountName,
+      String name,
+      int initialBalance});
 }
 
 /// @nodoc
@@ -773,60 +822,119 @@ class __$$_AddEventCopyWithImpl<$Res>
   __$$_AddEventCopyWithImpl(
       _$_AddEvent _value, $Res Function(_$_AddEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? accountType = null,
+    Object? accountName = null,
+    Object? name = null,
+    Object? initialBalance = null,
+  }) {
+    return _then(_$_AddEvent(
+      null == accountType
+          ? _value.accountType
+          : accountType // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == accountName
+          ? _value.accountName
+          : accountName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == initialBalance
+          ? _value.initialBalance
+          : initialBalance // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_AddEvent implements _AddEvent {
-  const _$_AddEvent();
+  const _$_AddEvent(
+      this.accountType, this.accountName, this.name, this.initialBalance);
+
+  @override
+  final String accountType;
+  @override
+  final String accountName;
+  @override
+  final String name;
+  @override
+  final int initialBalance;
 
   @override
   String toString() {
-    return 'AccountEvent.add()';
+    return 'AccountEvent.add(accountType: $accountType, accountName: $accountName, name: $name, initialBalance: $initialBalance)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AddEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$_AddEvent &&
+            (identical(other.accountType, accountType) ||
+                other.accountType == accountType) &&
+            (identical(other.accountName, accountName) ||
+                other.accountName == accountName) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.initialBalance, initialBalance) ||
+                other.initialBalance == initialBalance));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, accountType, accountName, name, initialBalance);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AddEventCopyWith<_$_AddEvent> get copyWith =>
+      __$$_AddEventCopyWithImpl<_$_AddEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() add,
+    required TResult Function(String accountType, String accountName,
+            String name, int initialBalance)
+        add,
     required TResult Function() update,
     required TResult Function() delete,
   }) {
-    return add();
+    return add(accountType, accountName, name, initialBalance);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? add,
+    TResult? Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult? Function()? update,
     TResult? Function()? delete,
   }) {
-    return add?.call();
+    return add?.call(accountType, accountName, name, initialBalance);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? add,
+    TResult Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult Function()? update,
     TResult Function()? delete,
     required TResult orElse(),
   }) {
     if (add != null) {
-      return add();
+      return add(accountType, accountName, name, initialBalance);
     }
     return orElse();
   }
@@ -870,7 +978,16 @@ class _$_AddEvent implements _AddEvent {
 }
 
 abstract class _AddEvent implements AccountEvent {
-  const factory _AddEvent() = _$_AddEvent;
+  const factory _AddEvent(final String accountType, final String accountName,
+      final String name, final int initialBalance) = _$_AddEvent;
+
+  String get accountType;
+  String get accountName;
+  String get name;
+  int get initialBalance;
+  @JsonKey(ignore: true)
+  _$$_AddEventCopyWith<_$_AddEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -912,7 +1029,9 @@ class _$_UpdateEvent implements _UpdateEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() add,
+    required TResult Function(String accountType, String accountName,
+            String name, int initialBalance)
+        add,
     required TResult Function() update,
     required TResult Function() delete,
   }) {
@@ -923,7 +1042,9 @@ class _$_UpdateEvent implements _UpdateEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? add,
+    TResult? Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult? Function()? update,
     TResult? Function()? delete,
   }) {
@@ -934,7 +1055,9 @@ class _$_UpdateEvent implements _UpdateEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? add,
+    TResult Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult Function()? update,
     TResult Function()? delete,
     required TResult orElse(),
@@ -1026,7 +1149,9 @@ class _$_DeletedEvent implements _DeletedEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() add,
+    required TResult Function(String accountType, String accountName,
+            String name, int initialBalance)
+        add,
     required TResult Function() update,
     required TResult Function() delete,
   }) {
@@ -1037,7 +1162,9 @@ class _$_DeletedEvent implements _DeletedEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? add,
+    TResult? Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult? Function()? update,
     TResult? Function()? delete,
   }) {
@@ -1048,7 +1175,9 @@ class _$_DeletedEvent implements _DeletedEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? add,
+    TResult Function(String accountType, String accountName, String name,
+            int initialBalance)?
+        add,
     TResult Function()? update,
     TResult Function()? delete,
     required TResult orElse(),

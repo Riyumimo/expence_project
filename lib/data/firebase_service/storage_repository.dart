@@ -34,14 +34,35 @@ class FirebaseStorageRepository extends StorageRepository {
   Future<void> addAccount(Account account) async {
     try {
       String uid = firebaseAuth.currentUser!.uid;
-      firestore
+
+      // Validasi data akun sebelum menyimpan ke Firestore
+      if (account.uid == null) {
+        throw Exception('Account UID cannot be empty');
+      }
+      if (account.accountName.isEmpty) {
+        throw Exception('Account name cannot be empty');
+      }
+      if (account.initialBalance <= 0) {
+        throw Exception('Initial balance must be a positive number');
+      }
+      if (account.accountType.isEmpty) {
+        throw Exception('Please select an account type');
+      }
+
+      await firestore
           .collection(userCollection)
           .doc(uid)
           .collection(accountCollection)
           .doc(account.uid)
-          .set(account.toFirestore());
-    } catch (e) {}
-    throw UnimplementedError();
+          .set(account.toFirestore(uid));
+
+      throw ('Succsess');
+    } catch (e) {
+      // Tangani pengecualian atau kesalahan yang terjadi
+      print('Error while adding account: $e');
+      // Anda bisa mengirimkan event atau memberikan feedback ke pengguna di sini
+      throw e;
+    }
   }
 
   @override

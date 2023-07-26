@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget with GetItMixin {
           ),
           BlocProvider(
             create: (context) =>
-                AccountBloc()..add(const AccountEvent.started()),
+                AccountBloc(storage)..add(const AccountEvent.started()),
           ),
         ],
         child: BlocListener<AuthenticationBloc, AuthenticationState>(

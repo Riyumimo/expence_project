@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,10 +10,11 @@ part 'account_event.dart';
 part 'account_bloc.freezed.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
-  AccountBloc() : super(_Initial()) {
+  final StorageRepository _storageRepository;
+  AccountBloc(this._storageRepository) : super(const _Initial()) {
     on<_Started>((event, emit) async {
-      print('bloc_account started');
       List listAccount = [];
+      print('bloc_account started');
       if (listAccount.isEmpty) {
         await SharedPreferences.getInstance()
             .then((value) => value.setBool('account', false));
@@ -21,6 +22,25 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         // emit(const _Loaded([]));
       }
     });
-    on<_AddEvent>((event, emit) {});
+    on<_AddEvent>((event, emit) async {
+      if (event.accountName.isEmpty) {
+        emit(const _Error('Account name cannot be empty'));
+      } else if (event.initialBalance <= 0) {
+        emit(const _Error('Initial balance must be a positive number'));
+      } else if (event.accountType.isEmpty) {
+        emit(const _Error('Please select an account type'));
+      } else {
+        // Semua validasi berhasil, tambahkan akun
+        _storageRepository.addAccount(Account(
+          event.accountName,
+          event.initialBalance.toDouble(),
+          event.name,
+          DateTime.now(),
+          DateTime.now(),
+          event.accountType,
+          null,
+        ));
+      }
+    });
   }
 }
