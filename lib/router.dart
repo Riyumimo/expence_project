@@ -1,12 +1,14 @@
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
 import 'package:expence_project/ui/screens/account/account_screen.dart';
+import 'package:expence_project/ui/screens/account/add_account_screen.dart';
 import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:expence_project/ui/screens/detail_screen/detail_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:expence_project/ui/screens/page1%20copy%202.dart';
 import 'package:expence_project/ui/screens/page1%20copy.dart';
+import 'package:expence_project/ui/screens/profile/profile_screen.dart';
 import 'package:expence_project/ui/screens/record_keeping_screen/camera_screen.dart';
 import 'package:expence_project/ui/screens/record_keeping_screen/record_keeping_screens.dart';
 import 'package:expence_project/ui/screens/transaction_screen/status_screen.dart';
@@ -28,8 +30,10 @@ class ScreenPaths {
   static String camera = '/camera';
   static String status = '/status';
   static String account = '/account';
+  static String addAccount = '/addAccount';
   static String transaction = '/transactions';
   static String detail = '/detail';
+  static String profile = '/profile';
 }
 
 final appRoute = GoRouter(redirect: _handleRedirect, routes: [
@@ -52,7 +56,9 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(ScreenPaths.verification, (s) => const VerificationScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => const DashboardScreen()),
         AppRoute(ScreenPaths.camera, (s) => const CameraScreen()),
+        AppRoute(ScreenPaths.addAccount, (s) => const AddAccountScreens()),
         AppRoute(ScreenPaths.account, (s) => const AccountScreen()),
+        AppRoute(ScreenPaths.profile, (s) => const ProfileScreens()),
         AppRoute(
             ScreenPaths.record,
             (s) => RecordKeppingScreen(

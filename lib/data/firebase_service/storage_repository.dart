@@ -84,6 +84,7 @@ class FirebaseStorageRepository extends StorageRepository {
 
   @override
   Future<UserModel> getUser() async {
+    print('getUser....');
     String uid = firebaseAuth.currentUser!.uid;
     try {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =

@@ -33,7 +33,7 @@ class MyButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              const Spacer(),
+              // const Spacer(),
               isTransparant
                   ? SizedBox(
                       height: 24,
@@ -52,13 +52,18 @@ class MyButton extends StatelessWidget {
                       width: 15,
                     )
                   : const SizedBox(),
-              Text(title,
-                  style: $styles.text.bodyBold.copyWith(
-                      fontSize: 15,
-                      color: isTransparant
-                          ? $styles.colors.black
-                          : $styles.colors.offWhite)),
-              const Spacer(),
+              Expanded(
+                child: Center(
+                  child: Text(title,
+                      maxLines: 1,
+                      style: $styles.text.bodyBold.copyWith(
+                          fontSize: 15,
+                          color: isTransparant
+                              ? $styles.colors.black
+                              : $styles.colors.offWhite)),
+                ),
+              ),
+              // const Spacer(),
               isTransparant
                   ? Icon(
                       Icons.arrow_forward,

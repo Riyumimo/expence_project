@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget with GetItMixin {
                       print('Empity Data');
                       appRoute.go(ScreenPaths.home);
                     } else {
-                      appRoute.go(ScreenPaths.dashboard);
+                      appRoute.go(ScreenPaths.profile);
                     }
                   },
                   error: (error) {});
