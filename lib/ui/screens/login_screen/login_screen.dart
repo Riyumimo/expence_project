@@ -1,3 +1,4 @@
+import 'package:expence_project/logic/account_bloc/account_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/my_button.dart';
@@ -21,6 +22,12 @@ class _MyHomePageState extends State<LoginScreens> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _obscureTextPassword = true;
+
+  @override
+  initState() {
+    context.read<AccountBloc>().add(AccountEvent.started());
+    super.initState();
+  }
 
   void load() {
     setState(() {

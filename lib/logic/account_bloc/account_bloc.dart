@@ -21,16 +21,22 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<_Started>((event, emit) async {
       try {
         final data = await _storageRepository.getAccount();
-        for (var element in data) {
-          listAccount.add(element);
-        }
-        if (listAccount.isEmpty) {
-          setAccountStatus(false);
-          print('complete');
-          emit(const _Error('message'));
+        print('data from firebase $data');
+        if (data != null) {
+          for (var element in data) {
+            listAccount.add(element);
+          }
+          if (listAccount.isEmpty) {
+            await setAccountStatus(false);
+            print('account is empity');
+            emit(_Loaded(listAccount));
+          } else {
+            await setAccountStatus(true);
+            emit(_Loaded(listAccount));
+          }
         } else {
-          setAccountStatus(true);
-          emit(_Loaded(listAccount));
+          await setAccountStatus(false);
+          emit(const _Error('Account is empity'));
         }
       } on Exception catch (e) {
         print('Error occurred while fetching accounts: $e');
@@ -55,6 +61,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         ));
+        await setAccountStatus(true);
       }
     });
   }

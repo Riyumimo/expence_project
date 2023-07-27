@@ -27,13 +27,14 @@ class AuthenticationScreenRouter {
     if (getAuths != null) {
       if (repo.firebaseAuth.currentUser?.uid != null) {
         print(repo.firebaseAuth.currentUser?.uid);
+        // appRoute.go(ScreenPaths.dashboard);
         if (getAuths == repo.firebaseAuth.currentUser?.uid) {
           if (getAccount != null) {
             getAccount!
                 ? appRoute.go(ScreenPaths.dashboard)
-                : appRoute.go(ScreenPaths.home);
+                : appRoute.go(ScreenPaths.addAccount);
           } else {
-            appRoute.go(ScreenPaths.home);
+            appRoute.go(ScreenPaths.addAccount);
           }
         } else {
           appRoute.go(ScreenPaths.login);

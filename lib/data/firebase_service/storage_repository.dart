@@ -7,11 +7,11 @@ import '../models/user.dart';
 
 abstract class StorageRepository {
   Future<UserModel> getUser();
+  Future<List<Account>>? getAccount();
   Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
-  Future<List<Account>> getAccount();
-
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
+  Future<void> deleteUser();
 }
 
 class FirebaseStorageRepository extends StorageRepository {
@@ -104,8 +104,12 @@ class FirebaseStorageRepository extends StorageRepository {
   }
 
   @override
-  Future<List<Account>> getAccount() async {
+  Future<List<Account>>? getAccount() async {
     print('get account...');
+    if (firebaseAuth.currentUser == null) {
+      // Handle the case when the user is not authenticated.
+      throw Exception('User is not authenticated.');
+    }
     String uid = firebaseAuth.currentUser!.uid;
     try {
       CollectionReference accountRef = firestore
@@ -122,11 +126,38 @@ class FirebaseStorageRepository extends StorageRepository {
         return Account.fromFirestore(data);
       }).toList();
 
-      print('complete');
+      print('get Account list');
       return accountList;
     } catch (e) {
       print('Error occurred while fetching accounts: $e');
-      rethrow; // Rethrow the error to propagate it to the calling code.
+      return []; // Rethrow the error to propagate it to the calling code.
+    }
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    print('delete user...');
+    if (firebaseAuth.currentUser == null) {
+      // Handle the case when the user is not authenticated.
+      throw Exception('User is not authenticated.');
+    }
+    String uid = firebaseAuth.currentUser!.uid;
+    try {
+      CollectionReference collectionRef =
+          FirebaseFirestore.instance.collection(userCollection);
+      QuerySnapshot snapshot = await collectionRef.get();
+
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+
+      snapshot.docs.forEach((doc) {
+        batch.delete(doc.reference);
+      });
+
+      // Commit the batched write to delete all documents.
+      await batch.commit();
+      print('Document deleted successfully');
+    } catch (e) {
+      print('Error deleting document: $e');
     }
   }
 }

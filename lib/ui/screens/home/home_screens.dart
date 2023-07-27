@@ -1,10 +1,12 @@
 import 'dart:core';
 
 import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/chip_button.dart';
 part '../../common/list_tile_item.dart';
@@ -31,8 +33,8 @@ class _HomeScreensState extends State<HomeScreens> {
         _isLoaded = true;
       });
     });
-    // BlocProvider.of<AuthenticationBloc>(context)
-    //     .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+    BlocProvider.of<AuthenticationBloc>(context)
+        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
     super.initState();
   }
 
@@ -72,7 +74,12 @@ class _HomeScreensState extends State<HomeScreens> {
                         )),
                     const MyTextButton(title: 'Oktober'),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print('ontap...');
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(AuthenticationEvent.signOut());
+                        },
                         icon: SvgPicture.asset('assets/icons/notifiaction.svg'))
                   ]),
             ),

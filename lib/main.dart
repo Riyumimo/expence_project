@@ -56,7 +56,9 @@ class MyApp extends StatelessWidget with GetItMixin {
             print(state);
             state.map(
                 intial: (intial) {},
-                authenticated: (value) {},
+                authenticated: (value) {
+                  appRoute.go(ScreenPaths.dashboard);
+                },
                 loaded: (loaded) {},
                 unauthenticated: (unauthenticated) {
                   appRoute.go(ScreenPaths.login);
@@ -72,9 +74,7 @@ class MyApp extends StatelessWidget with GetItMixin {
                   loaded: (loaded) {
                     if (loaded.listAccount.isEmpty) {
                       print('Empity Data');
-                      appRoute.go(ScreenPaths.home);
-                    } else {
-                      appRoute.go(ScreenPaths.profile);
+                      appRoute.go(ScreenPaths.addAccount);
                     }
                   },
                   error: (error) {});
