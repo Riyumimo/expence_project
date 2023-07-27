@@ -2,8 +2,6 @@ import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -15,7 +13,6 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       body: SafeArea(
@@ -68,7 +65,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Padding appBar(double height) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Container(
+      child: SizedBox(
         height: height * .0788,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
               onPressed: () {
                 appRoute.pop();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 size: 32,
               ),
@@ -134,12 +131,12 @@ class ListTiles extends StatelessWidget {
                 size: 32,
               ),
             ),
-            Gap(9),
+            const Gap(9),
             Text(
               'Wallet',
               style: $styles.text.bodyBold.copyWith(fontSize: 18),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               '\$400',
               style: $styles.text.bodyBold.copyWith(fontSize: 18),

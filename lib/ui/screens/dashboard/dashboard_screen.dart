@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
 import 'package:expence_project/ui/screens/transaction_screen/transaction_screen.dart';
@@ -74,7 +73,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   Alignment alignment3 = const Alignment(0.4, -0.6);
 
   void onChangePage(int index) {
-    print('on index : $index');
     setState(() {
       initialTabIndex = index;
       if (index >= 2) {
@@ -109,8 +107,6 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    print('initial : $initialTabIndex');
-
     return Scaffold(
       body: PageView.builder(
         physics: const NeverScrollableScrollPhysics(),
@@ -200,7 +196,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         ],
 
         onTap: (i) {
-          print('ontap :$i');
           switch (i) {
             case 0:
               changePage(i);

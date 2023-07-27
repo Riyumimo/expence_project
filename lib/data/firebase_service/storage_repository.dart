@@ -12,6 +12,7 @@ abstract class StorageRepository {
   Future<void> addAccount(Account account);
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
   Future<void> deleteUser();
+  Future<void> deleteAccount();
 }
 
 class FirebaseStorageRepository extends StorageRepository {
@@ -28,7 +29,9 @@ class FirebaseStorageRepository extends StorageRepository {
     try {
       var uid = firebaseAuth.currentUser?.uid;
       firestore.collection(userCollection).doc(uid).set(user.toFireStore());
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -141,7 +144,6 @@ class FirebaseStorageRepository extends StorageRepository {
       // Handle the case when the user is not authenticated.
       throw Exception('User is not authenticated.');
     }
-    String uid = firebaseAuth.currentUser!.uid;
     try {
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection(userCollection);
@@ -149,15 +151,37 @@ class FirebaseStorageRepository extends StorageRepository {
 
       WriteBatch batch = FirebaseFirestore.instance.batch();
 
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         batch.delete(doc.reference);
-      });
+      }
 
       // Commit the batched write to delete all documents.
       await batch.commit();
       print('Document deleted successfully');
     } catch (e) {
       print('Error deleting document: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    print('delete account....');
+    if (firebaseAuth.currentUser == null) {
+// Handle the case when the user is not authenticated.
+      throw Exception('User is not authenticated.');
+    }
+    String uid = firebaseAuth.currentUser!.uid;
+    try {
+      CollectionReference accountCollectionReference = firestore
+          .collection(accountCollection)
+          .doc(uid)
+          .collection(accountCollection);
+      await accountCollectionReference.doc().delete();
+    } on FirebaseException catch (e) {
+      print(e);
+      rethrow;
+    } catch (e) {
+      rethrow;
     }
   }
 }

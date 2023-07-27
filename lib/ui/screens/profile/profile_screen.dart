@@ -1,8 +1,6 @@
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/data/models/account.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
-import 'package:flutter/material.dart';
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});
@@ -85,7 +83,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
   Padding appBar(double width, double height) {
     return Padding(
       padding: EdgeInsets.only(left: width * .09, top: 30, right: 16),
-      child: Container(
+      child: SizedBox(
         height: height * .0985,
         // color: Colors.amber,
         child: Row(
@@ -101,16 +99,16 @@ class _ProfileScreensState extends State<ProfileScreens> {
               child: Padding(
                 padding: const EdgeInsets.all(3),
                 child: CircleAvatar(
-                  backgroundColor: Color(0xFFC4C4C4),
+                  backgroundColor: const Color(0xFFC4C4C4),
                   foregroundColor: Colors.black,
                   radius: height * .0985,
-                  foregroundImage: AssetImage(
+                  foregroundImage: const AssetImage(
                     'assets/images/verification.png',
                   ),
                 ),
               ),
             ),
-            Gap(8),
+            const Gap(8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -121,11 +119,12 @@ class _ProfileScreensState extends State<ProfileScreens> {
                 ),
                 Text(
                   'Ilham Suherman',
-                  style: $styles.text.quote2.copyWith(color: Color(0xFF161719)),
+                  style: $styles.text.quote2
+                      .copyWith(color: const Color(0xFF161719)),
                 )
               ],
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
           ],
         ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:expence_project/logic/authencation_route_screen.dart';
-import 'package:expence_project/router.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 
 import '../commons_libs.dart';
@@ -92,28 +91,6 @@ class AppLogic {
 
   // bool shouldUseNavRail() =>
   //     display.size.width > display.size.height && display.size.height > 250;
-
-  /// Enable landscape, portrait or both. Views can call this method to override the default settings.
-  /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
-  /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
-  void _updateSystemOrientation() {
-    final axisList = _supportedOrientationsOverride ?? supportedOrientations;
-    //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
-    final orientations = <DeviceOrientation>[];
-    if (axisList.contains(Axis.vertical)) {
-      orientations.addAll([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    }
-    if (axisList.contains(Axis.horizontal)) {
-      orientations.addAll([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    }
-    SystemChrome.setPreferredOrientations(orientations);
-  }
 }
 
 // class AppImageCache extends WidgetsFlutterBinding {

@@ -22,10 +22,7 @@ class Account {
     this.updatedAt,
   }) : uid = id ?? const Uuid().v4();
   factory Account.fromFirestore(Map<String, dynamic> data) {
-    // final data = doc.data() as Map<String, dynamic>;
-    print(data);
     return Account(
-      // id: data['uid'],
       userId: data['userId'] ?? '',
       accountName: data['accountName'] ?? '',
       name: data['name'] ?? '',
