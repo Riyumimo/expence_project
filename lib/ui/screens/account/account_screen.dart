@@ -2,6 +2,10 @@ import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/my_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../data/models/account.dart';
+import '../../../logic/account_bloc/account_bloc.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -12,52 +16,88 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    // context.read<AccountBloc>().add(AccountEvent.started());
+    super.initState();
+  }
+
+  double getAllBalance(List<Account> accountList) {
+    double balance = 0;
+    for (var data in accountList) {
+      data.initialBalance;
+      balance += data.initialBalance!;
+    }
+    return balance;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          appBar(height),
-          SizedBox(
-            child: Stack(
-              alignment: Alignment.center,
+      body: SafeArea(child: BlocBuilder<AccountBloc, AccountState>(
+        builder: (context, state) {
+          print(state);
+          return state.map(initial: (initial) {
+            return const CircularProgressIndicator();
+          }, loading: (loading) {
+            return const CircularProgressIndicator();
+          }, loaded: (loaded) {
+            final listAccount = loaded.listAccount;
+            return Column(
               children: [
-                Image.asset('assets/images/BG.png'),
+                appBar(height),
+                SizedBox(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset('assets/images/BG.png'),
+                      Column(
+                        children: [
+                          Text(
+                            'Account Balance',
+                            style: $styles.text.body,
+                          ),
+                          Text(
+                            getAllBalance(loaded.listAccount).toString(),
+                            style: $styles.text.quote1.copyWith(fontSize: 40),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
                 Column(
                   children: [
-                    Text(
-                      'Account Balance',
-                      style: $styles.text.body,
+                    Column(
+                      children: List.generate(
+                        loaded.listAccount.length,
+                        (index) => ListTiles(
+                          height: height,
+                          amount: listAccount[index].initialBalance,
+                          name: listAccount[index].name,
+                        ),
+                      ),
                     ),
-                    Text(
-                      '\$8000',
-                      style: $styles.text.quote1.copyWith(fontSize: 40),
-                    ),
+                    Gap(height * 0.0369),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: MyButton(
+                        title: '+ Add new wallet',
+                        onPressed: () {
+                          appRoute.push(ScreenPaths.addAccount,
+                              extra: 'account');
+                        },
+                      ),
+                    )
                   ],
                 )
               ],
-            ),
-          ),
-          Column(
-            children: [
-              ListTiles(height: height),
-              ListTiles(height: height),
-              ListTiles(height: height),
-              ListTiles(height: height),
-              Gap(height * 0.0369),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: MyButton(
-                  title: '+ Add new wallet',
-                  onPressed: () {
-                    appRoute.push(ScreenPaths.addAccount);
-                  },
-                ),
-              )
-            ],
-          )
-        ],
+            );
+          }, error: (error) {
+            return Text(error.message);
+          });
+        },
       )),
     );
   }
@@ -106,9 +146,13 @@ class ListTiles extends StatelessWidget {
   const ListTiles({
     super.key,
     required this.height,
+    this.amount = 400,
+    this.name = 'wallet',
   });
 
   final double height;
+  final double? amount;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -133,12 +177,12 @@ class ListTiles extends StatelessWidget {
             ),
             const Gap(9),
             Text(
-              'Wallet',
+              name!,
               style: $styles.text.bodyBold.copyWith(fontSize: 18),
             ),
             const Spacer(),
             Text(
-              '\$400',
+              '\$ $amount',
               style: $styles.text.bodyBold.copyWith(fontSize: 18),
             )
           ],

@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:expence_project/logic/app_logic.dart';
 import 'package:expence_project/data/firebase_service/auth_repository.dart';
+import 'package:expence_project/logic/user_bloc/user_bloc.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/styles/styles.dart';
 import 'package:expence_project/ui/app_scafold.dart';
@@ -49,6 +50,10 @@ class MyApp extends StatelessWidget with GetItMixin {
           BlocProvider(
             create: (context) =>
                 AccountBloc(storage)..add(const AccountEvent.started()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                UserBloc(storage)..add(const UserEvent.started()),
           ),
         ],
         child: BlocListener<AuthenticationBloc, AuthenticationState>(

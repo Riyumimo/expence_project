@@ -76,9 +76,7 @@ class _HomeScreensState extends State<HomeScreens> {
                     IconButton(
                         onPressed: () {
                           print('ontap...');
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(AuthenticationEvent.signOut());
+                          storage.getUser();
                         },
                         icon: SvgPicture.asset('assets/icons/notifiaction.svg'))
                   ]),

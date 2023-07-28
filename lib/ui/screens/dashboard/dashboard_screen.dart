@@ -4,13 +4,13 @@ import 'package:animations/animations.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
+import 'package:expence_project/ui/screens/profile/profile_screen.dart';
 import 'package:expence_project/ui/screens/transaction_screen/transaction_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../commons_libs.dart';
 import '../../../logic/account_bloc/account_bloc.dart';
 import '../../../main.dart';
-import '../page1 copy 2.dart';
 import '../page1 copy.dart';
 
 part './widgets/pop_up_button.dart';
@@ -102,7 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     const HomeScreens(),
     const TransactionScreen(),
     const Page2(),
-    const Page3(),
+    const ProfileScreens(),
   ];
 
   @override

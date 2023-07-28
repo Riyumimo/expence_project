@@ -32,10 +32,37 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             emit(_Loaded(listAccount));
           }
         } else {
+          print(' initial list account ${listAccount.length}');
           //else
-          for (var element in data!) {
-            listAccount.add(element);
+          print('data.length ${data.length}');
+          if (listAccount.isEmpty) {
+            for (var element in data) {
+              listAccount.add(element);
+            }
+          } else {
+            print('have data..');
+            for (var element in data) {
+              bool accountExist = false;
+              for (var list in listAccount) {
+                if (list.name == element.name) {
+                  accountExist = true;
+                  print('${element.name} has already have');
+                  break;
+                }
+              }
+              if (!accountExist) {
+                print('${element.name} has Added');
+                listAccount.add(element);
+                emit(const AccountState.initial());
+              }
+              if (listAccount.length > data.length) {
+                // int numExtra = listAccount.length - data.length;
+                listAccount.removeRange(data.length, listAccount.length);
+              }
+            }
           }
+
+          print('list account : ${listAccount.length}');
           await setAccountStatus(true);
           emit(_Loaded(listAccount));
         }
@@ -47,6 +74,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     });
 
     on<_AddEvent>((event, emit) async {
+      print('add event');
+
       if (event.accountName.isEmpty) {
         emit(const _Error('Account name cannot be empty'));
       } else if (event.initialBalance <= 0) {
@@ -55,14 +84,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         emit(const _Error('Please select an account type'));
       } else {
         // Semua validasi berhasil, tambahkan akun
-        _storageRepository.addAccount(Account(
+        Account dataModel = Account(
           accountName: event.accountName,
           name: event.name,
           initialBalance: event.initialBalance.toDouble(),
           accountType: event.accountType,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-        ));
+        );
+        await _storageRepository.addAccount(dataModel);
         await setAccountStatus(true);
       }
     });

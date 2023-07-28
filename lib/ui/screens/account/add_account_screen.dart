@@ -8,8 +8,8 @@ import '../../common/input_field.dart';
 import '../record_keeping_screen/record_keeping_screens.dart';
 
 class AddAccountScreens extends StatefulWidget {
-  const AddAccountScreens({super.key});
-
+  const AddAccountScreens({super.key, this.title = 'login'});
+  final String? title;
   @override
   State<AddAccountScreens> createState() => _AccountScreenState();
 }
@@ -180,12 +180,28 @@ class _AccountScreenState extends State<AddAccountScreens> {
                   onPressed: () {
                     final accountNaming = accountName(_value!);
                     int? intValue = int.tryParse(_textMoneyController.text);
-                    context.read<AccountBloc>().add(AccountEvent.add(
-                        _hintAccountType,
-                        accountNaming!,
-                        _textDescController.text,
-                        intValue ?? 0));
-                    appRoute.go(ScreenPaths.dashboard);
+                    if (widget.title == 'login') {
+                      context.read<AccountBloc>().add(AccountEvent.add(
+                          _hintAccountType,
+                          accountNaming!,
+                          _textDescController.text,
+                          intValue ?? 0));
+
+                      appRoute.go(ScreenPaths.dashboard);
+                    } else {
+                      print('pop...');
+                      context.read<AccountBloc>().add(AccountEvent.add(
+                          _hintAccountType,
+                          accountNaming!,
+                          _textDescController.text,
+                          intValue ?? 0));
+                      context
+                          .read<AccountBloc>()
+                          .add(const AccountEvent.started());
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        appRoute.pop();
+                      });
+                    }
                   },
                 )
               ],

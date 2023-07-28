@@ -56,7 +56,11 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(ScreenPaths.verification, (s) => const VerificationScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => const DashboardScreen()),
         AppRoute(ScreenPaths.camera, (s) => const CameraScreen()),
-        AppRoute(ScreenPaths.addAccount, (s) => const AddAccountScreens()),
+        AppRoute(
+            ScreenPaths.addAccount,
+            (s) => AddAccountScreens(
+                  title: s.extra.toString(),
+                )),
         AppRoute(ScreenPaths.account, (s) => const AccountScreen()),
         AppRoute(ScreenPaths.profile, (s) => const ProfileScreens()),
         AppRoute(
