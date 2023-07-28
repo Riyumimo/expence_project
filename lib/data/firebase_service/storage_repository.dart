@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expence_project/data/models/account.dart';
-import 'package:expence_project/data/models/transaction.dart';
+import 'package:expence_project/data/models/account_model.dart';
+import 'package:expence_project/data/models/transaction_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/user.dart';
+import '../models/user_model.dart';
 
 abstract class StorageRepository {
   Future<UserModel> getUser();
   Future<List<Account>>? getAccount();
+  Future<List<TransactionModel>>? getAllTransaction(String accountId);
   Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
@@ -135,6 +136,40 @@ class FirebaseStorageRepository extends StorageRepository {
       print('Error occurred while fetching accounts: $e');
       return []; // Rethrow the error to propagate it to the calling code.
     }
+  }
+
+  @override
+  Future<List<TransactionModel>>? getAllTransaction(String accountId) async {
+    print('get transaction...');
+    // TODO: implement getTransaction
+    if (firebaseAuth.currentUser == null) {
+      // Handle the case when the user is not authenticated.
+      throw Exception('User is not authenticated.');
+    }
+
+    try {
+      String uid = firebaseAuth.currentUser!.uid;
+      CollectionReference transactionCollection = firestore
+          .collection(userCollection)
+          .doc(uid)
+          .collection(accountCollection)
+          .doc(accountId)
+          .collection(this.transactionCollection);
+
+      QuerySnapshot<Object?> querySnapshot = await transactionCollection.get();
+      List<TransactionModel> transactionList = querySnapshot.docs.map((e) {
+        Map<String, dynamic> data = e.data() as Map<String, dynamic>;
+        if (data.isEmpty) {
+          throw Exception('Data not available for document: ${e.id}');
+        }
+        return TransactionModel.fromFireStore(data);
+      }).toList();
+      return transactionList;
+    } on Exception catch (e) {
+      print('Error occurred while fetching accounts: $e');
+      return []; // R
+    }
+    // throw UnimplementedError();
   }
 
   @override

@@ -141,7 +141,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
                       return CircularProgressIndicator();
                     }, loaded: (value) {
                       return Text(
-                        value.user.name,
+                        value.userModel.name,
                         style: $styles.text.quote2
                             .copyWith(color: const Color(0xFF161719)),
                       );

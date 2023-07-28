@@ -1,5 +1,5 @@
 import 'package:either_dart/either.dart';
-import 'package:expence_project/data/models/user.dart';
+import 'package:expence_project/data/models/user_model.dart';
 import 'package:expence_project/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';

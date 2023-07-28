@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../data/models/account.dart';
+import '../../data/models/account_model.dart';
 
 part 'account_state.dart';
 part 'account_event.dart';

@@ -167,21 +167,21 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(UserModel user) loaded,
+    required TResult Function(UserModel userModel) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(UserModel user)? loaded,
+    TResult? Function(UserModel userModel)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(UserModel user)? loaded,
+    TResult Function(UserModel userModel)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -266,7 +266,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(UserModel user) loaded,
+    required TResult Function(UserModel userModel) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -276,7 +276,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(UserModel user)? loaded,
+    TResult? Function(UserModel userModel)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -286,7 +286,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(UserModel user)? loaded,
+    TResult Function(UserModel userModel)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -341,7 +341,7 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserModel user});
+  $Res call({UserModel userModel});
 }
 
 /// @nodoc
@@ -355,12 +355,12 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? userModel = null,
   }) {
     return _then(_$_LoadedState(
-      null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
+      null == userModel
+          ? _value.userModel
+          : userModel // ignore: cast_nullable_to_non_nullable
               as UserModel,
     ));
   }
@@ -369,14 +369,14 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState(this.user);
+  const _$_LoadedState(this.userModel);
 
   @override
-  final UserModel user;
+  final UserModel userModel;
 
   @override
   String toString() {
-    return 'UserState.loaded(user: $user)';
+    return 'UserState.loaded(userModel: $userModel)';
   }
 
   @override
@@ -384,11 +384,12 @@ class _$_LoadedState implements _LoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoadedState &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.userModel, userModel) ||
+                other.userModel == userModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, userModel);
 
   @JsonKey(ignore: true)
   @override
@@ -400,32 +401,32 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(UserModel user) loaded,
+    required TResult Function(UserModel userModel) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(user);
+    return loaded(userModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(UserModel user)? loaded,
+    TResult? Function(UserModel userModel)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(user);
+    return loaded?.call(userModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(UserModel user)? loaded,
+    TResult Function(UserModel userModel)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(user);
+      return loaded(userModel);
     }
     return orElse();
   }
@@ -466,9 +467,9 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements UserState {
-  const factory _LoadedState(final UserModel user) = _$_LoadedState;
+  const factory _LoadedState(final UserModel userModel) = _$_LoadedState;
 
-  UserModel get user;
+  UserModel get userModel;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -539,7 +540,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(UserModel user) loaded,
+    required TResult Function(UserModel userModel) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -549,7 +550,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(UserModel user)? loaded,
+    TResult? Function(UserModel userModel)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -559,7 +560,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(UserModel user)? loaded,
+    TResult Function(UserModel userModel)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

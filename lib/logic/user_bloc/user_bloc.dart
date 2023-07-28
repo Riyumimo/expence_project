@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../data/models/user.dart';
+import '../../data/models/user_model.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

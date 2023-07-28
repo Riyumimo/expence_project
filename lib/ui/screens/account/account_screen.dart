@@ -4,7 +4,7 @@ import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/my_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/account.dart';
+import '../../../data/models/account_model.dart';
 import '../../../logic/account_bloc/account_bloc.dart';
 
 class AccountScreen extends StatefulWidget {
