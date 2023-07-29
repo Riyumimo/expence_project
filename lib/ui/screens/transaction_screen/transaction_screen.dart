@@ -31,7 +31,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   // padding: const EdgeInsets.symmetric(vertical: 8),
                   width: double.infinity,
                   height: 64,
@@ -49,7 +49,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         child: DropdownButton(
                           // dropdownColor: Color,
                           borderRadius: BorderRadius.circular(40),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           // iconSize: 24,
                           // value: monhly,
                           hint: Text(monthly),
@@ -206,7 +206,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       'Filter Transaction',
                       style: $styles.text.bodyBold,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {
                         print('object');
@@ -283,7 +283,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
       separatorBuilder: () => const Gap(8),
       children: [
         SeparatedRow(
-          separatorBuilder: () => Gap(8),
+          separatorBuilder: () => const Gap(8),
           children: [
             Expanded(
                 child: RowChipButton(

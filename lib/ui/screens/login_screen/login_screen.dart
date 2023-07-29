@@ -25,7 +25,7 @@ class _MyHomePageState extends State<LoginScreens> {
 
   @override
   initState() {
-    context.read<AccountBloc>().add(AccountEvent.started());
+    context.read<AccountBloc>().add(const AccountEvent.started());
     super.initState();
   }
 

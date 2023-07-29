@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expence_project/data/models/account_model.dart';
 import 'package:expence_project/data/models/transaction_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/user_model.dart';
 
 abstract class StorageRepository {
   Future<UserModel> getUser();
   Future<List<Account>>? getAccount();
-  Future<List<TransactionModel>>? getAllTransaction(String accountId);
+  Future<List<TransactionModel>>? getAllTransaction();
+  Future<String?> uploadImageToFirebase(File imageFile);
   Future<void> addUser(UserModel user, String uid);
   Future<void> addAccount(Account account);
   Future<void> addTransaction(TransactionModel transaction, String accountUid);
@@ -139,9 +144,9 @@ class FirebaseStorageRepository extends StorageRepository {
   }
 
   @override
-  Future<List<TransactionModel>>? getAllTransaction(String accountId) async {
+  Future<List<TransactionModel>>? getAllTransaction() async {
     print('get transaction...');
-    // TODO: implement getTransaction
+
     if (firebaseAuth.currentUser == null) {
       // Handle the case when the user is not authenticated.
       throw Exception('User is not authenticated.');
@@ -153,7 +158,7 @@ class FirebaseStorageRepository extends StorageRepository {
           .collection(userCollection)
           .doc(uid)
           .collection(accountCollection)
-          .doc(accountId)
+          .doc()
           .collection(this.transactionCollection);
 
       QuerySnapshot<Object?> querySnapshot = await transactionCollection.get();
@@ -217,6 +222,30 @@ class FirebaseStorageRepository extends StorageRepository {
       rethrow;
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<String?> uploadImageToFirebase(File imageFile) async {
+    try {
+      // Create a unique file name for the image
+      String fileName = const Uuid().v4();
+
+      // Reference the storage location and upload the file
+      final Reference storageReference =
+          FirebaseStorage.instance.ref().child('images/$fileName');
+      final UploadTask uploadTask = storageReference.putFile(imageFile);
+
+      // Wait for the upload to complete and get the image URL
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => {});
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+      // Use the imageUrl for further processing or saving in the database
+      print('Image uploaded. URL: $imageUrl');
+      return imageUrl;
+    } catch (e) {
+      print('Error uploading image to Firebase: $e');
+      return null;
     }
   }
 }

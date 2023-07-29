@@ -136,9 +136,9 @@ class _ProfileScreensState extends State<ProfileScreens> {
                 BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
                     return state.map(error: (value) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }, initial: (value) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }, loaded: (value) {
                       return Text(
                         value.userModel.name,

@@ -4,11 +4,11 @@ import 'package:uuid/uuid.dart';
 class TransactionModel {
   final String? id;
   final String? accountUid; // Income or Expense
-  final String? type; // Income or Expense
-  final String? name;
+  final String? type;
+  final String? url;
   final double? amount;
   final String? description;
-  final int? category;
+  final String? category;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -16,7 +16,7 @@ class TransactionModel {
     String? uid,
     required this.accountUid,
     required this.type,
-    required this.name,
+    required this.url,
     required this.amount,
     required this.description,
     required this.category,
@@ -29,7 +29,7 @@ class TransactionModel {
       uid: data['id'] ?? '',
       accountUid: data['accountUid'] ?? '',
       type: data['type'] ?? '',
-      name: data['name'] ?? '',
+      url: data['url'] ?? '',
       amount: data['amount'] ?? '',
       description: data['description'] ?? '',
       category: data['category'] ?? '',
@@ -43,7 +43,7 @@ class TransactionModel {
       'id': id,
       'accountUid': accountUid,
       'type': type,
-      'name': name,
+      'url': url,
       'amount': amount,
       'description': description,
       'category': category,

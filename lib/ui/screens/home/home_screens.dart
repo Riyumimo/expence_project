@@ -87,7 +87,7 @@ class _HomeScreensState extends State<HomeScreens> {
               style: $styles.text.body
                   .copyWith(height: 0, color: ($styles.colors.textWhite)),
             )),
-            Gap(9),
+            const Gap(9),
             Center(
               child: Text(
                 '\$9400',
@@ -207,7 +207,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
                       FilledButton(
-                          onPressed: () async {}, child: Text("See all"))
+                          onPressed: () async {}, child: const Text("See all"))
                     ],
                   )),
             ),
@@ -224,8 +224,8 @@ class _HomeScreensState extends State<HomeScreens> {
                       appRoute.push(ScreenPaths.detail, extra: 'Income');
                     },
                   ),
-                  ListTileItem(),
-                  ListTileItem(),
+                  const ListTileItem(),
+                  const ListTileItem(),
                 ],
               ),
             ),

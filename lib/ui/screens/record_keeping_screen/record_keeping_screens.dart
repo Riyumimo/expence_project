@@ -203,7 +203,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                       dropdownColor: Colors.white,
                       iconSize: 32,
                       icon: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
+                        padding: const EdgeInsets.only(right: 8.0),
                         child: SvgPicture.asset(
                           'assets/icons/arrow-down.svg',
                         ),

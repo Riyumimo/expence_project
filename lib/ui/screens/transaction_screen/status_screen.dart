@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter/material.dart';
 
 class FinancialStatusScreen extends StatefulWidget {
   const FinancialStatusScreen({super.key});
@@ -81,7 +80,7 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
                                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Gap(42),
+                                    const Gap(42),
                                     _currentPage == 3
                                         ? Container()
                                         : Text(
@@ -90,7 +89,9 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
                                                 color: Colors.white
                                                     .withOpacity(.7)),
                                           ),
-                                    _currentPage == 3 ? Container() : Spacer(),
+                                    _currentPage == 3
+                                        ? Container()
+                                        : const Spacer(),
                                     Column(
                                       children: [
                                         Text(
@@ -100,7 +101,7 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
                                               fontWeight: FontWeight.w700,
                                               color: $styles.colors.white),
                                         ),
-                                        Gap(24),
+                                        const Gap(24),
                                         _currentPage == 2
                                             ? Row(
                                                 children: [
@@ -113,7 +114,7 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
                                                             BorderRadius
                                                                 .circular(24)),
                                                   ),
-                                                  Gap(8),
+                                                  const Gap(8),
                                                   Expanded(
                                                     child: Container(
                                                       // width: 156,
@@ -148,7 +149,7 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
                                                   ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     _currentPage == 2
                                         ? Container()
                                         : _currentPage == 3
@@ -199,7 +200,7 @@ class _FinancialStatusScreenState extends State<FinancialStatusScreen> {
     Color color = index == _currentPage ? Colors.grey : Colors.white;
     return Container(
       // padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       width: MediaQuery.sizeOf(context).width * .2,
       height: 4,
       decoration:
