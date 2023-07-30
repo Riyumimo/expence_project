@@ -7,7 +7,7 @@ class TransactionBlocEvent with _$TransactionBlocEvent {
   const factory TransactionBlocEvent.add(
     String accountUid,
     String type,
-    String? url,
+    File? url,
     String description,
     String category,
     double amount,

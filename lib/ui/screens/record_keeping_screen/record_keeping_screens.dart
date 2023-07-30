@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/permission/camera_permission.dart';
 import 'package:expence_project/logic/permission/galery_permission.dart';
+import 'package:expence_project/logic/transaction_bloc/transaction_bloc_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
@@ -154,7 +155,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(_image);
+    print(_image);
     return PageTransitionSwitcher(
       transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
           FadeThroughTransition(
@@ -312,7 +313,6 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                                 _hintWallet = value!;
                                 uid = getUid(loaded.listAccount, value);
                               });
-                              // print(uid);Fcon
                             },
                             elevation: 4,
                             items: walletList
@@ -438,6 +438,17 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   RecordButton(
                     onpressed: () {
                       print(uid);
+                      // print(_image?.toString());
+                      double? amount =
+                          double.tryParse(_textMoneyController.text);
+                      context.read<TransactionBlocBloc>().add(
+                          TransactionBlocEvent.add(
+                              uid!,
+                              widget.title!,
+                              null,
+                              _textDescController.text,
+                              _hintCategory,
+                              amount!));
                     },
                   )
                 ],

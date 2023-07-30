@@ -79,16 +79,26 @@ class FirebaseStorageRepository extends StorageRepository {
   Future<void> addTransaction(
       TransactionModel transaction, String accountUid) async {
     try {
-      String uid = firebaseAuth.currentUser!.uid;
-      firestore
+      String? uid = firebaseAuth.currentUser?.uid;
+      if (uid == null) {
+        throw Exception("User is not authenticated.");
+      }
+
+      final transactionRef = firestore
           .collection(userCollection)
           .doc(uid)
           .collection(accountCollection)
           .doc(accountUid)
           .collection(transactionCollection)
-          .doc(transaction.id.toString())
-          .set(transaction.toFirestore());
-    } catch (e) {}
+          .doc(transaction.id.toString());
+
+      await transactionRef.set(transaction.toFirestore());
+    } catch (e) {
+      // Jangan gunakan 'rethrow' tanpa alasan khusus, cukup log pesan errornya.
+      print("Error adding transaction: $e");
+      // Handle error jika diperlukan.
+      throw e;
+    }
   }
 
   @override

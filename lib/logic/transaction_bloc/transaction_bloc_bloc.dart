@@ -19,8 +19,7 @@ class TransactionBlocBloc
     on<_AddEvent>((event, emit) async {
       String? fileUrl;
       if (event.url != null) {
-        fileUrl =
-            await _storageRepository.uploadImageToFirebase(event.url as File);
+        fileUrl = await _storageRepository.uploadImageToFirebase(event.url!);
       }
       _storageRepository.addTransaction(
           TransactionModel(

@@ -23,6 +23,7 @@ class Account {
   }) : uid = id ?? const Uuid().v4();
   factory Account.fromFirestore(Map<String, dynamic> data) {
     return Account(
+      id: data['uid'],
       userId: data['userId'] ?? '',
       accountName: data['accountName'] ?? '',
       name: data['name'] ?? '',

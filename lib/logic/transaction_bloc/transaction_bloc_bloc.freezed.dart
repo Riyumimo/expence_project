@@ -20,7 +20,7 @@ mixin _$TransactionBlocEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -31,7 +31,7 @@ mixin _$TransactionBlocEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -42,7 +42,7 @@ mixin _$TransactionBlocEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
@@ -139,7 +139,7 @@ class _$_GetAllEvent implements _GetAllEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -153,7 +153,7 @@ class _$_GetAllEvent implements _GetAllEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -167,7 +167,7 @@ class _$_GetAllEvent implements _GetAllEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
@@ -265,7 +265,7 @@ class _$_GetByIdEvent implements _GetByIdEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -279,7 +279,7 @@ class _$_GetByIdEvent implements _GetByIdEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -293,7 +293,7 @@ class _$_GetByIdEvent implements _GetByIdEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
@@ -360,7 +360,7 @@ abstract class _$$_AddEventCopyWith<$Res> {
   $Res call(
       {String accountUid,
       String type,
-      String? url,
+      File? url,
       String description,
       String category,
       double amount});
@@ -396,7 +396,7 @@ class __$$_AddEventCopyWithImpl<$Res>
       freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as File?,
       null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -424,7 +424,7 @@ class _$_AddEvent implements _AddEvent {
   @override
   final String type;
   @override
-  final String? url;
+  final File? url;
   @override
   final String description;
   @override
@@ -468,7 +468,7 @@ class _$_AddEvent implements _AddEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -482,7 +482,7 @@ class _$_AddEvent implements _AddEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -496,7 +496,7 @@ class _$_AddEvent implements _AddEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
@@ -554,14 +554,14 @@ abstract class _AddEvent implements TransactionBlocEvent {
   const factory _AddEvent(
       final String accountUid,
       final String type,
-      final String? url,
+      final File? url,
       final String description,
       final String category,
       final double amount) = _$_AddEvent;
 
   String get accountUid;
   String get type;
-  String? get url;
+  File? get url;
   String get description;
   String get category;
   double get amount;
@@ -610,7 +610,7 @@ class _$_DeletedEvent implements _DeletedEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -624,7 +624,7 @@ class _$_DeletedEvent implements _DeletedEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -638,7 +638,7 @@ class _$_DeletedEvent implements _DeletedEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
@@ -736,7 +736,7 @@ class _$_UpdateEvent implements _UpdateEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAll,
     required TResult Function() getById,
-    required TResult Function(String accountUid, String type, String? url,
+    required TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)
         add,
     required TResult Function() delete,
@@ -750,7 +750,7 @@ class _$_UpdateEvent implements _UpdateEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAll,
     TResult? Function()? getById,
-    TResult? Function(String accountUid, String type, String? url,
+    TResult? Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult? Function()? delete,
@@ -764,7 +764,7 @@ class _$_UpdateEvent implements _UpdateEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAll,
     TResult Function()? getById,
-    TResult Function(String accountUid, String type, String? url,
+    TResult Function(String accountUid, String type, File? url,
             String description, String category, double amount)?
         add,
     TResult Function()? delete,
