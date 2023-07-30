@@ -3,14 +3,13 @@ part of '../record_keeping_screens.dart';
 class RecordButton extends StatelessWidget {
   const RecordButton({
     super.key,
+    this.onpressed,
   });
-
+  final Function()? onpressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print('object');
-      },
+      onTap: onpressed,
       child: Container(
         height: 54,
         width: double.infinity,

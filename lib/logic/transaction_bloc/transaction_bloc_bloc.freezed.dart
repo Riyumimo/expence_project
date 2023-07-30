@@ -828,7 +828,7 @@ mixin _$TransactionBlocState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<TransactionModel> transactionModel) loaded,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
@@ -836,7 +836,7 @@ mixin _$TransactionBlocState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<TransactionModel> transactionModel)? loaded,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -844,7 +844,7 @@ mixin _$TransactionBlocState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<TransactionModel> transactionModel)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -934,7 +934,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<TransactionModel> transactionModel) loaded,
     required TResult Function() error,
   }) {
     return initial();
@@ -945,7 +945,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<TransactionModel> transactionModel)? loaded,
     TResult? Function()? error,
   }) {
     return initial?.call();
@@ -956,7 +956,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<TransactionModel> transactionModel)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -1047,7 +1047,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<TransactionModel> transactionModel) loaded,
     required TResult Function() error,
   }) {
     return loading();
@@ -1058,7 +1058,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<TransactionModel> transactionModel)? loaded,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -1069,7 +1069,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<TransactionModel> transactionModel)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -1125,6 +1125,8 @@ abstract class _Loading implements TransactionBlocState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<TransactionModel> transactionModel});
 }
 
 /// @nodoc
@@ -1133,36 +1135,69 @@ class __$$_LoadedCopyWithImpl<$Res>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transactionModel = null,
+  }) {
+    return _then(_$_Loaded(
+      null == transactionModel
+          ? _value._transactionModel
+          : transactionModel // ignore: cast_nullable_to_non_nullable
+              as List<TransactionModel>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(final List<TransactionModel> transactionModel)
+      : _transactionModel = transactionModel;
+
+  final List<TransactionModel> _transactionModel;
+  @override
+  List<TransactionModel> get transactionModel {
+    if (_transactionModel is EqualUnmodifiableListView)
+      return _transactionModel;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactionModel);
+  }
 
   @override
   String toString() {
-    return 'TransactionBlocState.loaded()';
+    return 'TransactionBlocState.loaded(transactionModel: $transactionModel)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$_Loaded &&
+            const DeepCollectionEquality()
+                .equals(other._transactionModel, _transactionModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transactionModel));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<TransactionModel> transactionModel) loaded,
     required TResult Function() error,
   }) {
-    return loaded();
+    return loaded(transactionModel);
   }
 
   @override
@@ -1170,10 +1205,10 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<TransactionModel> transactionModel)? loaded,
     TResult? Function()? error,
   }) {
-    return loaded?.call();
+    return loaded?.call(transactionModel);
   }
 
   @override
@@ -1181,12 +1216,12 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<TransactionModel> transactionModel)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(transactionModel);
     }
     return orElse();
   }
@@ -1230,7 +1265,13 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements TransactionBlocState {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(final List<TransactionModel> transactionModel) =
+      _$_Loaded;
+
+  List<TransactionModel> get transactionModel;
+  @JsonKey(ignore: true)
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1271,7 +1312,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<TransactionModel> transactionModel) loaded,
     required TResult Function() error,
   }) {
     return error();
@@ -1282,7 +1323,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<TransactionModel> transactionModel)? loaded,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -1293,7 +1334,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<TransactionModel> transactionModel)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {

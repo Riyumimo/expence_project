@@ -9,7 +9,11 @@ import 'package:expence_project/logic/permission/galery_permission.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../data/models/account_model.dart';
+import '../../../logic/account_bloc/account_bloc.dart';
 
 part './widgets/attachment_widget.dart';
 part './widgets/input_record.dart';
@@ -41,7 +45,9 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
     "Bussines",
     "Divide",
   ];
-  List<String> walletList = ["Bank", "E-Money", "Cash"];
+  List<String> walletList = [];
+  String? uid;
+
   File? _image;
   CameraImagePickerHandler? cameraImagePickerHandler;
   GaleryPermissionHandler? galeryPermissionHandler;
@@ -56,9 +62,22 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   void initState() {
+    BlocProvider.of<AccountBloc>(context).add(AccountEvent.started());
     cameraImagePickerHandler = CameraImagePickerHandler();
     galeryPermissionHandler = GaleryPermissionHandler();
     super.initState();
+  }
+
+  String? getUid(List<Account> list, String name) {
+    String? uid;
+    for (var element in list) {
+      if (name == element.name) {
+        uid = element.uid;
+        continue;
+      }
+    }
+    print(uid);
+    return uid;
   }
 
   Future<void> _pickImage() async {
@@ -135,7 +154,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_image);
+    // print(_image);
     return PageTransitionSwitcher(
       transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
           FadeThroughTransition(
@@ -262,44 +281,63 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                   ),
 
                   //Wallet
-                  MyInputField(
-                    colorText: _hintWallet == 'Wallet' ? false : true,
-                    hint: _hintWallet,
-                    color: $styles.colors.white,
-                    widget: DropdownButton(
-                      dropdownColor: Colors.white,
-                      iconSize: 32,
-                      icon: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/icons/arrow-down.svg',
-                        ),
-                      ),
-                      underline: Container(),
-                      onChanged: (value) {
-                        setState(() {
-                          _hintWallet = value!;
-                        });
-                      },
-                      elevation: 4,
-                      items: walletList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Row(
-                              children: [
-                                Icon(walletIcon(value),
-                                    color: $styles.colors.greyStrong),
-                                const Gap(5),
-                                Text(
-                                  value,
-                                  style: $styles.text.bodyBold.copyWith(
-                                      color: $styles.colors.greyStrong),
-                                ),
-                              ],
-                            ));
-                      }).toList(),
-                    ),
+                  BlocBuilder<AccountBloc, AccountState>(
+                    builder: (context, state) {
+                      return state.map(initial: (initial) {
+                        return const CircularProgressIndicator();
+                      }, loading: (loading) {
+                        return const CircularProgressIndicator();
+                      }, loaded: (loaded) {
+                        final List<String> name = [];
+                        for (var element in loaded.listAccount) {
+                          name.add(element.name!);
+                        }
+                        walletList = name;
+                        return MyInputField(
+                          colorText: _hintWallet == 'Wallet' ? false : true,
+                          hint: _hintWallet,
+                          color: $styles.colors.white,
+                          widget: DropdownButton(
+                            dropdownColor: Colors.white,
+                            iconSize: 32,
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: SvgPicture.asset(
+                                'assets/icons/arrow-down.svg',
+                              ),
+                            ),
+                            underline: Container(),
+                            onChanged: (value) {
+                              setState(() {
+                                _hintWallet = value!;
+                                uid = getUid(loaded.listAccount, value);
+                              });
+                              // print(uid);Fcon
+                            },
+                            elevation: 4,
+                            items: walletList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      Icon(walletIcon(value),
+                                          color: $styles.colors.greyStrong),
+                                      const Gap(5),
+                                      Text(
+                                        value,
+                                        style: $styles.text.bodyBold.copyWith(
+                                            color: $styles.colors.greyStrong),
+                                      ),
+                                    ],
+                                  ));
+                            }).toList(),
+                          ),
+                        );
+                      }, error: (error) {
+                        return const CircularProgressIndicator();
+                      });
+                    },
                   ),
 
                   _image == null
@@ -397,7 +435,11 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                       ),
                     ),
                   ),
-                  const RecordButton()
+                  RecordButton(
+                    onpressed: () {
+                      print(uid);
+                    },
+                  )
                 ],
               ),
             )
@@ -406,7 +448,6 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
       ),
     );
   }
-
   // Method //
 
   Future<dynamic> bottomSheet(BuildContext context) {
