@@ -9,8 +9,8 @@ class TransactionModel {
   final double? amount;
   final String? description;
   final String? category;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   TransactionModel({
     String? uid,
@@ -33,8 +33,8 @@ class TransactionModel {
       amount: data['amount'] ?? '',
       description: data['description'] ?? '',
       category: data['category'] ?? '',
-      createdAt: (data['createdAt' as Timestamp]).toDate(),
-      updatedAt: data['updatedAt' as Timestamp].toDate(),
+      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      updatedAt: (data['updatedAt'] as Timestamp).toDate(),
     );
   }
   // Konversi objek TransactionModel menjadi Map untuk menyimpan di Firestore
@@ -47,8 +47,8 @@ class TransactionModel {
       'amount': amount,
       'description': description,
       'category': category,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': Timestamp.fromDate(updatedAt),
+      'createdAt': Timestamp.fromDate(createdAt!),
+      'updatedAt': Timestamp.fromDate(updatedAt!),
     };
   }
 }

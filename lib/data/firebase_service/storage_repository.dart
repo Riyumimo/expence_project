@@ -162,23 +162,39 @@ class FirebaseStorageRepository extends StorageRepository {
       throw Exception('User is not authenticated.');
     }
 
+    String uid = firebaseAuth.currentUser!.uid;
     try {
-      String uid = firebaseAuth.currentUser!.uid;
-      CollectionReference transactionCollection = firestore
+      QuerySnapshot<Object?> accountCollection = await firestore
           .collection(userCollection)
           .doc(uid)
-          .collection(accountCollection)
-          .doc()
-          .collection(this.transactionCollection);
+          .collection(this.accountCollection)
+          .get();
+      CollectionReference? transanctionCollections;
+      for (DocumentSnapshot accountDoc in accountCollection.docs) {
+        transanctionCollections = firestore
+            .collection(userCollection)
+            .doc(uid)
+            .collection(this.accountCollection)
+            .doc(accountDoc.id)
+            .collection(transactionCollection);
+      }
+      if (transanctionCollections == null) {
+        throw ("Collection is null");
+      }
+      QuerySnapshot<Object?> querySnapshot =
+          await transanctionCollections.get();
+      // print('quiery ${querySnapshot.docs}');
 
-      QuerySnapshot<Object?> querySnapshot = await transactionCollection.get();
       List<TransactionModel> transactionList = querySnapshot.docs.map((e) {
         Map<String, dynamic> data = e.data() as Map<String, dynamic>;
+        // print("data $data");
+        // print(e);
         if (data.isEmpty) {
           throw Exception('Data not available for document: ${e.id}');
         }
         return TransactionModel.fromFireStore(data);
       }).toList();
+      // print(transactionList);
       return transactionList;
     } on Exception catch (e) {
       print('Error occurred while fetching accounts: $e');
