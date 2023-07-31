@@ -199,7 +199,11 @@ class _AccountScreenState extends State<AddAccountScreens> {
                           .read<AccountBloc>()
                           .add(const AccountEvent.started());
                       Future.delayed(const Duration(milliseconds: 100), () {
-                        appRoute.pop();
+                        if (widget.title != 'login') {
+                          appRoute.pop();
+                        } else {
+                          appRoute.go(ScreenPaths.dashboard);
+                        }
                       });
                     }
                   },

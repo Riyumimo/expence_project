@@ -2,6 +2,7 @@ import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
 import 'package:expence_project/ui/screens/account/account_screen.dart';
 import 'package:expence_project/ui/screens/account/add_account_screen.dart';
+import 'package:expence_project/ui/screens/account/pre_add_account.dart';
 import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:expence_project/ui/screens/detail_screen/detail_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';
@@ -31,6 +32,7 @@ class ScreenPaths {
   static String status = '/status';
   static String account = '/account';
   static String addAccount = '/addAccount';
+  static String preAddAccount = '/preaddAccount';
   static String transaction = '/transactions';
   static String detail = '/detail';
   static String profile = '/profile';
@@ -56,6 +58,7 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(ScreenPaths.verification, (s) => const VerificationScreen()),
         AppRoute(ScreenPaths.dashboard, (s) => const DashboardScreen()),
         AppRoute(ScreenPaths.camera, (s) => const CameraScreen()),
+        AppRoute(ScreenPaths.preAddAccount, (s) => const PreAddAccountScreen()),
         AppRoute(
             ScreenPaths.addAccount,
             (s) => AddAccountScreens(

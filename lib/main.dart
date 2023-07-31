@@ -1,19 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:expence_project/data/firebase_service/storage_repository.dart';
-import 'package:expence_project/logic/app_logic.dart';
-import 'package:expence_project/data/firebase_service/auth_repository.dart';
-import 'package:expence_project/logic/transaction_bloc/transaction_bloc_bloc.dart';
-import 'package:expence_project/logic/user_bloc/user_bloc.dart';
-import 'package:expence_project/router.dart';
-import 'package:expence_project/styles/styles.dart';
-import 'package:expence_project/ui/app_scafold.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get_it/get_it.dart';
-
 import 'commons_libs.dart';
 import 'firebase_options.dart';
 import 'logic/account_bloc/account_bloc.dart';
@@ -66,7 +50,14 @@ class MyApp extends StatelessWidget with GetItMixin {
             state.map(
                 intial: (intial) {},
                 authenticated: (value) {
-                  appRoute.go(ScreenPaths.dashboard);
+                  bool? getAccount;
+                  SharedPreferences.getInstance().then((value) {
+                    getAccount = value.getBool('account')!;
+                  });
+                  getAccount ?? appRoute.go(ScreenPaths.dashboard);
+                  getAccount!
+                      ? appRoute.go(ScreenPaths.dashboard)
+                      : appRoute.go(ScreenPaths.preAddAccount);
                 },
                 loaded: (loaded) {},
                 unauthenticated: (unauthenticated) {
@@ -83,7 +74,7 @@ class MyApp extends StatelessWidget with GetItMixin {
                   loaded: (loaded) {
                     if (loaded.listAccount.isEmpty) {
                       print('Empity Data');
-                      appRoute.go(ScreenPaths.addAccount);
+                      appRoute.go(ScreenPaths.preAddAccount);
                     }
                   },
                   error: (error) {});
