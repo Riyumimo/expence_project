@@ -1,14 +1,13 @@
 import 'dart:core';
 
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../data/models/account_model.dart';
 import '../../../data/models/transaction_model.dart';
 import '../../../logic/account_bloc/account_bloc.dart';
 import '../../common/chip_button.dart';
-part '../../common/list_tile_item.dart';
+import '../../common/list_tile_item.dart';
 part './widgets/income_expense.dart';
 
 class HomeScreens extends StatefulWidget {
@@ -232,19 +231,33 @@ class _HomeScreensState extends State<HomeScreens> {
             SizedBox(
               width: double.infinity,
               height: 200,
-              child: ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 27,
-                ),
-                children: [
-                  ListTileItem(
-                    ontap: () {
-                      appRoute.push(ScreenPaths.detail, extra: 'Income');
-                    },
-                  ),
-                  const ListTileItem(),
-                  const ListTileItem(),
-                ],
+              child: BlocBuilder<TransactionBloc, TransactionBlocState>(
+                builder: (context, state) {
+                  return state.map(initial: (initial) {
+                    return CircularProgressIndicator();
+                  }, loading: (loading) {
+                    return CircularProgressIndicator();
+                  }, loaded: (loaded) {
+                    final transactionAccount = loaded.transactionModel;
+                    return ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: transactionAccount.length,
+                      itemBuilder: (context, index) {
+                        final data = transactionAccount[index];
+                        print(data.category);
+                        return ListTileItem(
+                          amount: data.amount,
+                          description: data.description,
+                          createAt: data.createdAt,
+                          category: data.category,
+                          type: data.type!.toLowerCase(),
+                        );
+                      },
+                    );
+                  }, error: (error) {
+                    return const CircularProgressIndicator();
+                  });
+                },
               ),
             ),
             // Center(

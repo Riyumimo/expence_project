@@ -1,25 +1,65 @@
-part of '../screens/home/home_screens.dart';
+import 'package:intl/intl.dart';
+
+import '../../commons_libs.dart';
 
 class ListTileItem extends StatelessWidget {
   const ListTileItem({
     super.key,
     this.ontap,
+    this.category,
+    this.description,
+    this.amount,
+    this.type,
+    this.createAt,
   });
   final Function()? ontap;
-
-  Color? colorIcon(String category) {
+  final String? category;
+  final String? description;
+  final double? amount;
+  final String? type;
+  final DateTime? createAt;
+  Color? _colorIcon(String category) {
     switch (category) {
       case "Food":
-        return Colors.amber;
+        return const Color(0xFFFDD5D7);
       case "Subcriptions":
-        return Colors.red;
+        return const Color(0xFFEEE5FF);
       case "Shoping":
-        return Colors.green;
+        return const Color(0xFFFCEED4);
+      case "Salary":
+        return const Color(0xFFCFFAEA);
+      case "Bussines":
+        return const Color(0xFFEEE5FF);
       case "Monthly":
-        return Colors.amber;
+        return const Color(0xFFBDDCFF);
+      default:
+    }
+    return Colors.amber;
+  }
+
+  String? _getIcon(String category) {
+    switch (category) {
+      case "Food":
+        return 'assets/icons/restaurant.svg';
+      case "Subcriptions":
+        return 'assets/icons/recurring-bill.svg';
+      case "Shoping":
+        return 'assets/icons/shopping-bag.svg';
+      case "Salary":
+        return 'assets/icons/salary.svg';
+      case "Bussines":
+        return 'assets/icons/recurring-bill.svg';
+
+      case "Monthly":
+        return 'assets/icons/car.svg';
       default:
     }
     return null;
+  }
+
+  String _getDateTime(DateTime dateTime) {
+    String formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
+    return formattedDate;
   }
 
   @override
@@ -43,14 +83,24 @@ class ListTileItem extends StatelessWidget {
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFCEED4),
+                  color: _colorIcon(category ?? '') ?? Colors.accents[800],
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Icon(
-                  Icons.shopping_bag_rounded,
-                  size: 40,
-                  color: $styles.colors.accent1,
-                ),
+                child: _getIcon(category ?? '') == null
+                    ? Icon(
+                        Icons.shopping_bag_rounded,
+                        size: 40,
+                        color: $styles.colors.accent1,
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset(
+                          _getIcon(category!)!,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
               ),
               const Gap(9),
               Expanded(
@@ -61,26 +111,28 @@ class ListTileItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Shopping',
+                          category ?? '',
                           style: $styles.text.bodyBold,
                         ),
                         const Spacer(),
                         Text(
-                          '\$-120',
-                          style: $styles.text.bodyBold
-                              .copyWith(color: Colors.red[800]),
-                        )
+                            '\$ ${type == 'Income' ? "-" : "+"}${amount ?? ''}',
+                            style: $styles.text.bodyBold.copyWith(
+                                color: type == "income"
+                                    ? Colors.green[800]
+                                    : Colors.red[800]))
                       ],
                     ),
                     Row(
                       children: [
                         Text(
-                          'Buy some groceries',
+                          description ?? '',
+                          maxLines: 1,
                           style: $styles.text.body,
                         ),
                         const Spacer(),
                         Text(
-                          '10:00 AM',
+                          _getDateTime(createAt ?? DateTime.now()),
                           style: $styles.text.body,
                         )
                       ],
