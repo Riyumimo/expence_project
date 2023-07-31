@@ -1,8 +1,8 @@
 import 'package:expence_project/main.dart';
 import 'package:expence_project/ui/app_scafold.dart';
-import 'package:expence_project/ui/screens/account/account_screen.dart';
-import 'package:expence_project/ui/screens/account/add_account_screen.dart';
-import 'package:expence_project/ui/screens/account/pre_add_account.dart';
+import 'package:expence_project/ui/screens/account_screen/account_screen.dart';
+import 'package:expence_project/ui/screens/account_screen/add_account_screen.dart';
+import 'package:expence_project/ui/screens/account_screen/pre_add_account.dart';
 import 'package:expence_project/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:expence_project/ui/screens/detail_screen/detail_screen.dart';
 import 'package:expence_project/ui/screens/home/home_screens.dart';

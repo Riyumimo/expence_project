@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget with GetItMixin {
                 UserBloc(storage)..add(const UserEvent.started()),
           ),
           BlocProvider(
-            create: (context) => TransactionBlocBloc(storage),
+            create: (context) => TransactionBloc(storage)
+              ..add(const TransactionBlocEvent.getAll()),
           ),
         ],
         child: BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -49,11 +50,13 @@ class MyApp extends StatelessWidget with GetItMixin {
             print(state);
             state.map(
                 intial: (intial) {},
-                authenticated: (value) {
+                authenticated: (value) async {
                   bool? getAccount;
-                  SharedPreferences.getInstance().then((value) {
-                    getAccount = value.getBool('account')!;
+                  await SharedPreferences.getInstance().then((value) {
+                    final data = value.getBool('account');
+                    getAccount = data;
                   });
+                  print(' getAccount $getAccount');
                   getAccount ?? appRoute.go(ScreenPaths.dashboard);
                   getAccount!
                       ? appRoute.go(ScreenPaths.dashboard)

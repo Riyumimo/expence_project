@@ -1,8 +1,4 @@
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
-import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/account_model.dart';
 import '../../../logic/account_bloc/account_bloc.dart';
@@ -15,13 +11,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    // context.read<AccountBloc>().add(AccountEvent.started());
-    super.initState();
-  }
-
   double getAllBalance(List<Account> accountList) {
     double balance = 0;
     for (var data in accountList) {

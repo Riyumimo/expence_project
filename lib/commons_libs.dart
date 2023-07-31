@@ -17,7 +17,7 @@ export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:expence_project/data/firebase_service/storage_repository.dart';
 export 'package:expence_project/logic/app_logic.dart';
 export 'package:expence_project/data/firebase_service/auth_repository.dart';
-export 'package:expence_project/logic/transaction_bloc/transaction_bloc_bloc.dart';
+export 'package:expence_project/logic/transaction_bloc/transaction_bloc.dart';
 export 'package:expence_project/logic/user_bloc/user_bloc.dart';
 export 'package:expence_project/styles/styles.dart';
 export 'package:expence_project/ui/app_scafold.dart';

@@ -2,12 +2,11 @@ import 'dart:core';
 
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/screens/login_screen/login_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../data/models/account_model.dart';
+import '../../../data/models/transaction_model.dart';
+import '../../../logic/account_bloc/account_bloc.dart';
 import '../../common/chip_button.dart';
 part '../../common/list_tile_item.dart';
 part './widgets/income_expense.dart';
@@ -33,8 +32,8 @@ class _HomeScreensState extends State<HomeScreens> {
         _isLoaded = true;
       });
     });
-    BlocProvider.of<AuthenticationBloc>(context)
-        .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+    // BlocProvider.of<AuthenticationBloc>(context)
+    //     .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
     super.initState();
   }
 
@@ -42,6 +41,28 @@ class _HomeScreensState extends State<HomeScreens> {
   void dispose() {
     _isLoaded;
     super.dispose();
+  }
+
+  double _getAllBalance(List<Account> accountList) {
+    double balance = 0;
+    for (var data in accountList) {
+      balance += data.initialBalance!;
+    }
+    return balance;
+  }
+
+  double _getAllTransaction(List<TransactionModel> transactionList,
+      {bool isIncome = true}) {
+    double amountIncome = 0;
+    double amountExpense = 0;
+    for (var data in transactionList) {
+      if (data.type == 'Income') {
+        amountIncome += data.amount!;
+      } else {
+        amountExpense -= data.amount!;
+      }
+    }
+    return isIncome ? amountIncome : amountExpense;
   }
 
   @override
@@ -89,43 +110,80 @@ class _HomeScreensState extends State<HomeScreens> {
             )),
             const Gap(9),
             Center(
-              child: Text(
-                '\$9400',
-                style: $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+              child: BlocBuilder<AccountBloc, AccountState>(
+                builder: (context, state) {
+                  return state.map(initial: (initial) {
+                    return Text(
+                      '',
+                      style:
+                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+                    );
+                  }, loading: (loading) {
+                    return CircularProgressIndicator();
+                  }, loaded: (loaded) {
+                    return Text(
+                      '\$ ${_getAllBalance(loaded.listAccount).toString()}',
+                      style:
+                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+                    );
+                  }, error: (error) {
+                    return Text(
+                      '',
+                      style:
+                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+                    );
+                  });
+                },
               ),
             ),
-            SeparatedRow(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
-              separatorBuilder: () => const Gap(16),
-              children: [
-                Expanded(
-                    child: IncomeExpenseWidget(
-                  title: 'Income',
-                  color: const Color(0xFF00A86B),
-                  amount: '\$10000',
-                  icon: ColorFiltered(
-                    colorFilter: const ColorFilter.mode(
-                        Color(0xFF00A86B), BlendMode.srcIn),
-                    child: SvgPicture.asset(
-                      'assets/icons/income.svg',
-                    ),
-                  ),
-                )),
-                Expanded(
-                  child: IncomeExpenseWidget(
-                    title: 'Expense',
-                    color: const Color(0xFFFD3C4A),
-                    amount: '\$5000',
-                    icon: ColorFiltered(
-                      colorFilter: const ColorFilter.mode(
-                          Color(0xFFFD3C4A), BlendMode.srcIn),
-                      child: SvgPicture.asset(
-                        'assets/icons/expense.svg',
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            BlocBuilder<TransactionBloc, TransactionBlocState>(
+              builder: (context, state) {
+                return state.map(initial: (initial) {
+                  return const CircularProgressIndicator();
+                }, loading: (loading) {
+                  return const CircularProgressIndicator();
+                }, loaded: (loaded) {
+                  return SeparatedRow(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 23),
+                    separatorBuilder: () => const Gap(16),
+                    children: [
+                      Expanded(
+                          child: IncomeExpenseWidget(
+                        title: 'Income',
+                        color: const Color(0xFF00A86B),
+                        amount: _getAllTransaction(loaded.transactionModel)
+                            .toString(),
+                        icon: ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                              Color(0xFF00A86B), BlendMode.srcIn),
+                          child: SvgPicture.asset(
+                            'assets/icons/income.svg',
+                          ),
+                        ),
+                      )),
+                      Expanded(
+                        child: IncomeExpenseWidget(
+                          title: 'Expense',
+                          color: const Color(0xFFFD3C4A),
+                          amount: _getAllTransaction(loaded.transactionModel,
+                                  isIncome: false)
+                              .toString(),
+                          icon: ColorFiltered(
+                            colorFilter: const ColorFilter.mode(
+                                Color(0xFFFD3C4A), BlendMode.srcIn),
+                            child: SvgPicture.asset(
+                              'assets/icons/expense.svg',
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }, error: (error) {
+                  return const CircularProgressIndicator();
+                });
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -148,51 +206,7 @@ class _HomeScreensState extends State<HomeScreens> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
               ),
-              child: SeparatedRow(
-                separatorBuilder: () => const Gap(8),
-                children: [
-                  Expanded(
-                      child: RowChipButton(
-                    label: 'Today',
-                    onSelected: () {
-                      setState(() {
-                        _isSelected = 0;
-                      });
-                    },
-                    isSelected: _isSelected == 0,
-                  )),
-                  Expanded(
-                      child: RowChipButton(
-                    label: 'Week',
-                    isSelected: _isSelected == 1,
-                    onSelected: () {
-                      setState(() {
-                        _isSelected = 1;
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RowChipButton(
-                    label: 'Month',
-                    isSelected: _isSelected == 2,
-                    onSelected: () {
-                      setState(() {
-                        _isSelected = 2;
-                      });
-                    },
-                  )),
-                  Expanded(
-                      child: RowChipButton(
-                    label: 'Year',
-                    isSelected: _isSelected == 3,
-                    onSelected: () {
-                      setState(() {
-                        _isSelected = 3;
-                      });
-                    },
-                  )),
-                ],
-              ),
+              child: rowFIlter(),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -207,7 +221,11 @@ class _HomeScreensState extends State<HomeScreens> {
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
                       FilledButton(
-                          onPressed: () async {}, child: const Text("See all"))
+                          onPressed: () async {
+                            final data = await storage.getAllTransaction();
+                            print('Transaction $data');
+                          },
+                          child: const Text("See all"))
                     ],
                   )),
             ),
@@ -243,6 +261,54 @@ class _HomeScreensState extends State<HomeScreens> {
         ),
       ),
     ));
+  }
+
+  SeparatedRow rowFIlter() {
+    return SeparatedRow(
+      separatorBuilder: () => const Gap(8),
+      children: [
+        Expanded(
+            child: RowChipButton(
+          label: 'Today',
+          onSelected: () {
+            setState(() {
+              _isSelected = 0;
+            });
+          },
+          isSelected: _isSelected == 0,
+        )),
+        Expanded(
+            child: RowChipButton(
+          label: 'Week',
+          isSelected: _isSelected == 1,
+          onSelected: () {
+            setState(() {
+              _isSelected = 1;
+            });
+          },
+        )),
+        Expanded(
+            child: RowChipButton(
+          label: 'Month',
+          isSelected: _isSelected == 2,
+          onSelected: () {
+            setState(() {
+              _isSelected = 2;
+            });
+          },
+        )),
+        Expanded(
+            child: RowChipButton(
+          label: 'Year',
+          isSelected: _isSelected == 3,
+          onSelected: () {
+            setState(() {
+              _isSelected = 3;
+            });
+          },
+        )),
+      ],
+    );
   }
 
   LineChartData mainData() {

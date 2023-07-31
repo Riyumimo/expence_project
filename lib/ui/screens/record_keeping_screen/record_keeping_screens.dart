@@ -6,7 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/permission/camera_permission.dart';
 import 'package:expence_project/logic/permission/galery_permission.dart';
-import 'package:expence_project/logic/transaction_bloc/transaction_bloc_bloc.dart';
+import 'package:expence_project/logic/transaction_bloc/transaction_bloc.dart';
 import 'package:expence_project/main.dart';
 import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
@@ -441,14 +441,16 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                       // print(_image?.toString());
                       double? amount =
                           double.tryParse(_textMoneyController.text);
-                      context.read<TransactionBlocBloc>().add(
-                          TransactionBlocEvent.add(
-                              uid!,
-                              widget.title!,
-                              null,
-                              _textDescController.text,
-                              _hintCategory,
-                              amount!));
+                      context.read<TransactionBloc>().add(
+                            TransactionBlocEvent.add(
+                                uid!,
+                                widget.title!,
+                                null,
+                                _textDescController.text,
+                                _hintCategory,
+                                amount!),
+                          );
+                      appRoute.pop();
                     },
                   )
                 ],
