@@ -1,9 +1,5 @@
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/chip_button.dart';
-import 'package:expence_project/ui/common/my_button.dart';
-import 'package:expence_project/ui/screens/home/home_screens.dart';
 
 import '../../common/list_tile_item.dart';
 
@@ -210,9 +206,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     ),
                     const Spacer(),
                     InkWell(
-                      onTap: () {
-                        print('object');
-                      },
+                      onTap: () {},
                       child: Container(
                         width: 71,
                         height: 32,

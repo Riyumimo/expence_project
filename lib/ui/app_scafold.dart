@@ -1,7 +1,4 @@
-import 'package:expence_project/main.dart';
-
 import '../commons_libs.dart';
-import '../styles/styles.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({Key? key, required this.child}) : super(key: key);

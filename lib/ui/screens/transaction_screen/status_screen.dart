@@ -1,7 +1,4 @@
-import 'package:animations/animations.dart';
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/ui/common/my_button.dart';
 
 class FinancialStatusScreen extends StatefulWidget {
   const FinancialStatusScreen({super.key});

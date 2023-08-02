@@ -24,12 +24,12 @@ class PreAddAccountScreen extends StatelessWidget {
                 'Let’s setup your account!',
                 style: $styles.text.quote1.copyWith(fontSize: 36),
               ),
-              Gap(37),
+              const Gap(37),
               Text(
                 'Account can be your bank, credit card or your wallet',
                 style: $styles.text.body,
               ),
-              Spacer(),
+              const Spacer(),
               MyButton(
                 title: 'Let`s go',
                 onPressed: () => appRoute.go(ScreenPaths.addAccount),

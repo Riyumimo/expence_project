@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bloc/bloc.dart';
 import 'package:expence_project/data/firebase_service/storage_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -21,7 +23,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<_Started>((event, emit) async {
       try {
         final data = await _storageRepository.getAccount();
-        print('data from firebase $data');
         //if Statement
         if (data == null) {
           await setAccountStatus(false);
@@ -106,7 +107,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         listAccount.clear();
         setAccountStatus(false);
       } on Exception catch (e) {
-        // TODO
         print(e);
         rethrow;
       }

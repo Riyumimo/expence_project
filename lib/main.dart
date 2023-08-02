@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'commons_libs.dart';
 import 'firebase_options.dart';
 import 'logic/account_bloc/account_bloc.dart';
@@ -56,7 +58,6 @@ class MyApp extends StatelessWidget with GetItMixin {
                     final data = value.getBool('account');
                     getAccount = data;
                   });
-                  print(' getAccount $getAccount');
                   getAccount ?? appRoute.go(ScreenPaths.dashboard);
                   getAccount!
                       ? appRoute.go(ScreenPaths.dashboard)

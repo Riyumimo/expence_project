@@ -1,7 +1,3 @@
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
-import 'package:expence_project/ui/common/my_button.dart';
-
 import '../../../commons_libs.dart';
 
 class VerificationScreen extends StatelessWidget {

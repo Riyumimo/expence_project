@@ -1,5 +1,4 @@
 import '../../commons_libs.dart';
-import '../../main.dart';
 
 class RowChipButton extends StatelessWidget {
   const RowChipButton({

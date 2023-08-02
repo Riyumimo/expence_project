@@ -1,5 +1,3 @@
-import 'package:expence_project/main.dart';
-import 'package:expence_project/ui/app_scafold.dart';
 import 'package:expence_project/ui/screens/account_screen/account_screen.dart';
 import 'package:expence_project/ui/screens/account_screen/add_account_screen.dart';
 import 'package:expence_project/ui/screens/account_screen/pre_add_account.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:either_dart/either.dart';
 import 'package:expence_project/data/models/user_model.dart';
 import 'package:expence_project/main.dart';

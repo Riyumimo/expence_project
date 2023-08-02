@@ -66,7 +66,6 @@ class _HomeScreensState extends State<HomeScreens> {
 
   @override
   Widget build(BuildContext context) {
-    print(_isSelected);
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -95,7 +94,6 @@ class _HomeScreensState extends State<HomeScreens> {
                     const MyTextButton(title: 'Oktober'),
                     IconButton(
                         onPressed: () {
-                          print('ontap...');
                           storage.getUser();
                         },
                         icon: SvgPicture.asset('assets/icons/notifiaction.svg'))
@@ -118,7 +116,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           $styles.text.quote1.copyWith(fontSize: 40, height: 0),
                     );
                   }, loading: (loading) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }, loaded: (loaded) {
                     return Text(
                       '\$ ${_getAllBalance(loaded.listAccount).toString()}',
@@ -220,11 +218,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
                       FilledButton(
-                          onPressed: () async {
-                            final data = await storage.getAllTransaction();
-                            print('Transaction $data');
-                          },
-                          child: const Text("See all"))
+                          onPressed: () async {}, child: const Text("See all"))
                     ],
                   )),
             ),
@@ -234,9 +228,9 @@ class _HomeScreensState extends State<HomeScreens> {
               child: BlocBuilder<TransactionBloc, TransactionBlocState>(
                 builder: (context, state) {
                   return state.map(initial: (initial) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }, loading: (loading) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }, loaded: (loaded) {
                     final transactionAccount = loaded.transactionModel;
                     return ListView.builder(
@@ -244,7 +238,6 @@ class _HomeScreensState extends State<HomeScreens> {
                       itemCount: transactionAccount.length,
                       itemBuilder: (context, index) {
                         final data = transactionAccount[index];
-                        print(data.category);
                         return ListTileItem(
                           amount: data.amount,
                           description: data.description,

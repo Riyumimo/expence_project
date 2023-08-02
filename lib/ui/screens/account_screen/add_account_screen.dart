@@ -1,9 +1,5 @@
-import 'package:expence_project/router.dart';
-import 'package:expence_project/ui/common/my_button.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../commons_libs.dart';
 import '../../../logic/account_bloc/account_bloc.dart';
-import '../../../main.dart';
 import '../../common/input_field.dart';
 import '../record_keeping_screen/record_keeping_screens.dart';
 
@@ -18,7 +14,7 @@ class _AccountScreenState extends State<AddAccountScreens> {
   final TextEditingController _textMoneyController = TextEditingController();
   final TextEditingController _textDescController = TextEditingController();
   String _hintAccountType = 'Account Type';
-  List<String> AccountTypeList = ['Bank', 'E-wallet'];
+  List<String> accountTypeList = ['Bank', 'E-wallet'];
   int? _value = 0;
 
   Widget? switchWidget(int i) {
@@ -133,8 +129,8 @@ class _AccountScreenState extends State<AddAccountScreens> {
                         });
                       },
                       elevation: 4,
-                      items: AccountTypeList.map<DropdownMenuItem<String>>(
-                          (String value) {
+                      items: accountTypeList
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value,
                             child: Text(
@@ -189,7 +185,6 @@ class _AccountScreenState extends State<AddAccountScreens> {
 
                       appRoute.go(ScreenPaths.dashboard);
                     } else {
-                      print('pop...');
                       context.read<AccountBloc>().add(AccountEvent.add(
                           _hintAccountType,
                           accountNaming!,

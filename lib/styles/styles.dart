@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:expence_project/styles/styles.dart';
-
 import '../commons_libs.dart';
 export 'colors.dart';
 

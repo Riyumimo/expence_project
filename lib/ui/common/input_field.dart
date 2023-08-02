@@ -1,5 +1,3 @@
-import 'package:expence_project/main.dart';
-
 import '../../commons_libs.dart';
 
 class MyInputField extends StatelessWidget {

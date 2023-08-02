@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/router.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -23,7 +22,6 @@ class _CameraScreenState extends State<CameraScreen> {
   void dispose() {
     _cameraInitializeFuture = _cameraController.dispose();
     // _cameraController.dispose();
-    print('disposekan');
     super.dispose();
   }
 
@@ -48,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
       final image = await _cameraController.takePicture();
       appRoute.pop<String>(image.path);
     } catch (e) {
-      print('Error capturing image: $e');
+      rethrow;
     }
   }
 

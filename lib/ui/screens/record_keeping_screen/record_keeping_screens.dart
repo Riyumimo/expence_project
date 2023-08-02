@@ -1,16 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'dart:math';
 
-import 'package:animations/animations.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:expence_project/commons_libs.dart';
 import 'package:expence_project/logic/permission/camera_permission.dart';
 import 'package:expence_project/logic/permission/galery_permission.dart';
-import 'package:expence_project/logic/transaction_bloc/transaction_bloc.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
 import 'package:expence_project/ui/common/input_field.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../data/models/account_model.dart';
@@ -63,7 +60,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<AccountBloc>(context).add(AccountEvent.started());
+    BlocProvider.of<AccountBloc>(context).add(const AccountEvent.started());
     cameraImagePickerHandler = CameraImagePickerHandler();
     galeryPermissionHandler = GaleryPermissionHandler();
     super.initState();
@@ -450,6 +447,9 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                                 _hintCategory,
                                 amount!),
                           );
+                      context
+                          .read<TransactionBloc>()
+                          .add(const TransactionBlocEvent.getAll());
                       appRoute.pop();
                     },
                   )

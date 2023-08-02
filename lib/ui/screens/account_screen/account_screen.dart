@@ -26,7 +26,6 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       body: SafeArea(child: BlocBuilder<AccountBloc, AccountState>(
         builder: (context, state) {
-          print(state);
           return state.map(initial: (initial) {
             return const CircularProgressIndicator();
           }, loading: (loading) {

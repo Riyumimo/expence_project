@@ -1,8 +1,4 @@
-import 'package:animations/animations.dart';
-import 'package:expence_project/router.dart';
-import 'package:expence_project/ui/common/my_button.dart';
 import '../../../commons_libs.dart';
-import '../../../main.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.title});
@@ -268,7 +264,7 @@ class DetailScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: $styles.text.body,
                 ),
-                Gap(16),
+                const Gap(16),
                 Row(
                   children: [
                     Expanded(
