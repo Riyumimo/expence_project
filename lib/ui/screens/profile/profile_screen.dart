@@ -1,9 +1,4 @@
 import 'package:expence_project/commons_libs.dart';
-import 'package:expence_project/main.dart';
-import 'package:expence_project/router.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../logic/user_bloc/user_bloc.dart';
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});
@@ -16,15 +11,11 @@ class _ProfileScreensState extends State<ProfileScreens> {
   // bool isBorder = false;
   @override
   void initState() {
-    // TODO: implement initState
-    print('profile screen...');
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    print('dispose');
     super.dispose();
   }
 

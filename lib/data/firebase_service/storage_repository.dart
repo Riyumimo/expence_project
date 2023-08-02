@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,7 +99,7 @@ class FirebaseStorageRepository extends StorageRepository {
       // Jangan gunakan 'rethrow' tanpa alasan khusus, cukup log pesan errornya.
       print("Error adding transaction: $e");
       // Handle error jika diperlukan.
-      throw e;
+      rethrow;
     }
   }
 

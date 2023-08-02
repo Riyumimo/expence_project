@@ -9,7 +9,7 @@ part 'user_state.dart';
 part 'user_bloc.freezed.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  StorageRepository _storageRepository;
+  final StorageRepository _storageRepository;
   UserBloc(this._storageRepository) : super(const _InitialState()) {
     on<_Started>((event, emit) async {
       final data = await _storageRepository.getUser();
