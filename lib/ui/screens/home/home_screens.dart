@@ -42,12 +42,33 @@ class _HomeScreensState extends State<HomeScreens> {
     super.dispose();
   }
 
-  double _getAllBalance(List<Account> accountList) {
+  double _getAllBalance(
+      List<Account> accountList, List<TransactionModel>? transactionList) {
     double balance = 0;
-    for (var data in accountList) {
-      balance += data.initialBalance!;
+    if (transactionList == null) {
+      for (var data in accountList) {
+        balance += data.initialBalance!;
+      }
+      return balance;
+    } else {
+      for (var account in accountList) {
+        balance += account.initialBalance ?? 0;
+        // print(balance);
+        for (var transaction in transactionList) {
+          if (account.uid == transaction.accountUid) {
+            break;
+          }
+          String? type = transaction.type?.toLowerCase();
+          if (type == 'income') {
+            balance += transaction.amount ?? 0;
+          } else {
+            balance -= transaction.amount ?? 0;
+          }
+        }
+      }
+      // print(balance);
+      return balance;
     }
-    return balance;
   }
 
   double _getAllTransaction(List<TransactionModel> transactionList,
@@ -106,82 +127,8 @@ class _HomeScreensState extends State<HomeScreens> {
                   .copyWith(height: 0, color: ($styles.colors.textWhite)),
             )),
             const Gap(9),
-            Center(
-              child: BlocBuilder<AccountBloc, AccountState>(
-                builder: (context, state) {
-                  return state.map(initial: (initial) {
-                    return Text(
-                      '',
-                      style:
-                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
-                    );
-                  }, loading: (loading) {
-                    return const CircularProgressIndicator();
-                  }, loaded: (loaded) {
-                    return Text(
-                      '\$ ${_getAllBalance(loaded.listAccount).toString()}',
-                      style:
-                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
-                    );
-                  }, error: (error) {
-                    return Text(
-                      '',
-                      style:
-                          $styles.text.quote1.copyWith(fontSize: 40, height: 0),
-                    );
-                  });
-                },
-              ),
-            ),
-            BlocBuilder<TransactionBloc, TransactionBlocState>(
-              builder: (context, state) {
-                return state.map(initial: (initial) {
-                  return const CircularProgressIndicator();
-                }, loading: (loading) {
-                  return const CircularProgressIndicator();
-                }, loaded: (loaded) {
-                  return SeparatedRow(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 23),
-                    separatorBuilder: () => const Gap(16),
-                    children: [
-                      Expanded(
-                          child: IncomeExpenseWidget(
-                        title: 'Income',
-                        color: const Color(0xFF00A86B),
-                        amount: _getAllTransaction(loaded.transactionModel)
-                            .toString(),
-                        icon: ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                              Color(0xFF00A86B), BlendMode.srcIn),
-                          child: SvgPicture.asset(
-                            'assets/icons/income.svg',
-                          ),
-                        ),
-                      )),
-                      Expanded(
-                        child: IncomeExpenseWidget(
-                          title: 'Expense',
-                          color: const Color(0xFFFD3C4A),
-                          amount: _getAllTransaction(loaded.transactionModel,
-                                  isIncome: false)
-                              .toString(),
-                          icon: ColorFiltered(
-                            colorFilter: const ColorFilter.mode(
-                                Color(0xFFFD3C4A), BlendMode.srcIn),
-                            child: SvgPicture.asset(
-                              'assets/icons/expense.svg',
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                }, error: (error) {
-                  return const CircularProgressIndicator();
-                });
-              },
-            ),
+            getAllBalance(),
+            incomeAndExpense(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
@@ -218,40 +165,17 @@ class _HomeScreensState extends State<HomeScreens> {
                       const Spacer(),
                       // ChoiceChip(label: 'label', selected: selected)
                       FilledButton(
-                          onPressed: () async {}, child: const Text("See all"))
+                          onPressed: () async {
+                            await storage.getAllTransaction();
+                          },
+                          child: const Text("See all"))
                     ],
                   )),
             ),
             SizedBox(
               width: double.infinity,
               height: 200,
-              child: BlocBuilder<TransactionBloc, TransactionBlocState>(
-                builder: (context, state) {
-                  return state.map(initial: (initial) {
-                    return const CircularProgressIndicator();
-                  }, loading: (loading) {
-                    return const CircularProgressIndicator();
-                  }, loaded: (loaded) {
-                    final transactionAccount = loaded.transactionModel;
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: transactionAccount.length,
-                      itemBuilder: (context, index) {
-                        final data = transactionAccount[index];
-                        return ListTileItem(
-                          amount: data.amount,
-                          description: data.description,
-                          createAt: data.createdAt,
-                          category: data.category,
-                          type: data.type!.toLowerCase(),
-                        );
-                      },
-                    );
-                  }, error: (error) {
-                    return const CircularProgressIndicator();
-                  });
-                },
-              ),
+              child: listTransaction(),
             ),
             // Center(
             //   child: ElevatedButton(
@@ -267,6 +191,127 @@ class _HomeScreensState extends State<HomeScreens> {
         ),
       ),
     ));
+  }
+
+  BlocBuilder<TransactionBloc, TransactionBlocState> listTransaction() {
+    return BlocBuilder<TransactionBloc, TransactionBlocState>(
+      builder: (context, state) {
+        return state.map(initial: (initial) {
+          return const CircularProgressIndicator();
+        }, loading: (loading) {
+          return const CircularProgressIndicator();
+        }, loaded: (loaded) {
+          final transactionAccount = loaded.transactionModel;
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: transactionAccount.length,
+            itemBuilder: (context, index) {
+              final data = transactionAccount[index];
+              return ListTileItem(
+                amount: data.amount,
+                description: data.description,
+                createAt: data.createdAt,
+                category: data.category,
+                type: data.type!.toLowerCase(),
+              );
+            },
+          );
+        }, error: (error) {
+          return const CircularProgressIndicator();
+        });
+      },
+    );
+  }
+
+  BlocBuilder<TransactionBloc, TransactionBlocState> incomeAndExpense() {
+    return BlocBuilder<TransactionBloc, TransactionBlocState>(
+      builder: (context, state) {
+        return state.map(initial: (initial) {
+          return const CircularProgressIndicator();
+        }, loading: (loading) {
+          return const CircularProgressIndicator();
+        }, loaded: (loaded) {
+          return SeparatedRow(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
+            separatorBuilder: () => const Gap(16),
+            children: [
+              Expanded(
+                  child: IncomeExpenseWidget(
+                title: 'Income',
+                color: const Color(0xFF00A86B),
+                amount: _getAllTransaction(loaded.transactionModel).toString(),
+                icon: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                      Color(0xFF00A86B), BlendMode.srcIn),
+                  child: SvgPicture.asset(
+                    'assets/icons/income.svg',
+                  ),
+                ),
+              )),
+              Expanded(
+                child: IncomeExpenseWidget(
+                  title: 'Expense',
+                  color: const Color(0xFFFD3C4A),
+                  amount: _getAllTransaction(loaded.transactionModel,
+                          isIncome: false)
+                      .toString(),
+                  icon: ColorFiltered(
+                    colorFilter: const ColorFilter.mode(
+                        Color(0xFFFD3C4A), BlendMode.srcIn),
+                    child: SvgPicture.asset(
+                      'assets/icons/expense.svg',
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
+        }, error: (error) {
+          return const CircularProgressIndicator();
+        });
+      },
+    );
+  }
+
+  Center getAllBalance() {
+    return Center(
+      child: BlocBuilder<AccountBloc, AccountState>(
+        builder: (context, state) {
+          return state.map(initial: (initial) {
+            return Text(
+              '',
+              style: $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+            );
+          }, loading: (loading) {
+            return const CircularProgressIndicator();
+          }, loaded: (loaded) {
+            List<Account> listAccount = loaded.listAccount;
+            return BlocBuilder<TransactionBloc, TransactionBlocState>(
+              builder: (context, state) {
+                return state.map(initial: (initial) {
+                  return const CircularProgressIndicator();
+                }, loading: (loading) {
+                  return const CircularProgressIndicator();
+                }, loaded: (loaded) {
+                  return Text(
+                    '\$ ${_getAllBalance(listAccount, loaded.transactionModel).toString()}',
+                    style:
+                        $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+                  );
+                }, error: (error) {
+                  return const CircularProgressIndicator();
+                });
+              },
+            );
+          }, error: (error) {
+            return Text(
+              '',
+              style: $styles.text.quote1.copyWith(fontSize: 40, height: 0),
+            );
+          });
+        },
+      ),
+    );
   }
 
   SeparatedRow rowFIlter() {

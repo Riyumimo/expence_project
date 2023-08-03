@@ -116,30 +116,34 @@ class _ProfileScreensState extends State<ProfileScreens> {
               ),
             ),
             const Gap(8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Username',
-                  style: $styles.text.body,
-                ),
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    return state.map(error: (value) {
-                      return const CircularProgressIndicator();
-                    }, initial: (value) {
-                      return const CircularProgressIndicator();
-                    }, loaded: (value) {
-                      return Text(
+            BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                return state.map(error: (value) {
+                  return const CircularProgressIndicator();
+                }, initial: (value) {
+                  return const CircularProgressIndicator();
+                }, loaded: (value) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 140,
+                        child: Text(
+                          value.userModel.email,
+                          maxLines: 2,
+                          style: $styles.text.body,
+                        ),
+                      ),
+                      Text(
                         value.userModel.name,
                         style: $styles.text.quote2
                             .copyWith(color: const Color(0xFF161719)),
-                      );
-                    });
-                  },
-                )
-              ],
+                      ),
+                    ],
+                  );
+                });
+              },
             ),
             const Spacer(),
             IconButton(onPressed: () {}, icon: const Icon(Icons.edit))

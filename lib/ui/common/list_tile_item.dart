@@ -116,7 +116,7 @@ class ListTileItem extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                            '\$ ${type == 'Income' ? "-" : "+"}${amount ?? ''}',
+                            '\$ ${type == 'income' ? "+" : "-"}${amount ?? ''}',
                             style: $styles.text.bodyBold.copyWith(
                                 color: type == "income"
                                     ? Colors.green[800]
