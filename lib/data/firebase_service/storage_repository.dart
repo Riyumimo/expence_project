@@ -171,32 +171,42 @@ class FirebaseStorageRepository extends StorageRepository {
           .doc(uid)
           .collection(this.accountCollection)
           .get();
-      CollectionReference? transanctionCollections;
+      List<CollectionReference> transanctionCollections = [];
       for (DocumentSnapshot accountDoc in accountCollection.docs) {
-        transanctionCollections = firestore
+        final data = firestore
             .collection(userCollection)
             .doc(uid)
             .collection(this.accountCollection)
             .doc(accountDoc.id)
             .collection(transactionCollection);
+        transanctionCollections.add(data);
       }
-      if (transanctionCollections == null) {
+      print('transCollection ${transanctionCollections.length}');
+      if (transanctionCollections.isEmpty) {
         throw ("Collection is null");
       }
-      QuerySnapshot<Object?> querySnapshot =
-          await transanctionCollections.get();
-      // print('quiery ${querySnapshot.docs}');
+      List<TransactionModel> transactionList = [];
+      for (var transCollection in transanctionCollections) {
+        print('initial list ${transactionList.length}');
+        QuerySnapshot<Object?> querySnapshot = await transCollection.get();
+        // print('quiery ${querySnapshot.docs.length}');
 
-      List<TransactionModel> transactionList = querySnapshot.docs.map((e) {
-        Map<String, dynamic> data = e.data() as Map<String, dynamic>;
-        // print("data $data");
-        // print(e);
-        if (data.isEmpty) {
-          throw Exception('Data not available for document: ${e.id}');
+        List<TransactionModel> transactionData = querySnapshot.docs.map((e) {
+          Map<String, dynamic> data = e.data() as Map<String, dynamic>;
+          print("data $data");
+          print(e);
+          if (data.isEmpty) {
+            throw Exception('Data not available for document: ${e.id}');
+          }
+          return TransactionModel.fromFireStore(data);
+        }).toList();
+        for (var element in transactionData) {
+          print('acccount Id${element.accountUid}');
+          transactionList.add(element);
         }
-        return TransactionModel.fromFireStore(data);
-      }).toList();
-      // print(transactionList);
+      }
+
+      // print(transactionList.length);
       return transactionList;
     } on Exception catch (e) {
       print('Error occurred while fetching accounts: $e');

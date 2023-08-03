@@ -16,6 +16,7 @@ class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocState> {
     on<_GetAllEvent>((event, emit) async {
       final data = await _storageRepository.getAllTransaction();
       listTransaction = data!;
+      print(data.length);
       emit(_Loaded(listTransaction));
     });
 
