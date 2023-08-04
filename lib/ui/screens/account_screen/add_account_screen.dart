@@ -17,40 +17,76 @@ class _AccountScreenState extends State<AddAccountScreens> {
   List<String> accountTypeList = ['Bank', 'E-wallet'];
   int? _value = 0;
 
-  Widget? switchWidget(int i) {
+  Widget? switchWidgetEmoney(int i) {
     switch (i) {
       case 0:
-        return const Icon(
-          Icons.bar_chart_rounded,
-        );
+        return SvgPicture.asset('assets/icons/ovo.svg');
       case 1:
-        return const Icon(Icons.balance);
+        return SvgPicture.asset('assets/icons/shoope-pay.svg');
       case 2:
-        return const Icon(Icons.margin);
-      case 3:
-        return const Icon(Icons.add_chart);
-      case 4:
-        return const Icon(Icons.bar_chart);
+        return SvgPicture.asset('assets/icons/dana.svg');
       default:
+        return Center(
+          child: Text(
+            'Other',
+            style: $styles.text.body
+                .copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+          ),
+        );
     }
-    return null;
   }
 
-  String? accountName(int i) {
+  Widget? switchWidgetBank(int i) {
     switch (i) {
       case 0:
-        return "BNI";
+        return SvgPicture.asset('assets/icons/bca.svg');
       case 1:
-        return "Paypal";
+        return SvgPicture.asset('assets/icons/bni.svg');
       case 2:
-        return "Sryariah";
+        return SvgPicture.asset('assets/icons/BRI.svg');
       case 3:
-        return "BRI";
+        return SvgPicture.asset('assets/icons/paypal.svg');
+      case 4:
+        return SvgPicture.asset('assets/icons/mandiri.svg');
+      default:
+        return Center(
+          child: Text(
+            'Other',
+            style: $styles.text.body
+                .copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+          ),
+        );
+    }
+  }
+
+  String? accountNameBank(int i) {
+    switch (i) {
+      case 0:
+        return "BCA";
+      case 1:
+        return "BNI";
+      case 2:
+        return "CHASE";
+      case 3:
+        return "Paypal";
       case 4:
         return "Mandiri";
       default:
+        return 'other';
     }
-    return null;
+  }
+
+  String? accountNameEwallet(int i) {
+    switch (i) {
+      case 0:
+        return "ovo";
+      case 1:
+        return "Shoope-pay";
+      case 2:
+        return "Dana";
+      default:
+        return 'other';
+    }
   }
 
   @override
@@ -143,13 +179,13 @@ class _AccountScreenState extends State<AddAccountScreens> {
                 _hintAccountType == "Account Type"
                     ? Container()
                     : SizedBox(
-                        height: 88,
+                        height: 100,
                         width: double.infinity,
                         child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          spacing: 6.0,
+                          // alignment: WrapAlignment.spaceBetween,
+                          spacing: 7.0,
                           children: List<Widget>.generate(
-                            5,
+                            _hintAccountType == "Bank" ? 6 : 4,
                             (int index) => ChoiceChip(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
@@ -160,7 +196,12 @@ class _AccountScreenState extends State<AddAccountScreens> {
                                   borderRadius: BorderRadius.circular(8)),
                               selectedColor: const Color(0xFFEEE5FF),
                               backgroundColor: const Color(0xFFF1F1FA),
-                              label: switchWidget(index)!,
+                              label: SizedBox(
+                                  width: 28,
+                                  height: 28,
+                                  child: _hintAccountType == 'Bank'
+                                      ? switchWidgetBank(index)!
+                                      : switchWidgetEmoney(index)!),
                               selected: _value == index,
                               onSelected: (selected) {
                                 setState(() {
@@ -174,12 +215,17 @@ class _AccountScreenState extends State<AddAccountScreens> {
                 MyButton(
                   title: 'Continue',
                   onPressed: () {
-                    final accountNaming = accountName(_value!);
+                    String? accountNaming;
+                    if (_hintAccountType == "Bank") {
+                      accountNaming = accountNameBank(_value!);
+                    } else {
+                      accountNaming = accountNameEwallet(_value!);
+                    }
                     int? intValue = int.tryParse(_textMoneyController.text);
                     if (widget.title == 'login') {
                       context.read<AccountBloc>().add(AccountEvent.add(
                           _hintAccountType,
-                          accountNaming!,
+                          accountNaming ?? '',
                           _textDescController.text,
                           intValue ?? 0));
 
