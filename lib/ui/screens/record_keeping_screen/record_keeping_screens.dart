@@ -433,7 +433,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     ),
                   ),
                   RecordButton(
-                    onpressed: () {
+                    onpressed: () sync* {
                       print(uid);
                       // print(_image?.toString());
                       double? amount =
@@ -442,15 +442,17 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                             TransactionBlocEvent.add(
                                 uid!,
                                 widget.title!,
-                                null,
+                                _image,
                                 _textDescController.text,
                                 _hintCategory,
                                 amount!),
                           );
-                      context
-                          .read<TransactionBloc>()
-                          .add(const TransactionBlocEvent.getAll());
-                      appRoute.pop();
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        context
+                            .read<TransactionBloc>()
+                            .add(const TransactionBlocEvent.getAll());
+                        appRoute.pop();
+                      });
                     },
                   )
                 ],
@@ -461,6 +463,8 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
       ),
     );
   }
+
+  void recordData(BuildContext context) {}
   // Method //
 
   Future<dynamic> bottomSheet(BuildContext context) {

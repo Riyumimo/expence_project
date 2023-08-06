@@ -268,7 +268,6 @@ class FirebaseStorageRepository extends StorageRepository {
     try {
       // Create a unique file name for the image
       String fileName = const Uuid().v4();
-
       // Reference the storage location and upload the file
       final Reference storageReference =
           FirebaseStorage.instance.ref().child('images/$fileName');

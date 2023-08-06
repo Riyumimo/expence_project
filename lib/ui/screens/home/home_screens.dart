@@ -33,6 +33,8 @@ class _HomeScreensState extends State<HomeScreens> {
     });
     // BlocProvider.of<AuthenticationBloc>(context)
     //     .add(AuthenticationEvent.getSignIn(repo.firebaseAuth));
+    BlocProvider.of<TransactionBloc>(context)
+        .add(const TransactionBlocEvent.getAll());
     super.initState();
   }
 
