@@ -179,16 +179,6 @@ class _HomeScreensState extends State<HomeScreens> {
               height: 200,
               child: listTransaction(),
             ),
-            // Center(
-            //   child: ElevatedButton(
-            //     onPressed: () {
-            //       context
-            //           .read<AuthenticationBloc>()
-            //           .add(const AuthenticationEvent.signOut());
-            //     },
-            //     child: const Text("test"),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -215,6 +205,9 @@ class _HomeScreensState extends State<HomeScreens> {
                 createAt: data.createdAt,
                 category: data.category,
                 type: data.type!.toLowerCase(),
+                ontap: () {
+                  appRoute.push(ScreenPaths.detail, extra: data);
+                },
               );
             },
           );
@@ -287,7 +280,7 @@ class _HomeScreensState extends State<HomeScreens> {
           }, loading: (loading) {
             return const CircularProgressIndicator();
           }, loaded: (loaded) {
-            List<Account> listAccount = loaded.listAccount;
+            List<Account> listAccount = loaded.listAccount!;
             return BlocBuilder<TransactionBloc, TransactionBlocState>(
               builder: (context, state) {
                 return state.map(initial: (initial) {

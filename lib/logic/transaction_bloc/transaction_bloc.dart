@@ -12,12 +12,13 @@ part 'transaction_bloc.freezed.dart';
 class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocState> {
   final StorageRepository _storageRepository;
   TransactionBloc(this._storageRepository) : super(const _Initial()) {
-    List<TransactionModel> listTransaction = [];
+    List<TransactionModel>? listTransaction = [];
     on<_GetAllEvent>((event, emit) async {
       final data = await _storageRepository.getAllTransaction();
+      emit(const _Initial());
       listTransaction = data!;
       print(data.length);
-      emit(_Loaded(listTransaction));
+      emit(_Loaded(listTransaction!));
     });
 
     on<_AddEvent>((event, emit) async {
@@ -36,6 +37,10 @@ class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocState> {
               createdAt: DateTime.now(),
               updatedAt: DateTime.now()),
           event.accountUid);
+    });
+
+    on<_DeletedEvent>((event, emit) {
+      listTransaction!.clear();
     });
   }
 }

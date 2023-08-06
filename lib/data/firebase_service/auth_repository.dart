@@ -113,7 +113,6 @@ class FirebaseAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<void> signOut() async {
-    await storage.deleteUser();
     await googleSignIn.signOut();
     await firebaseAuth.signOut();
   }

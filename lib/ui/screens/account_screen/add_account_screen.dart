@@ -91,6 +91,7 @@ class _AccountScreenState extends State<AddAccountScreens> {
 
   @override
   Widget build(BuildContext context) {
+    print('title ${widget.title}');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -222,7 +223,8 @@ class _AccountScreenState extends State<AddAccountScreens> {
                       accountNaming = accountNameEwallet(_value!);
                     }
                     int? intValue = int.tryParse(_textMoneyController.text);
-                    if (widget.title == 'login') {
+                    if (widget.title != null) {
+                      print('to dahsboard');
                       context.read<AccountBloc>().add(AccountEvent.add(
                           _hintAccountType,
                           accountNaming ?? '',
@@ -231,6 +233,7 @@ class _AccountScreenState extends State<AddAccountScreens> {
 
                       appRoute.go(ScreenPaths.dashboard);
                     } else {
+                      print('to pop data');
                       context.read<AccountBloc>().add(AccountEvent.add(
                           _hintAccountType,
                           accountNaming!,
@@ -240,7 +243,7 @@ class _AccountScreenState extends State<AddAccountScreens> {
                           .read<AccountBloc>()
                           .add(const AccountEvent.started());
                       Future.delayed(const Duration(milliseconds: 100), () {
-                        if (widget.title != 'login') {
+                        if (widget.title != null) {
                           appRoute.pop();
                         } else {
                           appRoute.go(ScreenPaths.dashboard);

@@ -20,7 +20,7 @@ mixin _$AccountState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Account> listAccount) loaded,
+    required TResult Function(List<Account>? listAccount) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$AccountState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Account> listAccount)? loaded,
+    TResult? Function(List<Account>? listAccount)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$AccountState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Account> listAccount)? loaded,
+    TResult Function(List<Account>? listAccount)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -125,7 +125,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Account> listAccount) loaded,
+    required TResult Function(List<Account>? listAccount) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -136,7 +136,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Account> listAccount)? loaded,
+    TResult? Function(List<Account>? listAccount)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -147,7 +147,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Account> listAccount)? loaded,
+    TResult Function(List<Account>? listAccount)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -238,7 +238,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Account> listAccount) loaded,
+    required TResult Function(List<Account>? listAccount) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -249,7 +249,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Account> listAccount)? loaded,
+    TResult? Function(List<Account>? listAccount)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -260,7 +260,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Account> listAccount)? loaded,
+    TResult Function(List<Account>? listAccount)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -317,7 +317,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Account> listAccount});
+  $Res call({List<Account>? listAccount});
 }
 
 /// @nodoc
@@ -330,13 +330,13 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? listAccount = null,
+    Object? listAccount = freezed,
   }) {
     return _then(_$_Loaded(
-      null == listAccount
+      freezed == listAccount
           ? _value._listAccount
           : listAccount // ignore: cast_nullable_to_non_nullable
-              as List<Account>,
+              as List<Account>?,
     ));
   }
 }
@@ -344,14 +344,17 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(final List<Account> listAccount) : _listAccount = listAccount;
+  const _$_Loaded(final List<Account>? listAccount)
+      : _listAccount = listAccount;
 
-  final List<Account> _listAccount;
+  final List<Account>? _listAccount;
   @override
-  List<Account> get listAccount {
+  List<Account>? get listAccount {
+    final value = _listAccount;
+    if (value == null) return null;
     if (_listAccount is EqualUnmodifiableListView) return _listAccount;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listAccount);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -383,7 +386,7 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Account> listAccount) loaded,
+    required TResult Function(List<Account>? listAccount) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(listAccount);
@@ -394,7 +397,7 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Account> listAccount)? loaded,
+    TResult? Function(List<Account>? listAccount)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(listAccount);
@@ -405,7 +408,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Account> listAccount)? loaded,
+    TResult Function(List<Account>? listAccount)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -454,9 +457,9 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements AccountState {
-  const factory _Loaded(final List<Account> listAccount) = _$_Loaded;
+  const factory _Loaded(final List<Account>? listAccount) = _$_Loaded;
 
-  List<Account> get listAccount;
+  List<Account>? get listAccount;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -526,7 +529,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Account> listAccount) loaded,
+    required TResult Function(List<Account>? listAccount) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -537,7 +540,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Account> listAccount)? loaded,
+    TResult? Function(List<Account>? listAccount)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -548,7 +551,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Account> listAccount)? loaded,
+    TResult Function(List<Account>? listAccount)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

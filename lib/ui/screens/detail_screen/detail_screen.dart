@@ -1,8 +1,15 @@
+import 'package:dotted_border/dotted_border.dart';
+import 'package:intl/intl.dart';
+
 import '../../../commons_libs.dart';
+import '../../../data/models/transaction_model.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key, required this.title});
-  final String title;
+  const DetailScreen({
+    super.key,
+    required this.transaction,
+  });
+  final TransactionModel transaction;
 
   Color? colorScheme(String title) {
     switch (title) {
@@ -17,10 +24,16 @@ class DetailScreen extends StatelessWidget {
     }
   }
 
+  String _getDateTime(DateTime dateTime) {
+    String formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+    // print('url${transaction.url}');
     return PageTransitionSwitcher(
       transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
           FadeThroughTransition(
@@ -38,7 +51,7 @@ class DetailScreen extends StatelessWidget {
                 Container(
                   height: height * .34,
                   decoration: BoxDecoration(
-                    color: colorScheme(title) ?? Colors.amber,
+                    color: colorScheme(transaction.type!) ?? Colors.amber,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(16),
                       bottomRight: Radius.circular(16),
@@ -91,7 +104,7 @@ class DetailScreen extends StatelessWidget {
                           SizedBox(
                             height: height * .08,
                             child: Text(
-                              '\$120',
+                              '\$ ${transaction.amount}',
                               style: $styles.text.quote1.copyWith(
                                 height: 1,
                                 fontSize: 48,
@@ -100,14 +113,14 @@ class DetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Buy some grocery',
+                            transaction.description ?? '....',
                             style: $styles.text.body.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            'Saturday 4 June 2021 16:20',
+                            _getDateTime(transaction.createdAt!),
                             style: $styles.text.body.copyWith(
                               fontSize: 13,
                               color: const Color(0xFFFCFCFC),
@@ -137,7 +150,7 @@ class DetailScreen extends StatelessWidget {
                         SizedBox(
                           height: height * .0936,
                           child: Text(
-                            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+                            transaction.description ?? '',
                             style: $styles.text.body,
                             textAlign: TextAlign.justify,
                             maxLines: 5,
@@ -147,13 +160,26 @@ class DetailScreen extends StatelessWidget {
                           'Attachment',
                           style: $styles.text.bodyBold,
                         ),
-                        Container(
-                          height: 116,
-                          decoration: BoxDecoration(
-                            color: $styles.colors.accent1,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
+                        transaction.url != null && transaction.url != ''
+                            ? Container(
+                                height: 116,
+                                decoration: BoxDecoration(
+                                  // color: $styles.colors.accent1,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Image.network(transaction.url ?? ''))
+                            : DottedBorder(
+                                dashPattern: const [5, 5],
+                                color: $styles.colors.textWhite,
+                                child: SizedBox(
+                                  height: 100,
+                                  child: Center(
+                                      child: Text(
+                                    'No Image',
+                                    style: $styles.text.quote2.copyWith(
+                                        color: $styles.colors.textWhite),
+                                  )),
+                                )),
                         const Spacer(),
                         MyButton(
                           title: 'Edit',
@@ -190,7 +216,7 @@ class DetailScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Income',
+                          transaction.type ?? '',
                           style: $styles.text.bodyBold,
                         ),
                       ],
@@ -198,14 +224,14 @@ class DetailScreen extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          'Type',
+                          'Category',
                           style: $styles.text.body.copyWith(
                             color: const Color(0xFF91919F),
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          'Income',
+                          transaction.category ?? '',
                           style: $styles.text.bodyBold,
                         ),
                       ],
@@ -213,14 +239,14 @@ class DetailScreen extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          'Type',
+                          'Wallet',
                           style: $styles.text.body.copyWith(
                             color: const Color(0xFF91919F),
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          'Income',
+                          transaction.type ?? '',
                           style: $styles.text.bodyBold,
                         ),
                       ],

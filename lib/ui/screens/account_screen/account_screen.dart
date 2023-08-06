@@ -47,7 +47,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             style: $styles.text.body,
                           ),
                           Text(
-                            getAllBalance(loaded.listAccount).toString(),
+                            getAllBalance(loaded.listAccount!).toString(),
                             style: $styles.text.quote1.copyWith(fontSize: 40),
                           ),
                         ],
@@ -59,10 +59,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   children: [
                     Column(
                       children: List.generate(
-                        loaded.listAccount.length,
+                        loaded.listAccount!.length,
                         (index) => ListTiles(
                           height: height,
-                          amount: listAccount[index].initialBalance,
+                          amount: listAccount![index].initialBalance,
                           name: listAccount[index].name,
                         ),
                       ),

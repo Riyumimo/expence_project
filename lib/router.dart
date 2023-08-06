@@ -1,3 +1,4 @@
+import 'package:expence_project/data/models/transaction_model.dart';
 import 'package:expence_project/ui/screens/account_screen/account_screen.dart';
 import 'package:expence_project/ui/screens/account_screen/add_account_screen.dart';
 import 'package:expence_project/ui/screens/account_screen/pre_add_account.dart';
@@ -74,7 +75,7 @@ final appRoute = GoRouter(redirect: _handleRedirect, routes: [
         AppRoute(
             ScreenPaths.detail,
             (s) => DetailScreen(
-                  title: s.extra.toString(),
+                  transaction: s.extra as TransactionModel,
                 )),
         AppRoute('/page1', (s) => const Page2()),
         AppRoute('/page2', (s) => const Page3()),

@@ -287,7 +287,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                         return const CircularProgressIndicator();
                       }, loaded: (loaded) {
                         final List<String> name = [];
-                        for (var element in loaded.listAccount) {
+                        for (var element in loaded.listAccount!) {
                           name.add(element.name!);
                         }
                         walletList = name;
@@ -308,7 +308,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                             onChanged: (value) {
                               setState(() {
                                 _hintWallet = value!;
-                                uid = getUid(loaded.listAccount, value);
+                                uid = getUid(loaded.listAccount!, value);
                               });
                             },
                             elevation: 4,
@@ -433,7 +433,7 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                     ),
                   ),
                   RecordButton(
-                    onpressed: () sync* {
+                    onpressed: () async {
                       print(uid);
                       // print(_image?.toString());
                       double? amount =
@@ -447,10 +447,11 @@ class _RecordKeppingScreenState extends State<RecordKeppingScreen> {
                                 _hintCategory,
                                 amount!),
                           );
-                      Future.delayed(const Duration(milliseconds: 500), () {
-                        context
-                            .read<TransactionBloc>()
-                            .add(const TransactionBlocEvent.getAll());
+                      context
+                          .read<TransactionBloc>()
+                          .add(const TransactionBlocEvent.getAll());
+                      await Future.delayed(const Duration(milliseconds: 500),
+                          () {
                         appRoute.pop();
                       });
                     },

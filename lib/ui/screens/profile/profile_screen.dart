@@ -1,4 +1,6 @@
 import 'package:expence_project/commons_libs.dart';
+import 'package:expence_project/logic/account_bloc/account_bloc.dart';
+import 'package:expence_project/logic/auth_bloc/authentication_bloc.dart';
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});
@@ -34,10 +36,48 @@ class _ProfileScreensState extends State<ProfileScreens> {
                 onTap: () {
                   appRoute.push(ScreenPaths.account);
                 },
-                child: listTile(height, width, true)),
-            listTile(height, width, false),
-            listTile(height, width, false),
-            listTile(height, width, true, isBottom: false)
+                child: listTile(height, width, true,
+                    icon: Icons.account_balance_wallet, name: 'Account')),
+            listTile(height, width, false,
+                icon: Icons.settings, name: 'Setting'),
+            listTile(height, width, false,
+                icon: Icons.upload_file, name: 'Export Data'),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (builder) {
+                      return AlertDialog(
+                        title: const Text('Log Out'),
+                        content: const Text('Are You Sure Quit?'),
+                        actions: [
+                          FilledButton(
+                              onPressed: () {
+                                context
+                                    .read<AccountBloc>()
+                                    .add(const AccountEvent.delete());
+
+                                context
+                                    .read<TransactionBloc>()
+                                    .add(const TransactionBlocEvent.delete());
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(const AuthenticationEvent.signOut());
+                                appRoute.pop();
+                              },
+                              child: const Text('Ok')),
+                          FilledButton(
+                              onPressed: () {
+                                appRoute.pop();
+                              },
+                              child: const Text('Cancel'))
+                        ],
+                      );
+                    });
+              },
+              child: listTile(height, width, true,
+                  isBottom: false, icon: Icons.logout, name: 'Logout'),
+            )
           ],
         ),
       ),
@@ -45,7 +85,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
   }
 
   Container listTile(double height, double width, bool isBoders,
-      {bool isBottom = true}) {
+      {bool isBottom = true, String? name, IconData? icon}) {
     return Container(
       padding: const EdgeInsets.all(18),
       height: height * .1099,
@@ -67,19 +107,20 @@ class _ProfileScreensState extends State<ProfileScreens> {
         children: [
           Container(
             // padding: EdgeInsets.all(10),
-            height: 52,
-            width: 52,
+            height: height * .062,
+            width: width * .1386,
             decoration: BoxDecoration(
                 color: const Color(0xFFEEE5FF),
                 borderRadius: BorderRadius.circular(16)),
-            child: const Icon(
-              Icons.wallet,
+            child: Icon(
+              icon,
               size: 32,
+              color: const Color(0xFF7F3DFF),
             ),
           ),
           const Gap(9),
           Text(
-            'Account',
+            name ?? '',
             style: $styles.text.bodyBold,
           )
         ],

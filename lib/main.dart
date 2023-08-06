@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget with GetItMixin {
                     final data = value.getBool('account');
                     getAccount = data;
                   });
+                  print(getAccount);
                   getAccount ?? appRoute.go(ScreenPaths.dashboard);
                   getAccount!
                       ? appRoute.go(ScreenPaths.dashboard)
@@ -76,10 +77,10 @@ class MyApp extends StatelessWidget with GetItMixin {
                   initial: (initial) {},
                   loading: (loading) {},
                   loaded: (loaded) {
-                    if (loaded.listAccount.isEmpty) {
+                    if (loaded.listAccount!.isEmpty) {
                       print('Empity Data');
                       appRoute.go(ScreenPaths.preAddAccount);
-                    }
+                    } else if (loaded.listAccount == null) {}
                   },
                   error: (error) {});
             },

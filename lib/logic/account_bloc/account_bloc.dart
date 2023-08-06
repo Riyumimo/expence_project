@@ -19,19 +19,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   AccountBloc(this._storageRepository) : super(const _Initial()) {
-    List<Account> listAccount = [];
+    List<Account>? listAccount = [];
     on<_Started>((event, emit) async {
       try {
         final data = await _storageRepository.getAccount();
         //if Statement
-        if (data == null) {
+        if (data!.isEmpty) {
           await setAccountStatus(false);
+          print('data null');
           emit(const _Error('Account is empity'));
-          if (listAccount.isEmpty) {
-            await setAccountStatus(false);
-            print('account is empity');
-            emit(_Loaded(listAccount));
-          }
         } else {
           print(' initial list account ${listAccount.length}');
           //else
@@ -57,7 +53,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
                 emit(const AccountState.initial());
               }
               if (listAccount.length > data.length) {
-                // int numExtra = listAccount.length - data.length;
+                // int numExtra = listAccount!.length - data.length;
                 listAccount.removeRange(data.length, listAccount.length);
               }
             }
@@ -103,7 +99,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         if (listAccount.isEmpty) {
           emit(const _Error('this user has no account '));
         }
-        await _storageRepository.deleteAccount();
+        // await _storageRepository.deleteAccount();
         listAccount.clear();
         setAccountStatus(false);
       } on Exception catch (e) {
